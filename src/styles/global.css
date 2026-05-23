@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'RoadRage';
+  src: url('/fonts/road_rage/Road_Rage.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Orbitron';
+  src: url('/fonts/Orbitron/Orbitron-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter Italic';
+  src: url('/fonts/Inter/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Druk';
+  src: url('/fonts/druk-trial/Druk-BoldItalic-Trial.otf') format('opentype');
+}
