@@ -1,0 +1,347 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout>
+	<main class="min-h-screen bg-black px-6 py-12 text-white md:px-12">
+		<div class="mx-auto max-w-7xl space-y-24">
+
+			<header class="space-y-3 border-b border-white/10 pb-8">
+				<p class="text-xs uppercase tracking-[0.28em] text-amber-400">
+					InnoWeb Motion & Interaction Lab
+				</p>
+
+				<h1 class="[font-family:'Druk'] bg-gradient-to-b from-white via-slate-200 to-slate-600 bg-clip-text text-5xl uppercase leading-none tracking-[0.05em] text-transparent md:text-7xl">
+					Controlled Energy System
+				</h1>
+
+				<p class="max-w-3xl text-sm leading-relaxed text-slate-400 md:text-base">
+					This sandbox tests hover states, transitions, glow intensity, motion timing,
+					card lift, button feedback, and restraint rules before interactions are promoted
+					into reusable components.
+				</p>
+			</header>
+
+			<!-- Hover Behavior -->
+			<section class="space-y-8">
+				<div class="space-y-2">
+					<p class="text-xs uppercase tracking-[0.22em] text-slate-500">
+						Interaction Group
+					</p>
+
+					<h2 class="[font-family:'Druk'] text-4xl uppercase leading-none tracking-[0.03em] text-slate-100">
+						Hover Behavior
+					</h2>
+
+					<p class="max-w-3xl text-sm leading-relaxed text-slate-400">
+						Goal: Test hover feedback that clearly signals clickability without creating visual noise.
+					</p>
+				</div>
+
+				<div class="grid gap-4 md:grid-cols-3">
+					<div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-amber-400/50">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">Hover A</p>
+						<h3 class="mt-3 text-xl font-bold text-white">Border Highlight</h3>
+						<p class="mt-2 text-sm text-slate-400">
+							Lowest-intensity hover. Good for dense UI and product grids.
+						</p>
+					</div>
+
+					<div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition hover:-translate-y-1 hover:border-amber-400/50">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">Hover B</p>
+						<h3 class="mt-3 text-xl font-bold text-white">Lift + Border</h3>
+						<p class="mt-2 text-sm text-slate-400">
+							Moderate interaction. Good for cards and category tiles.
+						</p>
+					</div>
+
+					<div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-[0_0_28px_rgba(251,191,36,0.16)]">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">Hover C</p>
+						<h3 class="mt-3 text-xl font-bold text-white">Lift + Glow</h3>
+						<p class="mt-2 text-sm text-slate-400">
+							Highest standard hover. Use sparingly for featured content.
+						</p>
+					</div>
+				</div>
+
+				<p class="max-w-3xl text-sm text-slate-500">
+					Guideline Draft: default hover should clarify action. Glow should be reserved for priority elements.
+				</p>
+			</section>
+
+			<!-- Transition Timing -->
+			<section class="space-y-8 border-t border-white/10 pt-12">
+				<div class="space-y-2">
+					<p class="text-xs uppercase tracking-[0.22em] text-slate-500">
+						Interaction Group
+					</p>
+
+					<h2 class="[font-family:'Druk'] text-4xl uppercase leading-none tracking-[0.03em] text-slate-100">
+						Transition Timing
+					</h2>
+
+					<p class="max-w-3xl text-sm leading-relaxed text-slate-400">
+						Goal: Compare fast, standard, and slow transitions for UI feedback.
+					</p>
+				</div>
+
+				<div class="grid gap-4 md:grid-cols-3">
+					<button class="rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-5 text-left transition duration-150 hover:-translate-y-1 hover:border-amber-400/50 hover:bg-amber-400/5">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">150ms</p>
+						<p class="mt-2 text-lg font-bold text-white">Fast Feedback</p>
+						<p class="mt-1 text-sm text-slate-400">Snappy. Good for buttons and compact controls.</p>
+					</button>
+
+					<button class="rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-5 text-left transition duration-300 hover:-translate-y-1 hover:border-amber-400/50 hover:bg-amber-400/5">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">300ms</p>
+						<p class="mt-2 text-lg font-bold text-white">Standard Feedback</p>
+						<p class="mt-1 text-sm text-slate-400">Smooth. Good default for cards and panels.</p>
+					</button>
+
+					<button class="rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-5 text-left transition duration-500 hover:-translate-y-1 hover:border-amber-400/50 hover:bg-amber-400/5">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">500ms</p>
+						<p class="mt-2 text-lg font-bold text-white">Slow Feedback</p>
+						<p class="mt-1 text-sm text-slate-400">Cinematic. Use carefully for hero moments only.</p>
+					</button>
+				</div>
+
+				<p class="max-w-3xl text-sm text-slate-500">
+					Guideline Draft: 150ms for controls, 300ms for cards, 500ms only for deliberate hero-level moments.
+				</p>
+			</section>
+
+			<!-- Glow Intensity -->
+			<section class="space-y-8 border-t border-white/10 pt-12">
+				<div class="space-y-2">
+					<p class="text-xs uppercase tracking-[0.22em] text-slate-500">
+						Interaction Group
+					</p>
+
+					<h2 class="[font-family:'Druk'] text-4xl uppercase leading-none tracking-[0.03em] text-slate-100">
+						Glow Intensity
+					</h2>
+
+					<p class="max-w-3xl text-sm leading-relaxed text-slate-400">
+						Goal: Define restrained glow levels for premium sports energy without neon overload.
+					</p>
+				</div>
+
+				<div class="grid gap-4 md:grid-cols-4">
+					<div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">Glow 0</p>
+						<p class="mt-3 text-lg font-bold text-white">No Glow</p>
+						<p class="mt-2 text-sm text-slate-400">Default for most UI.</p>
+					</div>
+
+					<div class="rounded-3xl border border-amber-400/20 bg-white/[0.03] p-6 shadow-[0_0_18px_rgba(251,191,36,0.06)]">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">Glow 1</p>
+						<p class="mt-3 text-lg font-bold text-white">Ambient</p>
+						<p class="mt-2 text-sm text-slate-400">Safe default highlight.</p>
+					</div>
+
+					<div class="rounded-3xl border border-amber-400/30 bg-white/[0.03] p-6 shadow-[0_0_28px_rgba(251,191,36,0.14)]">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">Glow 2</p>
+						<p class="mt-3 text-lg font-bold text-white">Featured</p>
+						<p class="mt-2 text-sm text-slate-400">Use for cards, deals, and CTAs.</p>
+					</div>
+
+					<div class="rounded-3xl border border-amber-400/40 bg-amber-400/5 p-6 shadow-[0_0_42px_rgba(251,191,36,0.24)]">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">Glow 3</p>
+						<p class="mt-3 text-lg font-bold text-white">Hero Only</p>
+						<p class="mt-2 text-sm text-slate-400">Maximum standard glow.</p>
+					</div>
+				</div>
+
+				<p class="max-w-3xl text-sm text-slate-500">
+					Guideline Draft: Glow 3 should not appear in dense product grids or repeated UI.
+				</p>
+			</section>
+
+			<!-- Card Lift / Transform -->
+			<section class="space-y-8 border-t border-white/10 pt-12">
+				<div class="space-y-2">
+					<p class="text-xs uppercase tracking-[0.22em] text-slate-500">
+						Interaction Group
+					</p>
+
+					<h2 class="[font-family:'Druk'] text-4xl uppercase leading-none tracking-[0.03em] text-slate-100">
+						Card Lift / Transform
+					</h2>
+
+					<p class="max-w-3xl text-sm leading-relaxed text-slate-400">
+						Goal: Compare transform intensity for cards and category tiles.
+					</p>
+				</div>
+
+				<div class="grid gap-4 md:grid-cols-3">
+					<div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition duration-300 hover:-translate-y-0.5">
+						<div class="flex aspect-[3/4] items-center justify-center rounded-xl border border-dashed border-white/15 bg-black/60 text-xs uppercase tracking-[0.2em] text-slate-600">
+							Card
+						</div>
+						<p class="mt-4 text-sm font-medium text-slate-200">Subtle Lift</p>
+						<p class="mt-1 text-xs text-slate-500">translate-y-0.5</p>
+					</div>
+
+					<div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition duration-300 hover:-translate-y-1">
+						<div class="flex aspect-[3/4] items-center justify-center rounded-xl border border-dashed border-white/15 bg-black/60 text-xs uppercase tracking-[0.2em] text-slate-600">
+							Card
+						</div>
+						<p class="mt-4 text-sm font-medium text-slate-200">Standard Lift</p>
+						<p class="mt-1 text-xs text-slate-500">translate-y-1</p>
+					</div>
+
+					<div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition duration-300 hover:-translate-y-2 hover:scale-[1.015]">
+						<div class="flex aspect-[3/4] items-center justify-center rounded-xl border border-dashed border-white/15 bg-black/60 text-xs uppercase tracking-[0.2em] text-slate-600">
+							Card
+						</div>
+						<p class="mt-4 text-sm font-medium text-slate-200">Aggressive Lift</p>
+						<p class="mt-1 text-xs text-slate-500">translate-y-2 + scale</p>
+					</div>
+				</div>
+
+				<p class="max-w-3xl text-sm text-slate-500">
+					Guideline Draft: standard lift should be the default. Aggressive lift should be reserved for promotional category tiles.
+				</p>
+			</section>
+
+			<!-- Button Interaction -->
+			<section class="space-y-8 border-t border-white/10 pt-12">
+				<div class="space-y-2">
+					<p class="text-xs uppercase tracking-[0.22em] text-slate-500">
+						Interaction Group
+					</p>
+
+					<h2 class="[font-family:'Druk'] text-4xl uppercase leading-none tracking-[0.03em] text-slate-100">
+						Button Interaction
+					</h2>
+
+					<p class="max-w-3xl text-sm leading-relaxed text-slate-400">
+						Goal: Test click/hover feedback for primary conversion actions.
+					</p>
+				</div>
+
+				<div class="flex flex-wrap gap-4 rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+					<button class="rounded-lg bg-amber-400 px-6 py-3 text-sm font-bold uppercase tracking-wide text-black transition duration-150 hover:bg-amber-300 active:scale-95">
+						Primary Active
+					</button>
+
+					<button class="rounded-lg border border-amber-400/60 px-6 py-3 text-sm font-bold uppercase tracking-wide text-amber-300 transition duration-150 hover:border-amber-300 hover:bg-amber-400/10 active:scale-95">
+						Secondary Active
+					</button>
+
+					<button class="rounded-lg border border-white/15 px-6 py-3 text-sm font-bold uppercase tracking-wide text-slate-200 transition duration-150 hover:border-white/35 hover:bg-white/5 active:scale-95">
+						Ghost Active
+					</button>
+				</div>
+
+				<p class="max-w-3xl text-sm text-slate-500">
+					Guideline Draft: buttons should have quick feedback. Active scale should be subtle and not feel toy-like.
+				</p>
+			</section>
+
+			<!-- Scroll / Reveal Placeholder -->
+			<section class="space-y-8 border-t border-white/10 pt-12">
+				<div class="space-y-2">
+					<p class="text-xs uppercase tracking-[0.22em] text-slate-500">
+						Interaction Group
+					</p>
+
+					<h2 class="[font-family:'Druk'] text-4xl uppercase leading-none tracking-[0.03em] text-slate-100">
+						Scroll / Reveal Patterns
+					</h2>
+
+					<p class="max-w-3xl text-sm leading-relaxed text-slate-400">
+						Goal: Reserve space for future scroll reveal experiments. Astro alone should stay simple;
+						animation libraries should only be introduced if the design need justifies them.
+					</p>
+				</div>
+
+				<div class="grid gap-4 md:grid-cols-3">
+					<div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">Reveal A</p>
+						<h3 class="mt-3 text-xl font-bold text-white">Fade In</h3>
+						<p class="mt-2 text-sm text-slate-400">
+							Candidate for soft content entrance.
+						</p>
+					</div>
+
+					<div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">Reveal B</p>
+						<h3 class="mt-3 text-xl font-bold text-white">Rise In</h3>
+						<p class="mt-2 text-sm text-slate-400">
+							Candidate for hero sub-elements and cards.
+						</p>
+					</div>
+
+					<div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+						<p class="text-xs uppercase tracking-[0.2em] text-slate-500">Reveal C</p>
+						<h3 class="mt-3 text-xl font-bold text-white">Staggered Group</h3>
+						<p class="mt-2 text-sm text-slate-400">
+							Candidate for product grids and sports tiles.
+						</p>
+					</div>
+				</div>
+
+				<p class="max-w-3xl text-sm text-slate-500">
+					Guideline Draft: scroll effects should be subtle, optional, and never block content readability.
+				</p>
+			</section>
+
+			<!-- Motion Restraint -->
+			<section class="space-y-8 border-t border-white/10 pt-12">
+				<div class="space-y-2">
+					<p class="text-xs uppercase tracking-[0.22em] text-slate-500">
+						Interaction Standard
+					</p>
+
+					<h2 class="[font-family:'Druk'] text-4xl uppercase leading-none tracking-[0.03em] text-slate-100">
+						Motion Restraint Philosophy
+					</h2>
+
+					<p class="max-w-3xl text-sm leading-relaxed text-slate-400">
+						Goal: Document the first draft of InnoWeb’s interaction standards.
+					</p>
+				</div>
+
+				<div class="rounded-3xl border border-amber-400/20 bg-amber-400/5 p-6">
+					<h3 class="[font-family:'Druk'] text-3xl uppercase leading-none text-white">
+						Motion should add energy, not noise.
+					</h3>
+
+					<div class="mt-6 grid gap-4 md:grid-cols-2">
+						<div>
+							<p class="text-xs font-bold uppercase tracking-[0.18em] text-green-400">
+								Use Motion For
+							</p>
+
+							<ul class="mt-3 space-y-2 text-sm text-slate-300">
+								<li>Clarifying clickability</li>
+								<li>Guiding attention to priority CTAs</li>
+								<li>Adding premium energy to hero moments</li>
+								<li>Making cards feel responsive and alive</li>
+							</ul>
+						</div>
+
+						<div>
+							<p class="text-xs font-bold uppercase tracking-[0.18em] text-red-300">
+								Avoid Motion For
+							</p>
+
+							<ul class="mt-3 space-y-2 text-sm text-slate-300">
+								<li>Constant bouncing or pulsing</li>
+								<li>Dense product grids with excessive glow</li>
+								<li>Animations that delay content access</li>
+								<li>Effects that make the site feel like a game UI</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<p class="max-w-3xl text-sm text-slate-500">
+					Status: Draft standard. Validate through homepage and component implementation.
+				</p>
+			</section>
+
+		</div>
+	</main>
+</Layout>
