@@ -1,119 +1,347 @@
 @layer components {
 	.type-brush-hero {
 		font-family: 'RoadRage';
-		@apply bg-gradient-to-b from-yellow-100 via-yellow-400 to-yellow-900 bg-clip-text text-6xl uppercase leading-none tracking-[-0.08em] text-transparent drop-shadow-[0_8px_0_rgba(0,0,0,0.75)] md:text-8xl;
+		@apply inline-block 
+            text-[1.45rem] 
+            sm:text-[2.45rem] 
+            md:text-[3.15rem] 
+            lg:text-[4.55rem] 
+            xl:text-[5.35rem] 
+            2xl:text-[6.65rem]
+            uppercase tracking-[0.04em] leading-[0.9] rotate-[-1deg] 
+            bg-gradient-to-b from-yellow-100 via-yellow-400 via-amber-500 to-yellow-900 
+            bg-clip-text text-transparent shadow-lg drop-shadow-[0_8px_0_rgba(0,0,0,0.75)] 
+            hover:drop-shadow-[0_10px_0_rgba(0,0,0,0.85)] transition duration-300 hover:scale-105;
 	}
-
 	.type-brush-secondary {
 		font-family: 'RoadRage';
-		@apply bg-gradient-to-b from-white via-slate-200 to-slate-500 bg-clip-text text-3xl uppercase leading-none tracking-[0.06em] text-transparent drop-shadow-[0_6px_0_rgba(0,0,0,0.7)];
-	}
+		@apply 
+            text-[1.40rem] 
+            sm:text-[2.35rem] 
+            md:text-[3.00rem] 
+            lg:text-[4.35rem] 
+            xl:text-[5.05rem] 
+            2xl:text-[6.25rem]
+            uppercase tracking-[0.06em] leading-none rotate-[-1deg] 
+            bg-gradient-to-b from-white via-slate-200 to-slate-500
+            bg-clip-text text-transparent drop-shadow-[0_6px_0_rgba(0,0,0,0.7)];
+        }
 
 	.type-brush-price {
 		font-family: 'RoadRage';
-		@apply bg-gradient-to-b from-yellow-100 via-yellow-400 to-yellow-900 bg-clip-text text-2xl uppercase leading-none text-transparent;
+		@apply 
+            text-[1.35rem]
+            sm:text-[2.25rem] 
+            md:text-[2.90rem] 
+            lg:text-[4.15rem] 
+            xl:text-[4.85rem] 
+            2xl:text-[6.25rem]
+            uppercase leading-none
+            bg-gradient-to-b from-yellow-100 via-yellow-400 to-yellow-900 
+            bg-clip-text text-transparent;
 	}
 
 	.type-druk-hero {
 		font-family: 'Druk';
-		@apply bg-gradient-to-b from-white via-slate-100 via-slate-300 to-slate-700 bg-clip-text text-6xl uppercase leading-[0.9] tracking-[0.06em] text-transparent shadow-lg drop-shadow-[0_9px_0_rgba(0,0,0,0.9)] scale-y-90 skew-x-[-4deg] transition duration-300 hover:scale-105 hover:drop-shadow-[0_10px_0_rgba(0,0,0,0.85)];
+		@apply whitespace-nowrap
+            text-[1.90rem]
+            sm:text-[3.15rem] 
+            md:text-[4.10rem] 
+            lg:text-[5.95rem] 
+            xl:text-[6.85rem] 
+            2xl:text-[8.45rem]
+            uppercase leading-[0.9] tracking-[0.06em] scale-y-90 skew-x-[-4deg]
+            bg-gradient-to-b from-white via-slate-100 via-slate-300 to-slate-700 
+            bg-clip-text text-transparent shadow-lg drop-shadow-[0_9px_0_rgba(0,0,0,0.9)] 
+            transition duration-300 hover:scale-105 hover:drop-shadow-[0_10px_0_rgba(0,0,0,0.85)];
 	}
 
 	.type-druk-clean {
 		font-family: 'Druk';
-		@apply bg-gradient-to-b from-white via-slate-200 to-slate-600 bg-clip-text text-3xl uppercase leading-none tracking-[0.04em] text-transparent md:text-5xl;
+		@apply whitespace-nowrap
+            text-[1.90rem] 
+            sm:text-[3.15rem] 
+            md:text-[4.10rem] 
+            lg:text-[5.95rem] 
+            xl:text-[6.85rem] 
+            2xl:text-[8.45rem] 
+            uppercase leading-none tracking-[0.04em]
+            bg-gradient-to-b from-white via-slate-200 to-slate-600 
+            bg-clip-text text-transparent;
 	}
 
 	.type-druk-gold {
 		font-family: 'Druk';
-		@apply bg-gradient-to-b from-yellow-300 via-amber-500 to-amber-900 bg-clip-text text-4xl uppercase leading-[0.9] tracking-[0.08em] text-transparent shadow-lg drop-shadow-[0_9px_0_rgba(0,0,0,0.9)] skew-x-[-4deg] transition duration-300 hover:scale-105 hover:drop-shadow-[0_10px_0_rgba(0,0,0,0.85)];
+		@apply whitespace-nowrap
+            text-[1.09rem]
+            sm:text-[1.85rem] 
+            md:text-[2.40rem] 
+            lg:text-[3.45rem] 
+            xl:text-[4.05rem] 
+            2xl:text-[5.05rem]
+            uppercase leading-[0.9] tracking-[0.08em] skew-x-[-4deg]
+            bg-gradient-to-b from-yellow-300 via-amber-500 to-amber-900 
+            bg-clip-text text-transparent shadow-lg drop-shadow-[0_9px_0_rgba(0,0,0,0.9)] 
+            transition duration-300 hover:scale-105 hover:drop-shadow-[0_10px_0_rgba(0,0,0,0.85)];
 	}
 
-	.type-ui-statement {
+	.type-ui-statement-polish {
 		font-family: 'Inter';
-		@apply text-[1.8rem] font-[300] leading-[0.84] tracking-[-0.02em] text-[#f1f1f1]/95;
+		@apply 
+            text-[1.45rem] 
+            sm:text-[2.55rem] 
+            md:text-[3.20rem] 
+            lg:text-[4.65rem] 
+            xl:text-[5.65rem] 
+            2xl:text-[6.65rem]
+            font-[300] leading-tight tracking-[-0.02em] 
+            text-[#f1f1f1]/95;
 	}
 
 	.type-ui-statement-gold {
 		font-family: 'Inter';
-		@apply text-[1.8rem] font-[300] leading-[0.84] tracking-[-0.02em] text-[#d89b16];
+		@apply 
+            text-[1.45rem] 
+            sm:text-[2.55rem] 
+            md:text-[3.20rem] 
+            lg:text-[4.65rem] 
+            xl:text-[5.65rem] 
+            2xl:text-[6.65rem]
+            font-[300] leading-[0.84] tracking-[-0.02em] 
+            text-[#d89b16];
 	}
 
-	.type-section-title {
+	.type-ui-statement-bold {
 		font-family: 'Druk';
-		@apply text-3xl uppercase leading-none text-white;
+		@apply 
+            text-[2.05rem] 
+            sm:text-[3.25rem] 
+            md:text-[3.50rem] 
+            lg:text-[5.05rem] 
+            xl:text-[5.95rem] 
+            2xl:text-[6.45rem]
+            uppercase leading-none 
+            text-white;
 	}
 
-	.type-product-title {
-		@apply text-sm font-medium text-slate-200;
+    .type-product-title {
+		@apply 
+            text-[1.00rem]
+            sm:text-[1.70rem] 
+            md:text-[2.15rem] 
+            lg:text-[3.10rem] 
+            xl:text-[3.65rem] 
+            2xl:text-[4.35rem]
+        font-medium 
+        text-slate-200;
 	}
 
 	.type-panel-title {
-		@apply text-lg font-bold text-white;
+		@apply 
+            text-[0.75rem] 
+            sm:text-[1.25rem] 
+            md:text-[1.60rem] 
+            lg:text-[2.30rem] 
+            xl:text-[2.75rem] 
+            2xl:text-[3.25rem]
+        uppercase tracking-[0.22em] 
+        text-amber-500;
+	}
+
+	.type-section-title {
+		@apply 
+            text-[0.80rem] 
+            sm:text-[1.35rem] 
+            md:text-[1.65rem] 
+            lg:text-[2.45rem] 
+            xl:text-[2.85rem] 
+            2xl:text-[3.35rem]
+            text-xs font-bold 
+            uppercase tracking-wide 
+            text-amber-400;
 	}
 
 	.type-context-label {
-		@apply text-xs uppercase tracking-[0.28em] text-amber-400;
+		@apply 
+            text-[0.60rem]
+            sm:text-[1.05rem] 
+            md:text-[1.25rem] 
+            lg:text-[1.85rem] 
+            xl:text-[2.15rem] 
+            2xl:text-[2.55rem]
+            uppercase tracking-[0.28em] 
+            text-amber-400;
 	}
 
 	.type-eyebrow-label {
-		@apply text-xs uppercase tracking-[0.2em] text-slate-500;
+		@apply 
+            text-[0.65rem]
+            sm:text-[1.15rem] 
+            md:text-[1.35rem] 
+            lg:text-[2.00rem] 
+            xl:text-[2.35rem] 
+            2xl:text-[2.80rem]
+            uppercase tracking-[0.2em] 
+            text-slate-500;
 	}
 
 	.type-metadata {
-		@apply text-sm text-slate-500;
+		@apply 
+            text-[0.80rem]
+            sm:text-[1.10rem] 
+            md:text-[1.35rem] 
+            lg:text-[2.15rem] 
+            xl:text-[2.30rem] 
+            2xl:text-[2.65rem]
+            text-slate-500;
 	}
 
 	.type-status-label {
-		@apply text-xs font-bold uppercase tracking-[0.18em] text-green-400;
+		@apply 
+            text-[0.75rem] 
+            sm:text-[1.25rem] 
+            md:text-[1.50rem] 
+            lg:text-[2.20rem] 
+            xl:text-[2.60rem] 
+            2xl:text-[3.00rem]
+            font-bold uppercase tracking-[0.18em] 
+            text-green-400;
 	}
 
 	.type-action-label {
-		@apply text-xs font-bold uppercase tracking-wide;
+		@apply 
+            text-[0.75rem] 
+            sm:text-[1.30rem] 
+            md:text-[1.65rem] 
+            lg:text-[2.45rem] 
+            xl:text-[2.60rem] 
+            2xl:text-[3.15rem]
+            font-bold uppercase tracking-wide;
 	}
 
 	.type-cta-label {
-		@apply text-xs font-bold uppercase tracking-wide text-amber-400;
+		@apply 
+            text-[0.65rem] 
+            sm:text-[1.20rem] 
+            md:text-[1.45rem] 
+            lg:text-[2.15rem] 
+            xl:text-[2.50rem] 
+            2xl:text-[3.00rem]
+            font-bold 
+            uppercase tracking-wide 
+            text-amber-400;
 	}
 
 	.type-data-timer {
 		font-family: 'Orbitron';
-		@apply text-xl font-bold tracking-[0.1em] text-slate-100;
+		@apply 
+            text-[0.85rem]
+            sm:text-[1.55rem] 
+            md:text-[1.80rem] 
+            lg:text-[2.65rem] 
+            xl:text-[3.15rem] 
+            2xl:text-[3.85rem]
+            font-bold tracking-[0.1em] 
+            text-slate-100;
 	}
 
 	.type-countdown-timer {
 		font-family: 'Orbitron';
-		@apply text-lg font-bold tracking-[0.12em] text-amber-400;
+		@apply 
+            text-[0.85rem] 
+            sm:text-[1.50rem] 
+            md:text-[1.95rem] 
+            lg:text-[2.70rem] 
+            xl:text-[3.25rem] 
+            2xl:text-[3.85rem]
+            font-bold tracking-[0.12em] 
+            text-amber-400;
 	}
 
 	.type-price-primary {
 		font-family: 'Inter';
-		@apply text-4xl font-bold leading-none tracking-[-0.06em] text-slate-200;
+		@apply 
+            text-[1.25rem] 
+            sm:text-[2.05rem] 
+            md:text-[2.50rem] 
+            lg:text-[3.45rem] 
+            xl:text-[4.05rem] 
+            2xl:text-[4.65rem]
+            font-bold leading-none tracking-[-0.06em] 
+            text-slate-200;
 	}
 
 	.type-price-compare {
 		font-family: 'Inter';
-		@apply text-base leading-none text-slate-500 line-through;
+		@apply 
+            text-[0.95rem] 
+            sm:text-[1.35rem] 
+            md:text-[1.65rem] 
+            lg:text-[2.30rem] 
+            xl:text-[2.75rem] 
+            2xl:text-[3.20rem]
+            leading-none 
+            text-slate-500 line-through;
 	}
 
 	.type-price-savings {
 		font-family: 'Inter';
-		@apply text-base font-medium text-[#3fc75d];
+		@apply 
+            text-[0.75rem] 
+            sm:text-[1.20rem] 
+            md:text-[1.45rem] 
+            lg:text-[2.05rem] 
+            xl:text-[2.40rem] 
+            2xl:text-[2.80rem]
+            font-medium 
+            text-[#3fc75d];
 	}
 
 	.type-body {
-		@apply text-base leading-relaxed text-slate-400;
+		@apply 
+            text-[0.95rem] 
+            sm:text-[1.55rem] 
+            md:text-[1.95rem] 
+            lg:text-[3.15rem] 
+            xl:text-[3.55rem] 
+            2xl:text-[4.05rem]
+            leading-relaxed 
+            text-slate-400;
 	}
 
 	.type-body-prominent {
-		@apply text-base leading-relaxed text-slate-300;
+		@apply 
+            text-[0.95rem] 
+            sm:text-[1.55rem] 
+            md:text-[1.95rem] 
+            lg:text-[3.15rem] 
+            xl:text-[3.55rem] 
+            2xl:text-[4.05rem]
+            leading-relaxed 
+            text-slate-300;
 	}
 
 	.type-body-quiet {
-		@apply text-base leading-relaxed text-slate-500;
+		@apply 
+            text-[0.95rem] 
+            sm:text-[1.55rem] 
+            md:text-[1.95rem] 
+            lg:text-[3.15rem] 
+            xl:text-[3.55rem] 
+            2xl:text-[4.05rem]
+            leading-relaxed 
+            text-slate-500;
 	}
 
 	.type-body-overlay {
-		@apply text-base leading-relaxed text-white;
+		@apply 
+            text-[0.95rem] 
+            sm:text-[1.55rem] 
+            md:text-[1.95rem] 
+            lg:text-[3.15rem] 
+            xl:text-[3.55rem] 
+            2xl:text-[4.05rem]
+            leading-relaxed 
+            text-white;
 	}
 }
