@@ -1,14 +1,38 @@
 ---
 import Layout from '../../layouts/Layout.astro';
----
-
+/* Layout Systems */
+	import BaseLayout from '../components/layout/BaseLayout.astro';
+	import SectionWrapper from '../components/layout/SectionWrapper.astro';
+	import SectionHeader from '../components/layout/SectionHeader.astro';
+	import GridContainer from '../components/layout/GridContainer.astro';
+	import ContentRail from '../components/layout/ContentRail.astro';
+/* Navigation Systems */
+	import Header from '../components/navigation/Header.astro';
+	import UtilityHeaderStrip from '../components/navigation/UtilityHeaderStrip.astro';
+	import PrimaryNavBar from '../components/navigation/PrimaryNavBar.astro';
+	import SearchBar from '../components/navigation/SearchBar.astro';
+	import Footer from '../components/navigation/Footer.astro';
+	import SportNavigationTile from '../components/navigation/SportNavigationTile.astro';
+/* Homepage Systems */
+	import HeroBanner from '../components/home/HeroBanner.astro';
+	import HeroCTAGroup from '../components/home/HeroCTAGroup.astro';
+	import TrustStrip from '../components/home/TrustStrip.astro';
+	import PromotionalPanel from '../components/home/PromotionalPanel.astro';
+	import PromotionalCTAPanel from '../components/home/PromotionalCTAPanel.astro';
+/* Commerce Systems */
+	import ProductTile from '../components/commerce/ProductTile.astro';
+	import ProductCarousel from '../components/commerce/ProductCarousel.astro';
+/* Widget Systems */
+	import TrustWidget from '../components/widgets/TrustWidget.astro';
+---	
 <Layout>
 	<main class="min-h-screen bg-black px-6 py-12 text-white md:px-12">
-		<div class="mx-auto max-w-7xl space-y-24">
+
+		<div class="mx-auto max-w-7xl space-y-4">
 
 			<header class="space-y-3 border-b border-white/10 pb-8">
 				<p class="text-xs uppercase tracking-[0.28em] text-amber-400">
-					InnoWeb Component Lab
+					InnoWeb Component Viewer
 				</p>
 
 				<h1 class="[font-family:'Druk'] bg-gradient-to-b from-white via-slate-200 to-slate-600 bg-clip-text text-5xl uppercase leading-none tracking-[0.05em] text-transparent md:text-7xl">
@@ -16,10 +40,62 @@ import Layout from '../../layouts/Layout.astro';
 				</h1>
 
 				<p class="max-w-3xl text-sm leading-relaxed text-slate-400 md:text-base">
+					This section isolates referenced reusable UI components as they are developed for production
+					and responsive testing. Only this section should be referened during testing and QA.
+				</p>
+			</header>
+
+			<!-- Component Viewer -->
+			<section class="space-y-8">
+				<div class="space-y-2">
+					<p class="text-xs uppercase tracking-[0.22em] text-slate-500">
+						Component Viewer
+					</p>
+
+					<h2 class="[font-family:'Druk'] text-4xl uppercase leading-none tracking-[0.03em] text-slate-100">
+						BaseLayout
+					</h2>
+
+					<p class="max-w-3xl text-sm leading-relaxed text-slate-400">
+						Goal: Need to determine teh goal here and if base Layout is even a lab required item.
+					</p>
+				</div>
+
+				<div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+					<p class="max-w-3xl text-sm leading-relaxed text-slate-400">
+						View the imported component here
+					</p>
+				</div>
+
+				<p class="max-w-3xl text-sm text-slate-500">
+					Notes: Keep any notes or future work here.
+				</p>
+			</section>
+
+			<div class="h-px w-full max-w-md bg-amber-400/80"></div>
+
+
+
+			<header class="space-y-3 border-b border-white/10 pb-8">
+				<p class="text-xs uppercase tracking-[0.28em] text-amber-400">
+					InnoWeb Component Lab
+				</p>
+
+				<h1 class="[font-family:'Druk'] bg-gradient-to-b from-white via-slate-200 to-slate-600 bg-clip-text text-5xl uppercase leading-none tracking-[0.05em] text-transparent md:text-7xl">
+					UI Component Development Sandbox
+				</h1>
+
+				<p class="max-w-3xl text-sm leading-relaxed text-slate-400 md:text-base">
 					This sandbox isolates reusable UI patterns before they are promoted into production
 					components. Each section tests visual behavior, spacing, hierarchy, and reuse potential.
 				</p>
 			</header>
+
+
+
+
+
+
 
 			<!-- Buttons -->
 			<section class="space-y-8">
@@ -371,7 +447,6 @@ import Layout from '../../layouts/Layout.astro';
 					</div>
 				</div>
 			</section>
-
 		</div>
 	</main>
 </Layout>
