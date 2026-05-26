@@ -1,0 +1,40 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BaseLayout from '../../components/layout/BaseLayout.astro';
+---
+<Layout>
+	<BaseLayout />
+
+    <main class="layout-page bg-black px-6 py-12 text-white md:px-12">
+
+        
+
+            <section class="layout-section layout-debug">
+                <div class="layout-container layout-debug layout-demo-block">
+                    <h2 class="type-brush-heroclamp">Base Container</h2>
+                    <p>
+                        This is a standard content container used for most homepage sections,
+                        product groups, trust content, and reusable site blocks.
+                    </p>
+                </div>
+            </section>
+
+                <section class="layout-section layout-debug layout-demo-block">
+                    <div class="layout-container-wide layout-debug">
+                        Wide Container
+                    </div>
+                </section>
+           
+            <section class="layout-section layout-debug">
+                <div class="layout-container-narrow layout-debug">
+                    Narrow Container
+                </div>
+            </section>
+
+            <section class="layout-full-bleed layout-debug">
+                FULL BLEED
+            </section>
+
+	</main>
+
+</Layout>

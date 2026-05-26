@@ -1,5 +1,54 @@
 @layer components {
-	.type-brush-hero {
+      .type-brush-heroclamp {
+            font-family: 'RoadRage';
+
+            @apply inline-block uppercase tracking-[0.04em] leading-[0.9] rotate-[-1deg]
+                  bg-gradient-to-b from-yellow-100 via-yellow-400 via-amber-500 to-yellow-900
+                  bg-clip-text text-transparent shadow-lg
+                  drop-shadow-[0_8px_0_rgba(0,0,0,0.75)]
+                  hover:drop-shadow-[0_10px_0_rgba(0,0,0,0.85)]
+                  transition duration-300 hover:scale-105;
+
+            font-size: clamp(1.45rem, 4.5vw, 2.45rem);
+
+      }
+      @media (min-width: 640px) {
+            .type-brush-heroclamp {
+                  font-size: clamp(
+                  2.45rem,
+                  calc(2.45rem + (3.15 - 2.45) * ((100vw - 640px) / (768 - 640))),
+                  3.15rem
+            );}}
+      @media (min-width: 768px) {
+            .type-brush-heroclamp {
+                  font-size: clamp(
+                  3.15rem,
+                  calc(3.15rem + (4.55 - 3.15) * ((100vw - 768px) / (1024 - 768))),
+                  4.55rem
+            );}}
+      @media (min-width: 1024px) {
+            .type-brush-heroclamp {
+                  font-size: clamp(
+                  4.55rem,
+                  calc(4.55rem + (5.35 - 4.55) * ((100vw - 1024px) / (1280 - 1024))),
+                  5.35rem
+            );}}
+      @media (min-width: 1280px) {
+      .type-brush-heroclamp {
+            font-size: clamp(
+                  5.35rem,
+                  calc(5.35rem + (6.65 - 5.35) * ((100vw - 1280px) / (1536 - 1280))),
+                  6.65rem
+            );}}
+      @media (min-width: 1536px) {
+            .type-brush-heroclamp {
+                  font-size: clamp(
+                        6.65rem,
+                        calc(6.65rem + (8 - 6.65) * ((100vw - 1536px) / (1920 - 1536))),
+                        8rem
+                  );}}
+
+      .type-brush-hero {
 		font-family: 'RoadRage';
 		@apply inline-block 
             text-[1.45rem] 
