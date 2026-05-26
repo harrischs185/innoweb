@@ -8,6 +8,30 @@
         padding-block: clamp(2rem, 5vw, 5rem);
     }
 
+    .layout-section-tight {
+        padding-block: clamp(1rem, 2.5vw, 2.5rem);
+    }
+
+    .layout-section-loose {
+        padding-block: clamp(3rem, 7vw, 7rem);
+    }
+
+    .layout-section-hero {
+        padding-block: clamp(3rem, 8vw, 9rem);
+    }
+
+    .layout-section-flush {
+        padding-block: 0;
+    }
+
+    .layout-section-top-tight {
+        padding-top: clamp(1rem, 2.5vw, 2.5rem);
+    }
+
+    .layout-section-bottom-tight {
+        padding-bottom: clamp(1rem, 2.5vw, 2.5rem);
+    }
+
     .layout-container {
         width: min(calc(100% - clamp(1rem, 4vw, 4rem)), 1280px);
         margin-inline: auto;
@@ -29,11 +53,12 @@
 
     .layout-debug {
         border: 2px solid red;
-        background:rgba(30, 80, 232, 0.43);
+        background: rgba(0, 0, 0, 0.85);
     }
 
     .layout-demo-block {
         min-height: 180px;
+        padding: clamp(1rem, 3vw, 2.5rem);
     }
 
 </style>
