@@ -1,0 +1,51 @@
+---
+const {
+	spacing = 'default',
+	container = 'default',
+	debug = false,
+	class: sectionClass = '',
+	innerClass = '',
+} = Astro.props;
+
+const spacingClassMap = {
+	default: 'layout-section',
+	tight: 'layout-section-tight',
+	loose: 'layout-section-loose',
+	hero: 'layout-section-hero',
+	flush: 'layout-section-flush',
+};
+
+const containerClassMap = {
+	default: 'layout-container',
+	wide: 'layout-container-wide',
+	narrow: 'layout-container-narrow',
+	none: '',
+};
+
+const spacingClass = spacingClassMap[spacing] ?? spacingClassMap.default;
+const containerClass = containerClassMap[container] ?? containerClassMap.default;
+const outerDebugClass = debug ? 'layout-debug' : '';
+const innerDebugClass = debug ? 'layout-debug-inner' : '';
+
+const sectionClasses = [
+	spacingClass,
+	outerDebugClass,
+	sectionClass,
+].filter(Boolean).join(' ');
+
+const innerClasses = [
+	containerClass,
+	innerDebugClass,
+	innerClass,
+].filter(Boolean).join(' ');
+---
+
+<section class={sectionClasses}>
+	{container === 'none' ? (
+		<slot />
+	) : (
+		<div class={innerClasses}>
+			<slot />
+		</div>
+	)}
+</section>

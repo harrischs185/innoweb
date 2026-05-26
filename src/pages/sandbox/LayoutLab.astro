@@ -1,71 +1,36 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import BaseLayout from '../../components/layout/BaseLayout.astro';
+import SectionWrapper from '../../components/layout/SectionWrapper.astro';
 ---
 <Layout>
-	<BaseLayout />
+	
 
     <main class="layout-page bg-black px-6 py-12 text-white md:px-12">
 
-          <section class="layout-section layout-debug">
-                <div class="layout-container layout-debug layout-demo-block">
-                    <h2 class="type-brush-heroclamp">Base Container</h2>
-                    <p>
-                        This is a standard content container used for most homepage sections,
-                        product groups, trust content, and reusable site blocks.
-                    </p>
-                </div>
-            </section>
+        <SectionWrapper spacing="tight" container="default" debug>
+            Tight / Default
+        </SectionWrapper>
 
-                <section class="layout-section layout-debug layout-demo-block">
-                    <div class="layout-container-wide layout-debug">
-                        Wide Container
-                    </div>
-                </section>
-           
-            <section class="layout-section layout-debug">
-                <div class="layout-container-narrow layout-debug">
-                    Narrow Container
-                </div>
-            </section>
+        <SectionWrapper spacing="default" container="default" debug>
+            Default / Default
+        </SectionWrapper>
 
-            <section class="layout-full-bleed layout-debug">
-                FULL BLEED
-            </section>
-            
-            <section class="layout-section-tight layout-debug">
-                <div class="layout-container layout-debug layout-demo-block">
-                    Tight Section
-                </div>
-            </section>
+        <SectionWrapper spacing="loose" container="wide" debug>
+            Loose / Wide
+        </SectionWrapper>
 
-            <section class="layout-section layout-debug">
-                <div class="layout-container layout-debug layout-demo-block">
-                    Default Section
-                </div>
-            </section>
+        <SectionWrapper spacing="hero" container="wide" debug>
+            Hero / Wide
+        </SectionWrapper>
 
-            <section class="layout-section-loose layout-debug">
-                <div class="layout-container layout-debug layout-demo-block">
-                    Loose Section
-                </div>
-            </section>
+        <SectionWrapper spacing="flush" container="none" debug>
+            Flush / No Container
+        </SectionWrapper>
 
-            <section class="layout-section-hero layout-debug">
-                <div class="layout-container-wide layout-debug layout-demo-block">
-                    Hero Section
-                </div>
-            </section>
+        <SectionWrapper spacing="default" container="narrow" debug>
+            Default / Narrow
+        </SectionWrapper>
 
-            <section class="layout-section-flush layout-debug">
-                <div class="layout-container-wide layout-debug layout-demo-block">
-                    Flush Section
-                </div>
-            </section>
-        
-
-  
-
-	</main>
+    </main>
 
 </Layout>
