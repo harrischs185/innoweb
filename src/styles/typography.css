@@ -393,4 +393,20 @@
             leading-relaxed 
             text-white;
 	}
+
+      .type-utility-label {
+            font-family: 'Industry';
+
+            @apply font-semibold
+                  uppercase
+                  text-slate-100
+                  leading-none
+                  whitespace-nowrap;
+
+            font-size: clamp(0.58rem, 0.25vw + 0.52rem, 0.82rem);
+
+            letter-spacing: clamp(0.06em, 0.12vw, 0.14em);
+      }
+
+
 }

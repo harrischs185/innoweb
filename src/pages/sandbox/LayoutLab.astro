@@ -4,7 +4,19 @@ import SectionWrapper from '../../components/layout/SectionWrapper.astro';
 import SectionHeader from '../../components/layout/SectionHeader.astro';
 import GridContainer from '../../components/layout/GridContainer.astro';
 import ContentRail from '../../components/layout/ContentRail.astro';
+
+import UtilityHeaderStrip from '../../components/header/UtilityHeaderStrip.astro';
 ---
+<Layout>
+	<UtilityHeaderStrip debug />
+
+	<main class="layout-page bg-black text-white">
+		<div class="p-8 text-slate-400">
+			Header strip test area
+		</div>
+	</main>
+</Layout>
+
 <Layout>
     <main class="layout-page bg-black px-6 py-12 text-white md:px-12">
 

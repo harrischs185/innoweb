@@ -1,0 +1,111 @@
+---
+const {
+	items = [
+		{
+			icon: 'shield',
+			text: 'Veteran Owned',
+		},
+		{
+			icon: 'users',
+			text: 'Family Operated',
+		},
+		{
+			icon: 'star',
+			text: 'Collector Trusted',
+		},
+	],
+	visibleOnMobile = false,
+	debug = false,
+	class: extraClass = '',
+} = Astro.props;
+
+const visibilityClass = visibleOnMobile ? 'flex' : 'hidden md:flex';
+const debugClass = debug ? 'border border-red-500' : '';
+
+const stripClasses = [
+	visibilityClass,
+	'w-full items-center justify-center',
+	'border-b border-amber-500/20',
+	'bg-black/95 text-slate-100',
+	'px-4 py-2',
+	debugClass,
+	extraClass,
+].filter(Boolean).join(' ');
+
+const innerClasses = [
+	'flex items-center justify-center',
+	'gap-8 lg:gap-12',
+	'text-center',
+].join(' ');
+
+const iconClasses = [
+	'h-5 w-5',
+	'md:h-6 md:w-6',
+    'lg:h-7 lg:w-7',
+	'xl:h-8 xl:w-8',
+    '2xl:h-8 2xl:w-8',
+	'text-amber-400',
+	'drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]',
+].join(' ');
+
+const textClasses = [
+	'type-utility-label',
+	'whitespace-nowrap',
+].join(' ');
+---
+
+<div class={stripClasses} role="region" aria-label="Store trust and service highlights">
+	<div class={innerClasses}>
+		{items.map((item) => (
+			<div class="flex items-center gap-2 md:gap-3 xl:gap-4">
+				{item.icon === 'shield' && (
+					<svg class={iconClasses} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<path d="M12 3L19 6V11C19 15.5 16.2 19.7 12 21C7.8 19.7 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="2" />
+						<path d="M12 8V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+						<path d="M9 11H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+					</svg>
+				)}
+
+                    {item.icon === 'users' && (
+                    <svg class={iconClasses} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="12" cy="8" r="2.6" stroke="currentColor" stroke-width="2" />
+
+                        <circle cx="5.4" cy="10.2" r="2" stroke="currentColor" stroke-width="2" />
+                        <circle cx="18.6" cy="10.2" r="2" stroke="currentColor" stroke-width="2" />
+
+                        <path
+                            d="M7.2 18.5C7.7 15.4 9.4 13.8 12 13.8C14.6 13.8 16.3 15.4 16.8 18.5"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M2.8 18.5C3.3 16 4.8 14.6 7 14.4"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M21.2 18.5C20.7 16 19.2 14.6 17 14.4"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                )}
+
+				{item.icon === 'star' && (
+					<svg class={iconClasses} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<path d="M12 3L14.7 8.6L20.8 9.5L16.4 13.8L17.4 19.9L12 17L6.6 19.9L7.6 13.8L3.2 9.5L9.3 8.6L12 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+					</svg>
+				)}
+
+				<span class={textClasses}>
+					{item.text}
+				</span>
+			</div>
+		))}
+	</div>
+</div>
