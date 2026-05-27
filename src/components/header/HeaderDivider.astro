@@ -1,0 +1,31 @@
+---
+const {
+	width = 'full',
+	glow = true,
+	debug = false,
+	class: extraClass = '',
+} = Astro.props;
+
+const widthClassMap = {
+	full: 'w-full',
+	content: 'w-[92%] max-w-screen-2xl mx-auto',
+	narrow: 'w-[88%] max-w-5xl mx-auto',
+	inset: 'w-[96%] mx-auto',
+};
+
+const widthClass = widthClassMap[width] ?? widthClassMap.full;
+
+const classes = [
+	widthClass,
+	'h-px',
+	'bg-gradient-to-r',
+	'from-transparent',
+	'via-amber-500/45',
+	'to-transparent',
+	glow ? 'shadow-[0_0_12px_rgba(245,158,11,0.18)]' : '',
+	debug ? 'border border-red-500' : '',
+	extraClass,
+].filter(Boolean).join(' ');
+---
+
+<div class={classes} aria-hidden="true"></div>

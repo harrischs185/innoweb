@@ -1,0 +1,27 @@
+---
+const {
+	href = '/',
+	kicker = 'Sports Cards & Collectibles',
+	debug = false,
+	class: extraClass = '',
+} = Astro.props;
+
+const debugClass = debug ? 'border border-red-500' : '';
+
+const classes = [
+	'flex items-center gap-3',
+	debugClass,
+	extraClass,
+].filter(Boolean).join(' ');
+---
+
+<a href={href} class={classes} aria-label="InnoWeb home">
+	<div class="flex h-12 w-12 items-center justify-center rounded-full border border-amber-500/60 bg-slate-950 text-amber-400 md:h-16 md:w-16">
+		LOGO
+	</div>
+
+	<div class="hidden flex-col leading-none sm:flex">
+		<span class="type-utility-label text-amber-400">InnoWeb</span>
+		<span class="text-xs text-slate-500">{kicker}</span>
+	</div>
+</a>

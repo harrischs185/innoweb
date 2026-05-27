@@ -1,0 +1,38 @@
+---
+const {
+	items = [
+		{ label: 'Shop', href: '/shop' },
+		{ label: 'Players', href: '/players' },
+        { label: 'New arrivals', href: '/new-arrivals' },
+		{ label: "Bunker's Bargin's", href: '/bunkers-bargins' },
+		{ label: 'Buy / Consign', href: '/consign' },
+        { label: 'About Us', href: '/about' },
+        { label: 'Resources', href: '/resources' },
+        { label: 'Gift Cards', href: '/giftcards' },
+	],
+	debug = false,
+	class: extraClass = '',
+} = Astro.props;
+
+const debugClass = debug ? 'outline outline-1 outline-red-500' : '';
+
+const classes = [
+	'hidden lg:flex',
+	'items-center justify-center',
+	'gap-4 xl:gap-6 2xl:gap-8',
+	'py-3',
+	debugClass,
+	extraClass,
+].filter(Boolean).join(' ');
+---
+
+<nav class={classes} aria-label="Primary navigation">
+	{items.map((item) => (
+		<a
+			href={item.href}
+			class="type-utility-label text-slate-300 transition hover:text-amber-400"
+		>
+			{item.label}
+		</a>
+	))}
+</nav>

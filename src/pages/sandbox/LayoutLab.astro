@@ -1,85 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import SectionWrapper from '../../components/layout/SectionWrapper.astro';
-import SectionHeader from '../../components/layout/SectionHeader.astro';
-import GridContainer from '../../components/layout/GridContainer.astro';
-import ContentRail from '../../components/layout/ContentRail.astro';
-
 import UtilityHeaderStrip from '../../components/header/UtilityHeaderStrip.astro';
+import HeaderDivider from '../../components/header/HeaderDivider.astro';
+import SiteHeader from '../../components/header/SiteHeader.astro';
 ---
 <Layout>
-	<UtilityHeaderStrip debug />
+    <main class="layout-page bg-black px-6 py-0 text-white md:px-12">
+        <UtilityHeaderStrip />
+        <HeaderDivider width="full" />
+        <SiteHeader debug />
+		<HeaderDivider />
 
-	<main class="layout-page bg-black text-white">
-		<div class="p-8 text-slate-400">
-			Header strip test area
+		<div class="p-8 text-slate-500">
+			Page content starts here.
 		</div>
-	</main>
-</Layout>
-
-<Layout>
-    <main class="layout-page bg-black px-6 py-12 text-white md:px-12">
-
-        <SectionWrapper spacing="default" container="wide" debug>
-            <ContentRail split="balanced" gap="default" debug>
-                <div slot="primary" class="layout-demo-block p-6">
-                    <p class="type-context-label">Primary</p>
-                    <h2 class="type-section-title">Balanced Content Rail</h2>
-                    <p class="type-body">Primary content area for copy, CTAs, or section headers.</p>
-                </div>
-
-                <div slot="secondary" class="layout-demo-block p-6">
-                    <p class="type-context-label">Secondary</p>
-                    <p class="type-body">Secondary content area for media, cards, stats, or supporting visuals.</p>
-                </div>
-            </ContentRail>
-        </SectionWrapper>
-
-
-
-        <SectionWrapper spacing="default" container="wide" debug>
-            <SectionHeader
-                    eyebrow="Featured"
-                    title="Fresh Inventory"
-                    titleClass="type-druk-gold"
-                    subtitle=""
-                    align="center"
-                    debug
-                />
-                <GridContainer columns="4" gap="default" debug>
-                    <div class="layout-demo-block border border-slate-700 bg-slate-900 p-6">Grid Item 1</div>
-                    <div class="layout-demo-block border border-slate-700 bg-slate-900 p-6">Grid Item 2</div>
-                    <div class="layout-demo-block border border-slate-700 bg-slate-900 p-6">Grid Item 3</div>
-                    <div class="layout-demo-block border border-slate-700 bg-slate-900 p-6">Grid Item 4</div>
-                </GridContainer>
-        </SectionWrapper>
-
-
-
-        <SectionWrapper spacing="default" container="default" debug>
-            <SectionHeader
-                eyebrow="Featured"
-                title="Fresh Inventory"
-                titleClass="type-druk-gold"
-                subtitle="Hand-picked cards, sealed wax, and collector favorites ready to ship."
-                align="left"
-                debug
-            />
-        </SectionWrapper>
-
-        <SectionWrapper spacing="loose" container="wide" debug>
-            <SectionHeader
-                eyebrow="Collector Spotlight"
-                title="Built for the Hobby"
-                subtitle="A responsive header pattern for high-energy homepage sections."
-                align="center"
-                variant="loud"
-                ctaText="Browse Cards"
-                ctaHref="/"
-                debug
-            />
-        </SectionWrapper>
-
     </main>
-
 </Layout>

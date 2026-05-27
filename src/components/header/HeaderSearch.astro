@@ -1,0 +1,31 @@
+---
+const {
+	placeholder = 'Search cards, players, teams...',
+	debug = false,
+	class: extraClass = '',
+} = Astro.props;
+
+const debugClass = debug ? 'border border-red-500' : '';
+
+const classes = [
+	'w-full',
+	debugClass,
+	extraClass,
+].filter(Boolean).join(' ');
+---
+
+<form class={classes} role="search" action="/search" method="get">
+	<label class="sr-only" for="site-search">
+		Search
+	</label>
+
+	<div class="flex items-center rounded-full border border-slate-700 bg-slate-950 px-5 py-2 text-sm text-slate-400 focus-within:border-amber-500/70">
+		<input
+			id="site-search"
+			name="q"
+			type="search"
+			placeholder={placeholder}
+			class="w-full bg-transparent text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none"
+		/>
+	</div>
+</form>

@@ -1,0 +1,28 @@
+---
+const {
+	debug = false,
+	class: extraClass = '',
+} = Astro.props;
+
+const debugClass = debug ? 'border border-red-500' : '';
+
+const classes = [
+	'flex items-center gap-3',
+	debugClass,
+	extraClass,
+].filter(Boolean).join(' ');
+---
+
+<div class={classes}>
+	<a href="/account" class="hidden text-sm text-slate-300 hover:text-amber-400 md:inline">
+		Account
+	</a>
+
+	<a
+		href="/cart"
+		class="flex h-10 w-10 items-center justify-center rounded-full border border-amber-500/50 text-amber-400 hover:border-amber-400 hover:bg-amber-400/10"
+		aria-label="Cart"
+	>
+		🛒
+	</a>
+</div>
