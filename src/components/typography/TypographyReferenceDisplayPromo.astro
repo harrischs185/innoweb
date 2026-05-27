@@ -1,0 +1,378 @@
+---
+const items = [
+	{
+		className: 'type-brush-heroclamp',
+		use: 'Fluid RoadRage hero typography for major promotional moments',
+		sample: 'GAME DAY',
+	},
+	{
+		className: 'type-brush-hero',
+		use: 'Stepped RoadRage hero typography',
+		sample: 'GAME DAY',
+	},
+	{
+		className: 'type-brush-secondary',
+		use: 'Secondary brush headline, often paired under hero text',
+		sample: 'COLLECTORS',
+	},
+	{
+		className: 'type-brush-price',
+		use: 'Large stylized promo price text',
+		sample: '$129',
+	},
+	{
+		className: 'type-druk-hero',
+		use: 'Large athletic display headline',
+		sample: 'BREAKAWAY',
+	},
+	{
+		className: 'type-druk-clean',
+		use: 'Clean condensed athletic display title',
+		sample: 'LINEUP',
+	},
+	{
+		className: 'type-druk-gold',
+		use: 'Premium gold athletic display treatment',
+		sample: 'PREMIUM',
+	},
+	{
+		className: 'type-ui-statement-polish',
+		use: 'Large polished Inter statement text',
+		sample: 'Built for collectors',
+	},
+	{
+		className: 'type-ui-statement-gold',
+		use: 'Gold Inter statement emphasis',
+		sample: 'Gold Standard',
+	},
+	{
+		className: 'type-ui-statement-bold',
+		use: 'Bold Druk statement emphasis',
+		sample: 'NO DAYS OFF',
+	},
+];
+
+   const sectionUiItems = [
+	{
+		className: 'type-product-title',
+		use: 'Product/card titles',
+		sample: '2024 TOPPS CHROME',
+	},
+	{
+		className: 'type-panel-title',
+		use: 'Panel or card group titles',
+		sample: 'FEATURED INVENTORY',
+	},
+	{
+		className: 'type-section-title',
+		use: 'Standard section heading',
+		sample: 'Fresh Inventory',
+	},
+	{
+		className: 'type-context-label',
+		use: 'Context/category label',
+		sample: 'FEATURED',
+	},
+	{
+		className: 'type-eyebrow-label',
+		use: 'Eyebrow text above section headers',
+		sample: 'Collector Spotlight',
+	},
+	{
+		className: 'type-metadata',
+		use: 'Secondary metadata',
+		sample: 'Updated 2 hours ago',
+	},
+	{
+		className: 'type-status-label',
+		use: 'Availability/status text',
+		sample: 'IN STOCK',
+	},
+	{
+		className: 'type-action-label',
+		use: 'Button or CTA label',
+		sample: 'SHOP NOW',
+	},
+	{
+		className: 'type-cta-label',
+		use: 'Emphasized CTA text',
+		sample: 'VIEW COLLECTION',
+	},
+];
+
+const dataPricingItems = [
+	{
+		className: 'type-data-timer',
+		use: 'Orbitron data/timer display',
+		sample: '01:24:55',
+	},
+	{
+		className: 'type-countdown-timer',
+		use: 'Countdown timer emphasis',
+		sample: '00:12:19',
+	},
+	{
+		className: 'type-price-primary',
+		use: 'Primary product price',
+		sample: '$124.99',
+	},
+	{
+		className: 'type-price-compare',
+		use: 'Compare-at price / strikethrough',
+		sample: '$179.99',
+	},
+	{
+		className: 'type-price-savings',
+		use: 'Savings / discount text',
+		sample: 'SAVE 31%',
+	},
+];
+
+const bodyItems = [
+	{
+		className: 'type-body',
+		use: 'Standard body copy',
+		sample: 'Responsive collector-focused interface copy designed for readability.',
+	},
+	{
+		className: 'type-body-prominent',
+		use: 'Slightly stronger body copy',
+		sample: 'Premium featured messaging with elevated emphasis.',
+	},
+	{
+		className: 'type-body-quiet',
+		use: 'Muted body copy',
+		sample: 'Secondary informational text and passive UI content.',
+	},
+	{
+		className: 'type-body-overlay',
+		use: 'Body copy over dark/image overlays',
+		sample: 'Overlay-safe body typography for hero imagery.',
+	},
+];
+
+const sectionHeaderDefaults = [
+	{
+		prop: 'eyebrow',
+		className: '.type-eyebrow-label',
+	},
+	{
+		prop: 'title',
+		className: '.type-section-title',
+	},
+	{
+		prop: 'subtitle',
+		className: '.type-body',
+	},
+	{
+		prop: 'ctaText',
+		className: '.type-action-label',
+	},
+]; 
+
+---
+
+<section class="min-h-screen bg-black px-6 py-10 text-white md:px-10">
+	<div class="mx-auto max-w-[1500px] rounded-3xl border border-amber-500/50 bg-slate-950 p-6 shadow-2xl md:p-10">
+		<header class="mb-8 border-b border-slate-700 pb-6">
+			<p class="type-context-label">Typography Library</p>
+			<h1 class="type-druk-gold mt-3">Display / Promo Typography</h1>
+			<p class="mt-4 max-w-3xl text-sm leading-relaxed text-slate-400 md:text-base">
+				Reference sheet for the promoted display and promotional typography classes.
+				Each visual example uses the actual class from <code>typography.css</code>.
+			</p>
+		</header>
+
+		<div class="grid gap-4">
+			<div class="hidden grid-cols-[280px_1fr_520px] gap-6 border-b border-slate-700 pb-3 text-xs font-bold uppercase tracking-[0.18em] text-amber-400 lg:grid">
+				<div>Class</div>
+				<div>Intended Use</div>
+				<div>Visual Example</div>
+			</div>
+
+			{items.map((item) => (
+				<article class="grid gap-4 rounded-2xl border border-slate-800 bg-slate-900/70 p-5 lg:grid-cols-[280px_1fr_520px] lg:items-center lg:gap-6">
+					<div>
+						<p class="mb-1 text-xs font-bold uppercase tracking-[0.16em] text-slate-500 lg:hidden">
+							Class
+						</p>
+						<code class="text-sm text-sky-300 md:text-base">
+							.{item.className}
+						</code>
+					</div>
+
+					<div>
+						<p class="mb-1 text-xs font-bold uppercase tracking-[0.16em] text-slate-500 lg:hidden">
+							Intended Use
+						</p>
+						<p class="text-sm leading-relaxed text-slate-300 md:text-base">
+							{item.use}
+						</p>
+					</div>
+
+					<div class="overflow-hidden rounded-xl border border-slate-800 bg-black/60 p-4">
+						<p class="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-500 lg:hidden">
+							Visual Example
+						</p>
+						<div class={item.className}>
+							{item.sample}
+						</div>
+					</div>
+				</article>
+			))}
+		</div>
+	</div>
+</section>
+
+<section class="min-h-screen bg-black px-6 py-10 text-white md:px-10">
+	<div class="mx-auto max-w-[1500px] rounded-3xl border border-amber-500/50 bg-slate-950 p-6 shadow-2xl md:p-10">
+		<header class="mb-8 border-b border-slate-700 pb-6">
+			<p class="type-context-label">Typography Library</p>
+			<h1 class="type-druk-gold mt-3">Label / Status Typography</h1>
+			<p class="mt-4 max-w-3xl text-sm leading-relaxed text-slate-400 md:text-base">
+				Reference sheet for the promoted display and promotional typography classes.
+				Each visual example uses the actual class from <code>typography.css</code>.
+			</p>
+		</header>
+
+		<div class="grid gap-4">
+			<div class="hidden grid-cols-[280px_1fr_520px] gap-6 border-b border-slate-700 pb-3 text-xs font-bold uppercase tracking-[0.18em] text-amber-400 lg:grid">
+				<div>Class</div>
+				<div>Intended Use</div>
+				<div>Visual Example</div>
+			</div>
+
+		{sectionUiItems.map((item) => (
+			<article class="grid gap-4 rounded-2xl border border-slate-800 bg-slate-900/70 p-5 lg:grid-cols-[280px_1fr_520px] lg:items-center lg:gap-6">
+				<div>
+					<code class="text-sm text-sky-300 md:text-base">
+						.{item.className}
+					</code>
+				</div>
+
+				<div>
+					<p class="text-sm leading-relaxed text-slate-300 md:text-base">
+						{item.use}
+					</p>
+				</div>
+
+				<div class="overflow-hidden rounded-xl border border-slate-800 bg-black/60 p-4">
+					<div class={item.className}>
+						{item.sample}
+					</div>
+				</div>
+			</article>
+		))}
+	</div>
+</section>
+
+<section class="min-h-screen bg-black px-6 py-10 text-white md:px-10">
+	<div class="mx-auto max-w-[1500px] rounded-3xl border border-amber-500/50 bg-slate-950 p-6 shadow-2xl md:p-10">
+		<header class="mb-8 border-b border-slate-700 pb-6">
+			<p class="type-context-label">Typography Library</p>
+			<h1 class="type-druk-gold mt-3">Data / Timer Typography</h1>
+			<p class="mt-4 max-w-3xl text-sm leading-relaxed text-slate-400 md:text-base">
+				Reference sheet for the promoted display and promotional typography classes.
+				Each visual example uses the actual class from <code>typography.css</code>.
+			</p>
+		</header>
+
+		<div class="grid gap-4">
+			<div class="hidden grid-cols-[280px_1fr_520px] gap-6 border-b border-slate-700 pb-3 text-xs font-bold uppercase tracking-[0.18em] text-amber-400 lg:grid">
+				<div>Class</div>
+				<div>Intended Use</div>
+				<div>Visual Example</div>
+			</div>
+
+		{dataPricingItems.map((item) => (
+			<article class="grid gap-4 rounded-2xl border border-slate-800 bg-slate-900/70 p-5 lg:grid-cols-[280px_1fr_520px] lg:items-center lg:gap-6">
+				<div>
+					<code class="text-sm text-sky-300 md:text-base">
+						.{item.className}
+					</code>
+				</div>
+
+				<div>
+					<p class="text-sm leading-relaxed text-slate-300 md:text-base">
+						{item.use}
+					</p>
+				</div>
+
+				<div class="overflow-hidden rounded-xl border border-slate-800 bg-black/60 p-4">
+					<div class={item.className}>
+						{item.sample}
+					</div>
+				</div>
+			</article>
+		))}
+	</div>
+</section>
+
+<section class="min-h-screen bg-black px-6 py-10 text-white md:px-10">
+	<div class="mx-auto max-w-[1500px] rounded-3xl border border-amber-500/50 bg-slate-950 p-6 shadow-2xl md:p-10">
+		<header class="mb-8 border-b border-slate-700 pb-6">
+			<p class="type-context-label">Typography Library</p>
+			<h1 class="type-druk-gold mt-3">Body / Informational Typography</h1>
+			<p class="mt-4 max-w-3xl text-sm leading-relaxed text-slate-400 md:text-base">
+				Reference sheet for the promoted display and promotional typography classes.
+				Each visual example uses the actual class from <code>typography.css</code>.
+			</p>
+		</header>
+
+		<div class="grid gap-4">
+			<div class="hidden grid-cols-[280px_1fr_520px] gap-6 border-b border-slate-700 pb-3 text-xs font-bold uppercase tracking-[0.18em] text-amber-400 lg:grid">
+				<div>Class</div>
+				<div>Intended Use</div>
+				<div>Visual Example</div>
+			</div>
+
+		{bodyItems.map((item) => (
+			<article class="grid gap-4 rounded-2xl border border-slate-800 bg-slate-900/70 p-5 lg:grid-cols-[280px_1fr_520px] lg:items-center lg:gap-6">
+				<div>
+					<code class="text-sm text-sky-300 md:text-base">
+						.{item.className}
+					</code>
+				</div>
+
+				<div>
+					<p class="text-sm leading-relaxed text-slate-300 md:text-base">
+						{item.use}
+					</p>
+				</div>
+
+				<div class="overflow-hidden rounded-xl border border-slate-800 bg-black/60 p-4">
+					<div class={item.className}>
+						{item.sample}
+					</div>
+				</div>
+			</article>
+		))}
+	</div>
+</section>
+
+<section class="min-h-screen bg-black px-6 py-10 text-white md:px-10">
+	<div class="mx-auto max-w-[1500px] rounded-3xl border border-amber-500/50 bg-slate-950 p-6 shadow-2xl md:p-10">
+		<header class="mb-8 border-b border-slate-700 pb-6">
+			<p class="type-context-label">Typography Library</p>
+			<h1 class="type-druk-gold mt-3">Example Typography Override</h1>
+			<p class="mt-4 max-w-3xl text-sm leading-relaxed text-slate-400 md:text-base">
+				Typography classes live in: `src/styles/typography.css` </br>
+                They are imported through: `src/styles/global.css`
+                </code>.
+			</p>
+		</header>
+
+		<div class="grid gap-4">
+			
+                <pre class="overflow-x-auto rounded-xl border border-slate-800 bg-black/70 p-5 text-sm leading-relaxed text-slate-300">
+                    <code>{`<SectionHeader
+                    eyebrow="Featured"
+                    title="Fresh Inventory"
+                    titleClass="type-druk-gold"
+                    subtitle="Hand-picked cards, sealed wax, and collector favorites ready to ship."
+                    />`}</code>
+                </pre>
+
+
+	</div>
+</section>

@@ -1,34 +1,38 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import SectionWrapper from '../../components/layout/SectionWrapper.astro';
+import SectionHeader from '../../components/layout/SectionHeader.astro';
+import TypographyReferenceDisplayPromo from '../../components/typography/TypographyReferenceDisplayPromo.astro';
 ---
 <Layout>
-	
+	<TypographyReferenceDisplayPromo />
+</Layout>
 
+<Layout>
     <main class="layout-page bg-black px-6 py-12 text-white md:px-12">
 
-        <SectionWrapper spacing="tight" container="default" debug>
-            Tight / Default
-        </SectionWrapper>
-
         <SectionWrapper spacing="default" container="default" debug>
-            Default / Default
+            <SectionHeader
+                eyebrow="Featured"
+                title="Fresh Inventory"
+                titleClass="type-druk-gold"
+                subtitle="Hand-picked cards, sealed wax, and collector favorites ready to ship."
+                align="left"
+                debug
+            />
         </SectionWrapper>
 
         <SectionWrapper spacing="loose" container="wide" debug>
-            Loose / Wide
-        </SectionWrapper>
-
-        <SectionWrapper spacing="hero" container="wide" debug>
-            Hero / Wide
-        </SectionWrapper>
-
-        <SectionWrapper spacing="flush" container="none" debug>
-            Flush / No Container
-        </SectionWrapper>
-
-        <SectionWrapper spacing="default" container="narrow" debug>
-            Default / Narrow
+            <SectionHeader
+                eyebrow="Collector Spotlight"
+                title="Built for the Hobby"
+                subtitle="A responsive header pattern for high-energy homepage sections."
+                align="center"
+                variant="loud"
+                ctaText="Browse Cards"
+                ctaHref="/"
+                debug
+            />
         </SectionWrapper>
 
     </main>

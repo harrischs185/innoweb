@@ -1,0 +1,62 @@
+---
+const {
+	eyebrow = '',
+	title = '',
+	subtitle = '',
+	align = 'left',
+	variant = 'default',
+	ctaText = '',
+	ctaHref = '',
+	debug = false,
+} = Astro.props;
+
+const {
+	eyebrowClass = 'type-section-title',
+	titleClass = 'type-eyebrow-label',
+	subtitleClass = 'type-body',
+} = Astro.props;
+
+const alignClassMap = {
+	left: 'text-left items-start',
+	center: 'text-center items-center mx-auto',
+};
+
+const variantClassMap = {
+	default: 'gap-3',
+	loud: 'gap-4',
+	compact: 'gap-2',
+};
+
+const alignClass = alignClassMap[align] ?? alignClassMap.left;
+const variantClass = variantClassMap[variant] ?? variantClassMap.default;
+const debugClass = debug ? 'border border-yellow-400' : '';
+---
+
+<header class={`flex flex-col ${alignClass} ${variantClass} ${debugClass}`}>
+	{eyebrow && (
+		<p class={eyebrowClass}>
+			{eyebrow}
+		</p>
+	)}
+
+	{title && (
+		<h2 class={titleClass}>
+			{title}
+		</h2>
+	)}
+
+	{subtitle && (
+		<p class={subtitleClass}>
+			{subtitle}
+		</p>
+	)}
+
+	{ctaText && ctaHref && (
+		<a
+			href={ctaHref}
+			class="mt-2 inline-flex rounded-full border border-amber-300 px-4 py-2 text-sm font-bold uppercase tracking-[0.14em] text-amber-200 hover:bg-amber-300 hover:text-black"
+		>
+			{ctaText}
+		</a>
+	)}
+</header>
