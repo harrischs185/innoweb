@@ -2,10 +2,29 @@
 import Layout from '../../layouts/Layout.astro';
 import SectionWrapper from '../../components/layout/SectionWrapper.astro';
 import SectionHeader from '../../components/layout/SectionHeader.astro';
-import TypographyReferenceDisplayPromo from '../../components/typography/TypographyReferenceDisplayPromo.astro';
+import GridContainer from '../../components/layout/GridContainer.astro';
 ---
 <Layout>
     <main class="layout-page bg-black px-6 py-12 text-white md:px-12">
+
+        <SectionWrapper spacing="default" container="wide" debug>
+            <SectionHeader
+                    eyebrow="Featured"
+                    title="Fresh Inventory"
+                    titleClass="type-druk-gold"
+                    subtitle=""
+                    align="center"
+                    debug
+                />
+                <GridContainer columns="4" gap="default" debug>
+                    <div class="layout-demo-block border border-slate-700 bg-slate-900 p-6">Grid Item 1</div>
+                    <div class="layout-demo-block border border-slate-700 bg-slate-900 p-6">Grid Item 2</div>
+                    <div class="layout-demo-block border border-slate-700 bg-slate-900 p-6">Grid Item 3</div>
+                    <div class="layout-demo-block border border-slate-700 bg-slate-900 p-6">Grid Item 4</div>
+                </GridContainer>
+        </SectionWrapper>
+
+
 
         <SectionWrapper spacing="default" container="default" debug>
             <SectionHeader

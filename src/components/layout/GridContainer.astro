@@ -1,0 +1,49 @@
+---
+const {
+	columns = '3',
+	gap = 'default',
+	align = 'stretch',
+	debug = false,
+	class: extraClass = '',
+} = Astro.props;
+
+const columnClassMap = {
+	'1': 'grid-cols-1',
+	'2': 'grid-cols-1 md:grid-cols-2',
+	'3': 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3',
+	'4': 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4',
+	'auto': 'grid-cols-[repeat(auto-fit,minmax(min(100%,18rem),1fr))]',
+};
+
+const gapClassMap = {
+	none: 'gap-0',
+	tight: 'gap-3 md:gap-4',
+	default: 'gap-4 md:gap-6',
+	loose: 'gap-6 md:gap-8 xl:gap-10',
+};
+
+const alignClassMap = {
+	start: 'items-start',
+	center: 'items-center',
+	end: 'items-end',
+	stretch: 'items-stretch',
+};
+
+const columnClass = columnClassMap[columns] ?? columnClassMap['3'];
+const gapClass = gapClassMap[gap] ?? gapClassMap.default;
+const alignClass = alignClassMap[align] ?? alignClassMap.stretch;
+const debugClass = debug ? 'layout-debug-inner' : '';
+
+const classes = [
+	'grid',
+	columnClass,
+	gapClass,
+	alignClass,
+	debugClass,
+	extraClass,
+].filter(Boolean).join(' ');
+---
+
+<div class={classes}>
+	<slot />
+</div>
