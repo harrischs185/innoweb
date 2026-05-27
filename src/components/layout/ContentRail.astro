@@ -1,0 +1,72 @@
+---
+const {
+	split = 'balanced',
+	gap = 'default',
+	align = 'center',
+	reverse = false,
+	stackAt = 'md',
+	debug = false,
+	class: extraClass = '',
+	primaryClass = '',
+	secondaryClass = '',
+} = Astro.props;
+
+const splitClassMap = {
+	balanced: 'md:grid-cols-2',
+	primary: 'md:grid-cols-[1.35fr_0.65fr]',
+	secondary: 'md:grid-cols-[0.65fr_1.35fr]',
+	hero: 'lg:grid-cols-[1.15fr_0.85fr]',
+	media: 'lg:grid-cols-[0.9fr_1.1fr]',
+};
+
+const gapClassMap = {
+	none: 'gap-0',
+	tight: 'gap-4 md:gap-5',
+	default: 'gap-6 md:gap-8 lg:gap-10',
+	loose: 'gap-8 md:gap-12 lg:gap-16',
+};
+
+const alignClassMap = {
+	start: 'items-start',
+	center: 'items-center',
+	end: 'items-end',
+	stretch: 'items-stretch',
+};
+
+const stackClassMap = {
+	sm: 'sm:grid',
+	md: 'md:grid',
+	lg: 'lg:grid',
+};
+
+const splitClass = splitClassMap[split] ?? splitClassMap.balanced;
+const gapClass = gapClassMap[gap] ?? gapClassMap.default;
+const alignClass = alignClassMap[align] ?? alignClassMap.center;
+const stackClass = stackClassMap[stackAt] ?? stackClassMap.md;
+const reverseClass = reverse ? 'md:[&>*:first-child]:order-2 md:[&>*:last-child]:order-1' : '';
+const debugClass = debug ? 'layout-debug-inner' : '';
+
+const classes = [
+	'grid',
+	'grid-cols-1',
+	stackClass,
+	splitClass,
+	gapClass,
+	alignClass,
+	reverseClass,
+	debugClass,
+	extraClass,
+].filter(Boolean).join(' ');
+
+const childDebugClass = debug ? 'border border-cyan-400/70 bg-black/30' : '';
+---
+
+<div class={classes}>
+	<div class={[childDebugClass, primaryClass].filter(Boolean).join(' ')}>
+		<slot name="primary" />
+	</div>
+
+	<div class={[childDebugClass, secondaryClass].filter(Boolean).join(' ')}>
+		<slot name="secondary" />
+	</div>
+</div>

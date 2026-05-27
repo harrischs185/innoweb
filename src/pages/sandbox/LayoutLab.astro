@@ -3,9 +3,27 @@ import Layout from '../../layouts/Layout.astro';
 import SectionWrapper from '../../components/layout/SectionWrapper.astro';
 import SectionHeader from '../../components/layout/SectionHeader.astro';
 import GridContainer from '../../components/layout/GridContainer.astro';
+import ContentRail from '../../components/layout/ContentRail.astro';
 ---
 <Layout>
     <main class="layout-page bg-black px-6 py-12 text-white md:px-12">
+
+        <SectionWrapper spacing="default" container="wide" debug>
+            <ContentRail split="balanced" gap="default" debug>
+                <div slot="primary" class="layout-demo-block p-6">
+                    <p class="type-context-label">Primary</p>
+                    <h2 class="type-section-title">Balanced Content Rail</h2>
+                    <p class="type-body">Primary content area for copy, CTAs, or section headers.</p>
+                </div>
+
+                <div slot="secondary" class="layout-demo-block p-6">
+                    <p class="type-context-label">Secondary</p>
+                    <p class="type-body">Secondary content area for media, cards, stats, or supporting visuals.</p>
+                </div>
+            </ContentRail>
+        </SectionWrapper>
+
+
 
         <SectionWrapper spacing="default" container="wide" debug>
             <SectionHeader
