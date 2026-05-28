@@ -1,0 +1,37 @@
+---
+import PromoPanelShell from '../promos/PromoPanelShell.astro';
+
+import bunkerImage from '../../../assets/images/trust/BunkerPromo.png';
+---
+
+<PromoPanelShell class="lg:col-span-1">
+	<div class="grid h-full grid-cols-[0.9fr_1.1fr] overflow-hidden">
+			<div class="relative min-h-[170px]">
+				<img
+					src={bunkerImage.src}
+					alt="Bunker's bargains"
+					class="absolute inset-0 h-full w-full object-cover"
+				/>
+			</div>
+
+			<div class="flex h-full flex-col justify-center p-4">
+				<h3 class="type-brush-secondary text-[clamp(1.95rem,1.1vw,1.05rem)]">
+					Bunker's
+				</h3>
+				<h3 class="type-druk-gold text-[clamp(1.85rem,1.1vw,1.05rem)]">
+					Bargains 🔥
+				</h3>
+
+				<p class="mt-2 text-xs leading-relaxed text-slate-200">
+					Insane deals. Limited time only.
+				</p>
+
+				<a
+					href="/bunkers-bargains"
+					class="mt-4 inline-flex w-fit rounded-md border border-sky-500 px-3 py-2 text-[10px] font-bold uppercase tracking-wide text-white hover:bg-sky-500/10"
+				>
+					Shop Bunker's Bargains
+				</a>
+			</div>
+		</div>
+</PromoPanelShell>

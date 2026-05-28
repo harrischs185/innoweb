@@ -1,0 +1,22 @@
+---
+import SectionWrapper from '../../layout/SectionWrapper.astro';
+
+import TrustPromoPane from './TrustPromoPane.astro';
+import TrustAccessPane from './TrustAccessPane.astro';
+import TrustChecklistPane from './TrustChecklistPane.astro';
+import TrustSocialPane from './TrustSocialPane.astro';
+import FooterTrustBar from './FooterTrustBar.astro';
+---
+
+<SectionWrapper spacing="tight" container="wide">
+	<section aria-label="Trust and community">
+		<div class="grid gap-3 lg:grid-cols-[1.8fr_0.8fr_1.05fr_1.05fr]">
+			<TrustPromoPane />
+			<TrustAccessPane />
+			<TrustChecklistPane />
+			<TrustSocialPane />
+		</div>
+
+		<FooterTrustBar />
+	</section>
+</SectionWrapper>

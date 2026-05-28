@@ -1,0 +1,66 @@
+---
+import PromoPanelShell from '../promos/PromoPanelShell.astro';
+import IGImage from '../../../assets/images/trust/IGImage.jpg';
+import FBImage from '../../../assets/images/trust/FBImage.jpg';
+import YTmage from '../../../assets/images/trust/YTImage.jpg';
+---
+
+<PromoPanelShell>
+	<div class="flex h-full flex-col justify-center p-4">
+		<h3 class="type-promo-title text-[clamp(0.85rem,1.1vw,1.05rem)]">
+			Join the Community
+		</h3>
+
+		<p class="mt-4 text-sm leading-relaxed text-slate-300">
+			Follow us on social media for giveaways, breaks, and exclusive drops.
+		</p>
+
+		<div class="mt-6 flex items-center justify-center gap-4">
+			<div class="flex h-10 w-10 items-center justify-center">
+				<a
+					href="https://instagram.com/innoav_sports_collectables"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="flex h-10 w-10 items-center justify-center transition hover:scale-105"
+				>
+					<img
+						src={IGImage.src}
+						alt="Instagram"
+						class="h-full w-full object-contain scale-[1.05]"
+					/>
+				</a>
+			</div>
+
+			<div class="flex h-10 w-10 items-center justify-center">
+				<a
+					href="https://facebook.com/InnoAVSports"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="flex h-10 w-10 items-center justify-center transition hover:scale-105"
+				>
+					<img
+						src={FBImage.src}
+						alt="Facebook"
+						class="h-full w-full object-contain scale-[1.05]"
+					/>
+				</a>
+			</div>
+
+			<div class="flex h-10 w-10 items-center justify-center">
+				<a
+				href="https://youtube.com/@InnoAVSportsCollectables"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="flex h-10 w-10 items-center justify-center transition hover:scale-105"
+				>
+					<img
+						src={YTmage.src}
+						alt="YouTube"
+						class="h-full w-full object-contain scale-[1.05]"
+					/>
+				</a>
+			</div>
+		</div>
+		</div>
+	</div>
+</PromoPanelShell>
