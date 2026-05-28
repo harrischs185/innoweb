@@ -8,6 +8,7 @@ import HeaderDivider from '../../components/header/HeaderDivider.astro';
 import SiteHeader from '../../components/header/SiteHeader.astro';
 import HeroSection from '../../components/home/HeroSection.astro';
 import SportNavigationTile from '../../components/navigation/SportNavigationTile.astro';
+import SportNavigationCarousel from '../../components/navigation/SportNavigationCarousel.astro';
 
 import autographedImage from '../../assets/images/navigation/Autographed.png';
 import baseballImage from '../../assets/images/navigation/Baseball.png';
@@ -28,22 +29,35 @@ import TCGImage from '../../assets/images/navigation/TCG.png';
         <SiteHeader />
 		<HeaderDivider />
         <HeroSection />
-		
-        <SectionWrapper spacing="flush" container="wide">
-                        <GridContainer columns="6" gap="tight">
-                            <SportNavigationTile label="Graded" href="/shop/graded" image={gradedImage.src} />
-                            <SportNavigationTile label="Autographed" href="/shop/autographed" image={autographedImage.src} />
-                            <SportNavigationTile label="Football" href="/shop/football" image={footballImage.src} />
-                            <SportNavigationTile label="Baseball" href="/shop/baseball" image={baseballImage.src} />
-                            <SportNavigationTile label="Basketball" href="/shop/basketball" image={basketballImage.src} />
-                            <SportNavigationTile label="Golf" href="/shop/golf" image={golfImage.src} />
-                            <SportNavigationTile label="Soccer" href="/shop/soccer" image={soccerImage.src} />
-                            <SportNavigationTile label="Racing" href="/shop/racing" image={racingImage.src} />
-                            <SportNavigationTile label="WWE / UFC" href="/shop/wwe-ufc" image={mmaImage.src} />
-                            <SportNavigationTile label="TCG" href="/shop/tcg" image={TCGImage.src} />
-                            <SportNavigationTile label="Other" href="/shop/other" image={otherImage.src} />
-                        </GridContainer>
-                </SectionWrapper>
-
+		<div class="lg:hidden">
+            <SportNavigationCarousel>
+                <SportNavigationTile label="Graded" href="/shop/graded" image={gradedImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Autographed" href="/shop/autographed" image={autographedImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Football" href="/shop/football" image={footballImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Baseball" href="/shop/baseball" image={baseballImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Basketball" href="/shop/basketball" image={basketballImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Golf" href="/shop/golf" image={golfImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Soccer" href="/shop/soccer" image={soccerImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Racing" href="/shop/racing" image={racingImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="WWE / UFC" href="/shop/wwe-ufc" image={mmaImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="TCG" href="/shop/tcg" image={TCGImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Other" href="/shop/other" image={otherImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+            </SportNavigationCarousel>
+        </div>
+        <div class="hidden lg:block">
+            <GridContainer columns="6" gap="default">
+                <SportNavigationTile label="Graded" href="/shop/graded" image={gradedImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Autographed" href="/shop/autographed" image={autographedImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Football" href="/shop/football" image={footballImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Baseball" href="/shop/baseball" image={baseballImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Basketball" href="/shop/basketball" image={basketballImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Golf" href="/shop/golf" image={golfImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Soccer" href="/shop/soccer" image={soccerImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Racing" href="/shop/racing" image={racingImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="WWE / UFC" href="/shop/wwe-ufc" image={mmaImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="TCG" href="/shop/tcg" image={TCGImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+                <SportNavigationTile label="Other" href="/shop/other" image={otherImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
+            </GridContainer>
+        </div>
     </main>
 </Layout>

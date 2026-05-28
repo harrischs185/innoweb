@@ -3,7 +3,7 @@ const {
 	label = 'Football',
 	href = '/shop/football',
 	image = '',
-	eyebrow = '',
+	eyebrow = 'Explore',
 	debug = false,
 	class: extraClass = '',
 } = Astro.props;
@@ -34,7 +34,7 @@ const classes = [
 
 	<div class="relative flex h-full min-h-[180px] flex-col justify-end p-3 min-h-[130px] sm:min-h-[150px] lg:min-h-[165px]">
 		{eyebrow && (
-			<p class="type-utility-label mb-2 text-amber-400">
+			<p class="type-utility-label text-amber-400">
 				{eyebrow}
 			</p>
 		)}
