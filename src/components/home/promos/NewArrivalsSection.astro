@@ -1,0 +1,74 @@
+---
+import SectionWrapper from '../../layout/SectionWrapper.astro';
+import ProductCarousel from '../../products/ProductCarousel.astro';
+import ProductCard from '../../products/ProductCard.astro';
+
+import card1 from '../../../assets/images/Products/card-1.jpg';
+import card2 from '../../../assets/images/products/card-2.jpg';
+import card3 from '../../../assets/images/products/card-3.jpg';
+import card4 from '../../../assets/images/products/card-4.jpg';
+import card5 from '../../../assets/images/products/card-5.jpg';
+import card6 from '../../../assets/images/products/card-6.jpg';
+
+const products = [
+	{
+		title: '2023 Prizm Black Shimmer Victor Wembanyama PSA 10',
+		price: '$1,249.99',
+		image: card1.src,
+	},
+	{
+		title: "1986 Fleer Michael Jordan Rookie PSA 10",
+		price: '$100,299.99',
+		image: card2.src,
+	},
+	{
+		title: '2018 Panini Prizm Josh Allen Rookie PSA 10',
+		price: '$319.99',
+		image: card3.src,
+	},
+	{
+		title: '1986 Fleer Michael Jordan Rookie PSA 10',
+		price: '$100,299.99',
+		image: card4.src,
+	},
+	{
+		title: '2018 Panini Prizm Josh Allen Rookie PSA 10',
+		price: '$319.99',
+		image: card5.src,
+	},
+	{
+		title: '2023 Prizm Black Shimmer Victor Wembanyama PSA 10',
+		price: '$1,249.99',
+		image: card6.src,
+	},
+];
+---
+
+<SectionWrapper spacing="flush" container="wide">
+	<section aria-label="New arrivals">
+		<div class="mb-5 flex items-center justify-between">
+			<h2 class="type-promo-title">
+				New Arrivals
+			</h2>
+
+			<a
+				href="/shop/new-arrivals"
+				class="text-sm font-bold uppercase tracking-wide text-amber-400 hover:text-amber-300"
+			>
+				View All
+			</a>
+		</div>
+
+		<ProductCarousel>
+			{products.map((product) => (
+				<div class="w-[170px] shrink-0">
+					<ProductCard
+						title={product.title}
+						price={product.price}
+						image={product.image}
+					/>
+				</div>
+			))}
+		</ProductCarousel>
+	</section>
+</SectionWrapper>

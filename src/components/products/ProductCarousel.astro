@@ -1,0 +1,40 @@
+---
+const {
+	debug = false,
+	class: extraClass = '',
+} = Astro.props;
+
+const debugClass = debug ? 'outline outline-1 outline-red-500' : '';
+
+const classes = [
+	'relative',
+	debugClass,
+	extraClass,
+].filter(Boolean).join(' ');
+---
+
+<div class={classes}>
+	<div class="overflow-x-auto pb-3 scrollbar-hide">
+		<div class="flex gap-4">
+			<slot />
+		</div>
+	</div>
+
+	<button class="absolute left-0 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-700 bg-black/80 text-white lg:flex">
+		‹
+	</button>
+
+	<button class="absolute right-0 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-700 bg-black/80 text-white lg:flex">
+		›
+	</button>
+</div>
+
+<style>
+	.scrollbar-hide {
+		scrollbar-width: none;
+	}
+
+	.scrollbar-hide::-webkit-scrollbar {
+		display: none;
+	}
+</style>
