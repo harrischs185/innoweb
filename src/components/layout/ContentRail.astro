@@ -15,15 +15,16 @@ const splitClassMap = {
 	balanced: 'md:grid-cols-2',
 	primary: 'md:grid-cols-[1.35fr_0.65fr]',
 	secondary: 'md:grid-cols-[0.65fr_1.35fr]',
-	hero: 'lg:grid-cols-[1.15fr_0.85fr]',
-	media: 'lg:grid-cols-[0.9fr_1.1fr]',
+	hero: 'content-rail--hero',
+	media: 'md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]',
 };
 
 const gapClassMap = {
 	none: 'gap-0',
-	tight: 'gap-4 md:gap-5',
-	default: 'gap-6 md:gap-8 lg:gap-10',
-	loose: 'gap-8 md:gap-12 lg:gap-16',
+	tight: 'gap-3 md:gap-4',
+	default: 'gap-4 md:gap-6',
+	loose: 'gap-6 md:gap-8 xl:gap-10',
+	hero: 'gap-[clamp(0.5rem,1.5vw,1.5rem)]',
 };
 
 const alignClassMap = {
@@ -62,11 +63,25 @@ const childDebugClass = debug ? 'border border-cyan-400/70 bg-black/30' : '';
 ---
 
 <div class={classes}>
-	<div class={[childDebugClass, primaryClass].filter(Boolean).join(' ')}>
+	<div class={[childDebugClass, 'min-w-0', primaryClass].filter(Boolean).join(' ')}>
 		<slot name="primary" />
 	</div>
 
-	<div class={[childDebugClass, secondaryClass].filter(Boolean).join(' ')}>
+	<div class={[childDebugClass, 'min-w-0', secondaryClass].filter(Boolean).join(' ')}>
 		<slot name="secondary" />
 	</div>
 </div>
+
+<style>
+	.content-rail--hero {
+		grid-template-columns: 1fr;
+	}
+
+	@media (min-width: 768px) {
+		.content-rail--hero {
+			grid-template-columns:
+				minmax(0, 1fr)
+				minmax(20rem, clamp(22rem, 42vw, 44rem));
+		}
+	}
+</style>

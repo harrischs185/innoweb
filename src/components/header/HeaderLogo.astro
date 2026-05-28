@@ -1,4 +1,7 @@
 ---
+import logoImage from '../../assets/brands/InnoWeb-Logo.png';
+
+
 const {
 	href = '/',
 	kicker = 'Sports Cards & Collectibles',
@@ -16,12 +19,10 @@ const classes = [
 ---
 
 <a href={href} class={classes} aria-label="InnoWeb home">
-	<div class="flex h-12 w-12 items-center justify-center rounded-full border border-amber-500/60 bg-slate-950 text-amber-400 md:h-16 md:w-16">
-		LOGO
-	</div>
+	<img
+	src={logoImage.src}
+	alt="InnoWeb logo"
+	class="h-14 w-auto scale-110 object-contain md:h-20"
+	/>
 
-	<div class="hidden flex-col leading-none sm:flex">
-		<span class="type-utility-label text-amber-400">InnoWeb</span>
-		<span class="text-xs text-slate-500">{kicker}</span>
-	</div>
 </a>

@@ -1,0 +1,18 @@
+---
+const {
+	primaryText = 'Shop New Arrivals',
+	primaryHref = '/shop',
+	secondaryText = "Bunker's Bargains 🔥",
+	secondaryHref = '/bunkers-bargains',
+} = Astro.props;
+---
+
+<div class="flex min-w-0 flex-nowrap justify-center gap-2 md:justify-start md:gap-3">
+	<a href={primaryHref} class="whitespace-nowrap rounded-md bg-amber-400 px-[clamp(0.85rem,2vw,1.25rem)] py-[clamp(0.65rem,1.4vw,0.9rem)] text-center text-[clamp(0.56rem,0.85vw,1rem)] font-bold uppercase tracking-[0.04em] text-black hover:bg-amber-300">
+		{primaryText}
+	</a>
+
+	<a href={secondaryHref} class="whitespace-nowrap rounded-md border border-sky-500 px-[clamp(0.85rem,2vw,1.25rem)] py-[clamp(0.65rem,1.4vw,0.9rem)] text-center text-[clamp(0.56rem,0.85vw,1rem)] font-bold uppercase tracking-[0.04em] text-white hover:bg-sky-500/10">
+		{secondaryText}
+	</a>
+</div>

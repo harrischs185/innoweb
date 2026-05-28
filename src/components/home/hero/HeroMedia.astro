@@ -1,0 +1,31 @@
+---
+const {
+	src = '',
+	alt = 'Featured sports card display',
+	debug = false,
+	class: extraClass = '',
+	imageClass = '',
+} = Astro.props;
+
+const debugClass = debug ? 'border-red-500' : 'border-slate-800';
+---
+
+<div class={`relative mx-auto w-full overflow-visible ${extraClass}`}>
+	<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.18),transparent_60%)]"></div>
+		{src ? (
+			<img
+				src={src}
+				alt={alt}
+				class={`relative z-10 h-auto w-full max-h-[clamp(24rem,42vw,40rem)] object-contain ${imageClass}`}
+			/>
+		) : (
+		<div class="relative grid min-h-[320px] place-items-center p-6">
+			<div class="rounded-2xl border border-amber-500/40 bg-black/60 p-8 text-center shadow-2xl">
+				<p class="type-context-label">Hero Media</p>
+				<p class="mt-4 text-slate-400">
+					Featured Hero composition placeholder
+				</p>
+			</div>
+		</div>
+	)}
+</div>

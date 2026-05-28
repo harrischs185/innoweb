@@ -1,0 +1,60 @@
+---
+import SectionWrapper from '../layout/SectionWrapper.astro';
+import ContentRail from '../layout/ContentRail.astro';
+import HeroContent from './hero/HeroContent.astro';
+import HeroMedia from './hero/HeroMedia.astro';
+import HeroTrustBar from './hero/HeroTrustBar.astro';
+import heroBackground from '../../assets/images/hero/HeroBackground.png';
+import heroForeground from '../../assets/images/hero/HeroForeground.png';
+
+const {
+	debug = false,
+} = Astro.props;
+---
+
+<SectionWrapper spacing="flush" container="wide" debug={false}>
+	<div
+	class="overflow-hidden rounded-2xl border border-slate-800 bg-cover bg-center bg-no-repeat lg:hidden"
+	style={`background-image: linear-gradient(180deg, rgba(2,6,23,0.88) 0%, rgba(3,7,18,0.65) 45%, rgba(2,6,23,0.9) 100%), url(${heroBackground.src});`}
+	>
+		<div class="p-4">
+			<HeroContent />
+
+			<HeroMedia
+				src={heroForeground.src}
+				alt="Featured sports cards and collectibles"
+				debug={false}
+				class="mt-4"
+				imageClass="scale-[1.12] -translate-x-[2%] translate-y-1"
+			/>
+
+			<HeroTrustBar />
+		</div>
+	</div>
+
+	<div
+	class="hidden overflow-hidden rounded-3xl border border-slate-800 bg-cover bg-center bg-no-repeat lg:block"
+	style={`background-image: linear-gradient(90deg, rgba(2,6,23,0.95) 0%, rgba(3,7,18,0.75) 45%, rgba(2,6,23,0.35) 100%), url(${heroBackground.src});`}
+	>	
+		<ContentRail split="hero" gap="hero" align="stretch" debug={false}>
+			<div slot="primary" class="flex h-full min-h-full flex-col">
+				<div class="space-y-6">
+					<HeroContent />
+					<HeroTrustBar />
+				</div>
+			</div>
+
+			<div slot="secondary">
+				<HeroMedia
+					src={heroForeground.src}
+					alt="Featured sports cards and collectibles"
+					debug={false}
+					class="lg:-ml-4 xl:-ml-8"
+					imageClass="scale-110 -translate-x-2 translate-y-1"
+				/>
+			</div>
+		</ContentRail>
+
+		
+	</div>
+</SectionWrapper>

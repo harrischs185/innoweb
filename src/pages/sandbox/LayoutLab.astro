@@ -3,14 +3,16 @@ import Layout from '../../layouts/Layout.astro';
 import UtilityHeaderStrip from '../../components/header/UtilityHeaderStrip.astro';
 import HeaderDivider from '../../components/header/HeaderDivider.astro';
 import SiteHeader from '../../components/header/SiteHeader.astro';
+import HeroSection from '../../components/home/HeroSection.astro';
 ---
 <Layout>
     <main class="layout-page bg-black px-6 py-0 text-white md:px-12">
         <UtilityHeaderStrip />
         <HeaderDivider width="full" />
-        <SiteHeader debug />
+        <SiteHeader />
 		<HeaderDivider />
 
+        <HeroSection />
 		<div class="p-8 text-slate-500">
 			Page content starts here.
 		</div>
