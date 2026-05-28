@@ -1,0 +1,58 @@
+---
+import GridContainer from '../layout/GridContainer.astro';
+import SportNavigationCarousel from '../navigation/SportNavigationCarousel.astro';
+import SportNavigationTile from '../navigation/SportNavigationTile.astro';
+
+import gradedImage from '../../assets/images/navigation/graded.png';
+import autographedImage from '../../assets/images/navigation/autographed.png';
+import footballImage from '../../assets/images/navigation/football.png';
+import baseballImage from '../../assets/images/navigation/baseball.png';
+import basketballImage from '../../assets/images/navigation/basketball.png';
+import golfImage from '../../assets/images/navigation/golf.png';
+import soccerImage from '../../assets/images/navigation/soccer.png';
+import racingImage from '../../assets/images/navigation/racing.png';
+import wweUfcImage from '../../assets/images/navigation/mma.png';
+import tcgImage from '../../assets/images/navigation/tcg.png';
+import otherImage from '../../assets/images/navigation/other.png';
+
+const tiles = [
+	{ label: 'Graded', href: '/shop/graded', image: gradedImage.src },
+	{ label: 'Autographed', href: '/shop/autographed', image: autographedImage.src },
+	{ label: 'Football', href: '/shop/football', image: footballImage.src },
+	{ label: 'Baseball', href: '/shop/baseball', image: baseballImage.src },
+	{ label: 'Basketball', href: '/shop/basketball', image: basketballImage.src },
+	{ label: 'Golf', href: '/shop/golf', image: golfImage.src },
+	{ label: 'Soccer', href: '/shop/soccer', image: soccerImage.src },
+	{ label: 'Racing', href: '/shop/racing', image: racingImage.src },
+	{ label: 'WWE / UFC', href: '/shop/wwe-ufc', image: wweUfcImage.src },
+	{ label: 'TCG', href: '/shop/tcg', image: tcgImage.src },
+	{ label: 'Other', href: '/shop/other', image: otherImage.src },
+];
+---
+
+<section aria-label="Shop by sport and category">
+	<div class="lg:hidden">
+		<SportNavigationCarousel>
+			{tiles.map((tile) => (
+				<SportNavigationTile
+					label={tile.label}
+					href={tile.href}
+					image={tile.image}
+					class="shrink-0 basis-[42%] snap-start sm:basis-[28%]"
+				/>
+			))}
+		</SportNavigationCarousel>
+	</div>
+
+	<div class="hidden lg:block">
+		<GridContainer columns="6" gap="default">
+			{tiles.map((tile) => (
+				<SportNavigationTile
+					label={tile.label}
+					href={tile.href}
+					image={tile.image}
+				/>
+			))}
+		</GridContainer>
+	</div>
+</section>

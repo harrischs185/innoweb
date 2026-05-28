@@ -7,20 +7,7 @@ import UtilityHeaderStrip from '../../components/header/UtilityHeaderStrip.astro
 import HeaderDivider from '../../components/header/HeaderDivider.astro';
 import SiteHeader from '../../components/header/SiteHeader.astro';
 import HeroSection from '../../components/home/HeroSection.astro';
-import SportNavigationTile from '../../components/navigation/SportNavigationTile.astro';
-import SportNavigationCarousel from '../../components/navigation/SportNavigationCarousel.astro';
-
-import autographedImage from '../../assets/images/navigation/Autographed.png';
-import baseballImage from '../../assets/images/navigation/Baseball.png';
-import basketballImage from '../../assets/images/navigation/Basketball.png';
-import footballImage from '../../assets/images/navigation/Football.png';
-import golfImage from '../../assets/images/navigation/Golf.png';
-import gradedImage from '../../assets/images/navigation/Graded.png';
-import mmaImage from '../../assets/images/navigation/MMA.png';
-import otherImage from '../../assets/images/navigation/Other.png';
-import racingImage from '../../assets/images/navigation/Racing.png';
-import soccerImage from '../../assets/images/navigation/Soccer.png';
-import TCGImage from '../../assets/images/navigation/TCG.png';
+import SportNavigationSection from '../../components/home/SportNavigationSection.astro';
 ---
 <Layout>
     <main class="layout-page bg-black px-6 py-0 text-white md:px-12">
@@ -29,35 +16,6 @@ import TCGImage from '../../assets/images/navigation/TCG.png';
         <SiteHeader />
 		<HeaderDivider />
         <HeroSection />
-		<div class="lg:hidden">
-            <SportNavigationCarousel>
-                <SportNavigationTile label="Graded" href="/shop/graded" image={gradedImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Autographed" href="/shop/autographed" image={autographedImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Football" href="/shop/football" image={footballImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Baseball" href="/shop/baseball" image={baseballImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Basketball" href="/shop/basketball" image={basketballImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Golf" href="/shop/golf" image={golfImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Soccer" href="/shop/soccer" image={soccerImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Racing" href="/shop/racing" image={racingImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="WWE / UFC" href="/shop/wwe-ufc" image={mmaImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="TCG" href="/shop/tcg" image={TCGImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Other" href="/shop/other" image={otherImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-            </SportNavigationCarousel>
-        </div>
-        <div class="hidden lg:block">
-            <GridContainer columns="6" gap="default">
-                <SportNavigationTile label="Graded" href="/shop/graded" image={gradedImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Autographed" href="/shop/autographed" image={autographedImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Football" href="/shop/football" image={footballImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Baseball" href="/shop/baseball" image={baseballImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Basketball" href="/shop/basketball" image={basketballImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Golf" href="/shop/golf" image={golfImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Soccer" href="/shop/soccer" image={soccerImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Racing" href="/shop/racing" image={racingImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="WWE / UFC" href="/shop/wwe-ufc" image={mmaImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="TCG" href="/shop/tcg" image={TCGImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-                <SportNavigationTile label="Other" href="/shop/other" image={otherImage.src} class="shrink-0 min-w-[42%] snap-start sm:min-w-[28%] lg:min-w-[15.5%]" />
-            </GridContainer>
-        </div>
+		<SportNavigationSection />
     </main>
 </Layout>
