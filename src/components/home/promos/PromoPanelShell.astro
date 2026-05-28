@@ -1,0 +1,23 @@
+---
+const {
+	debug = false,
+	class: extraClass = '',
+} = Astro.props;
+
+const debugClass = debug ? 'outline outline-1 outline-red-500' : '';
+
+const classes = [
+	'relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-950',
+	'min-h-[170px] md:min-h-[190px]',
+	'shadow-[0_0_28px_rgba(15,23,42,0.45)]',
+	debugClass,
+	extraClass,
+].filter(Boolean).join(' ');
+---
+
+<article class={classes}>
+	<div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_45%,rgba(37,99,235,0.22),transparent_42%),radial-gradient(circle_at_25%_25%,rgba(245,158,11,0.12),transparent_35%)]"></div>
+	<div class="relative h-full">
+		<slot />
+	</div>
+</article>

@@ -195,6 +195,19 @@
         text-amber-500;
 	}
 
+      .type-promo-title {
+ 		@apply 
+            text-[0.65rem] 
+            sm:text-[1.20rem] 
+            md:text-[1.45rem] 
+            lg:text-[1.65rem] 
+            xl:text-[2.54rem] 
+            2xl:text-[3.00rem]
+            font-bold 
+            uppercase tracking-wide 
+            text-amber-400;
+	}
+
 	.type-section-title {
 		@apply 
             text-[0.80rem] 
@@ -295,12 +308,12 @@
 	.type-countdown-timer {
 		font-family: 'Orbitron';
 		@apply 
-            text-[0.85rem] 
+            text-[1.85rem] 
             sm:text-[1.50rem] 
             md:text-[1.95rem] 
-            lg:text-[2.70rem] 
-            xl:text-[3.25rem] 
-            2xl:text-[3.85rem]
+            lg:text-[0.90rem] 
+            xl:text-[1.25rem] 
+            2xl:text-[1.85rem]
             font-bold tracking-[0.12em] 
             text-amber-400;
 	}

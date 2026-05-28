@@ -1,0 +1,15 @@
+---
+import FeaturedCollectionPanel from './FeaturedCollectionPanel.astro';
+import DealOfTheDayPanel from './DealOfTheDayPanel.astro';
+
+const {
+	debug = false,
+} = Astro.props;
+---
+
+<section aria-label="Featured promotions">
+	<div class="grid gap-4 lg:grid-cols-[1.45fr_1fr]">
+		<FeaturedCollectionPanel debug={debug} />
+		<DealOfTheDayPanel debug={debug} />
+	</div>
+</section>
