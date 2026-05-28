@@ -1,9 +1,25 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import SectionWrapper from '../../components/layout/SectionWrapper.astro';
+import SectionHeader from '../../components/layout/SectionHeader.astro';
+import GridContainer from '../../components/layout/GridContainer.astro';
 import UtilityHeaderStrip from '../../components/header/UtilityHeaderStrip.astro';
 import HeaderDivider from '../../components/header/HeaderDivider.astro';
 import SiteHeader from '../../components/header/SiteHeader.astro';
 import HeroSection from '../../components/home/HeroSection.astro';
+import SportNavigationTile from '../../components/navigation/SportNavigationTile.astro';
+
+import autographedImage from '../../assets/images/navigation/Autographed.png';
+import baseballImage from '../../assets/images/navigation/Baseball.png';
+import basketballImage from '../../assets/images/navigation/Basketball.png';
+import footballImage from '../../assets/images/navigation/Football.png';
+import golfImage from '../../assets/images/navigation/Golf.png';
+import gradedImage from '../../assets/images/navigation/Graded.png';
+import mmaImage from '../../assets/images/navigation/MMA.png';
+import otherImage from '../../assets/images/navigation/Other.png';
+import racingImage from '../../assets/images/navigation/Racing.png';
+import soccerImage from '../../assets/images/navigation/Soccer.png';
+import TCGImage from '../../assets/images/navigation/TCG.png';
 ---
 <Layout>
     <main class="layout-page bg-black px-6 py-0 text-white md:px-12">
@@ -11,10 +27,23 @@ import HeroSection from '../../components/home/HeroSection.astro';
         <HeaderDivider width="full" />
         <SiteHeader />
 		<HeaderDivider />
-
         <HeroSection />
-		<div class="p-8 text-slate-500">
-			Page content starts here.
-		</div>
+		
+        <SectionWrapper spacing="flush" container="wide">
+                        <GridContainer columns="6" gap="tight">
+                            <SportNavigationTile label="Graded" href="/shop/graded" image={gradedImage.src} />
+                            <SportNavigationTile label="Autographed" href="/shop/autographed" image={autographedImage.src} />
+                            <SportNavigationTile label="Football" href="/shop/football" image={footballImage.src} />
+                            <SportNavigationTile label="Baseball" href="/shop/baseball" image={baseballImage.src} />
+                            <SportNavigationTile label="Basketball" href="/shop/basketball" image={basketballImage.src} />
+                            <SportNavigationTile label="Golf" href="/shop/golf" image={golfImage.src} />
+                            <SportNavigationTile label="Soccer" href="/shop/soccer" image={soccerImage.src} />
+                            <SportNavigationTile label="Racing" href="/shop/racing" image={racingImage.src} />
+                            <SportNavigationTile label="WWE / UFC" href="/shop/wwe-ufc" image={mmaImage.src} />
+                            <SportNavigationTile label="TCG" href="/shop/tcg" image={TCGImage.src} />
+                            <SportNavigationTile label="Other" href="/shop/other" image={otherImage.src} />
+                        </GridContainer>
+                </SectionWrapper>
+
     </main>
 </Layout>
