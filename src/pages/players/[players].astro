@@ -1,12 +1,20 @@
 ---
+export async function getStaticPaths() {
+	return [
+        { params: { players: 'football' } },
+		{ params: { players: 'baseball' } },
+		{ params: { players: 'basketball' } },
+		{ params: { players: 'golf' } },
+        { params: { players: 'soccer' } },        
+	];
+}
+
+const { players } = Astro.params;
+
 import Layout from '../../layouts/Layout.astro';
 import UtilityHeaderStrip from '../../components/header/UtilityHeaderStrip.astro';
 import HeaderDivider from '../../components/header/HeaderDivider.astro';
 import SiteHeader from '../../components/header/SiteHeader.astro';
-import HeroSection from '../../components/home/HeroSection.astro';
-import SportNavigationSection from '../../components/home/SportNavigationSection.astro';
-import PromotionalRail from '../../components/home/promos/PromotionalRail.astro';
-import NewArrivalsSection from '../../components/home/promos/NewArrivalsSection.astro';
 import TrustAccessGrid from '../../components/home/trust/TrustAccessGrid.astro';
 ---
 <Layout>
@@ -15,10 +23,9 @@ import TrustAccessGrid from '../../components/home/trust/TrustAccessGrid.astro';
         <HeaderDivider width="full" />
         <SiteHeader />
 		<HeaderDivider />
-        <HeroSection />
-		<SportNavigationSection />
-        <PromotionalRail />
-        <NewArrivalsSection />
+        <p>
+            {players}
+        </p>
         <TrustAccessGrid />
     </main>
 </Layout>

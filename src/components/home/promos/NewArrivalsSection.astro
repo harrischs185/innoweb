@@ -15,31 +15,37 @@ const products = [
 		title: '2023 Prizm Black Shimmer Victor Wembanyama PSA 10',
 		price: '$1,249.99',
 		image: card1.src,
+		slug: "example-1",
 	},
 	{
 		title: "1986 Fleer Michael Jordan Rookie PSA 10",
 		price: '$100,299.99',
 		image: card2.src,
+		slug: 'example-2',
 	},
 	{
 		title: '2018 Panini Prizm Josh Allen Rookie PSA 10',
 		price: '$319.99',
 		image: card3.src,
+		slug: 'example-3',
 	},
 	{
 		title: '1986 Fleer Michael Jordan Rookie PSA 10',
 		price: '$100,299.99',
 		image: card4.src,
+		slug: 'example-4',
 	},
 	{
 		title: '2018 Panini Prizm Josh Allen Rookie PSA 10',
 		price: '$319.99',
 		image: card5.src,
+		slug: 'example-5',
 	},
 	{
 		title: '2023 Prizm Black Shimmer Victor Wembanyama PSA 10',
 		price: '$1,249.99',
 		image: card6.src,
+		slug: 'example-6',
 	},
 ];
 ---
@@ -66,6 +72,7 @@ const products = [
 						title={product.title}
 						price={product.price}
 						image={product.image}
+						slug={product.slug}
 					/>
 				</div>
 			))}

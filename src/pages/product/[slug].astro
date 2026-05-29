@@ -1,24 +1,35 @@
 ---
+
 import Layout from '../../layouts/Layout.astro';
 import UtilityHeaderStrip from '../../components/header/UtilityHeaderStrip.astro';
 import HeaderDivider from '../../components/header/HeaderDivider.astro';
 import SiteHeader from '../../components/header/SiteHeader.astro';
-import HeroSection from '../../components/home/HeroSection.astro';
-import SportNavigationSection from '../../components/home/SportNavigationSection.astro';
-import PromotionalRail from '../../components/home/promos/PromotionalRail.astro';
-import NewArrivalsSection from '../../components/home/promos/NewArrivalsSection.astro';
 import TrustAccessGrid from '../../components/home/trust/TrustAccessGrid.astro';
+
+export async function getStaticPaths() {
+	return [
+		{ params: { slug: 'example-1' } },
+        { params: { slug: 'example-2' } },
+        { params: { slug: 'example-3' } },
+        { params: { slug: 'example-4' } },
+        { params: { slug: 'example-5' } },
+        { params: { slug: 'example-6' } },
+        { params: { slug: 'gift-cards' } },
+	];
+}
+
+const { slug } = Astro.params;
 ---
+
+
 <Layout>
     <main class="layout-page bg-black px-6 py-0 text-white md:px-12">
         <UtilityHeaderStrip />
         <HeaderDivider width="full" />
         <SiteHeader />
 		<HeaderDivider />
-        <HeroSection />
-		<SportNavigationSection />
-        <PromotionalRail />
-        <NewArrivalsSection />
+        <h1>Product Route Shell</h1>
+        <p>Current product slug: {slug}</p>
         <TrustAccessGrid />
     </main>
 </Layout>

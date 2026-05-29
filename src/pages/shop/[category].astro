@@ -1,0 +1,42 @@
+---
+export async function getStaticPaths() {
+	return [
+		{ params: { category: 'graded' } },
+        { params: { category: 'autographed' } },
+        { params: { category: 'football' } },
+		{ params: { category: 'baseball' } },
+		{ params: { category: 'basketball' } },
+		{ params: { category: 'golf' } },
+        { params: { category: 'soccer' } },
+        { params: { category: 'racing' } },
+        { params: { category: 'wwe-ufc' } },
+        { params: { category: 'tcg' } },
+        { params: { category: 'hockey' } },
+        { params: { category: 'other' } },
+
+        { params: { category: 'new-arrivals' } },
+        { params: { category: 'bunkers-bargains' } },
+        
+	];
+}
+
+const { category } = Astro.params;
+
+import Layout from '../../layouts/Layout.astro';
+import UtilityHeaderStrip from '../../components/header/UtilityHeaderStrip.astro';
+import HeaderDivider from '../../components/header/HeaderDivider.astro';
+import SiteHeader from '../../components/header/SiteHeader.astro';
+import TrustAccessGrid from '../../components/home/trust/TrustAccessGrid.astro';
+---
+<Layout>
+    <main class="layout-page bg-black px-6 py-0 text-white md:px-12">
+        <UtilityHeaderStrip />
+        <HeaderDivider width="full" />
+        <SiteHeader />
+		<HeaderDivider />
+        <p>
+            {category}
+        </p>
+        <TrustAccessGrid />
+    </main>
+</Layout>

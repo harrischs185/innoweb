@@ -3,11 +3,13 @@ const {
 	title = '2018 Prizm Josh Allen Rookie PSA 10',
 	price = '$249.99',
 	image = '',
-	href = '/products/example',
+	slug = 'example',
+	href,
 	debug = false,
 	class: extraClass = '',
 } = Astro.props;
 
+const productHref = href ?? `/product/${slug}`;
 const debugClass = debug ? 'outline outline-1 outline-red-500' : '';
 
 const classes = [
@@ -19,7 +21,7 @@ const classes = [
 ---
 
 <article class={classes}>
-	<a href={href} class="flex h-full flex-col">
+	<a href={productHref} class="flex h-full flex-col">
 		<div class="relative aspect-[3/4] overflow-hidden border-b border-slate-800 bg-black/40">
 			{image && (
 				<img
