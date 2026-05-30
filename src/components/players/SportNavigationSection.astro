@@ -1,0 +1,47 @@
+---
+import GridContainer from '../layout/GridContainer.astro';
+import SportNavigationCarousel from '../navigation/SportNavigationCarousel.astro';
+import SportNavigationTile from '../navigation/SportNavigationTile.astro';
+
+import footballImage from '../../assets/images/navigation/football.png';
+import baseballImage from '../../assets/images/navigation/baseball.png';
+import basketballImage from '../../assets/images/navigation/basketball.png';
+import golfImage from '../../assets/images/navigation/golf.png';
+import soccerImage from '../../assets/images/navigation/soccer.png';
+
+const tiles = [
+	{ label: 'Football', href: '/players/football', image: footballImage.src },
+	{ label: 'Baseball', href: '/players/baseball', image: baseballImage.src },
+	{ label: 'Basketball', href: '/players/basketball', image: basketballImage.src },
+	{ label: 'Golf', href: '/players/golf', image: golfImage.src },
+	{ label: 'Soccer', href: '/players/soccer', image: soccerImage.src },
+	
+];
+---
+
+<section aria-label="Players by sport and position">
+	<div class="lg:hidden">
+		<SportNavigationCarousel>
+			{tiles.map((tile) => (
+				<SportNavigationTile
+					label={tile.label}
+					href={tile.href}
+					image={tile.image}
+					class="shrink-0 basis-[42%] snap-start sm:basis-[28%]"
+				/>
+			))}
+		</SportNavigationCarousel>
+	</div>
+
+	<div class="hidden lg:block">
+		<GridContainer columns="6" gap="default">
+			{tiles.map((tile) => (
+				<SportNavigationTile
+					label={tile.label}
+					href={tile.href}
+					image={tile.image}
+				/>
+			))}
+		</GridContainer>
+	</div>
+</section>

@@ -8,6 +8,7 @@ import TrustAccessGrid from '../../components/home/trust/TrustAccessGrid.astro';
 
 export async function getStaticPaths() {
 	return [
+        { params: { slug: 'example' } },
 		{ params: { slug: 'example-1' } },
         { params: { slug: 'example-2' } },
         { params: { slug: 'example-3' } },
