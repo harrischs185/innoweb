@@ -1,0 +1,53 @@
+---
+import SectionHeader from '../layout/SectionHeader.astro';
+import GridContainer from '../layout/GridContainer.astro';
+import PlayerNavigationTile from '../navigation/PlayerNavigationTile.astro';
+
+import { playerConfig } from '../../data/players';
+
+const featuredSlugs = [
+	'josh-allen',
+	'patrick-mahomes',
+	'shohei-ohtani',
+	'michael-jordan',
+	'tiger-woods',
+	'lionel-messi',
+];
+
+const featuredPlayers = featuredSlugs
+	.map((slug) => {
+		const player = playerConfig[slug];
+
+		if (!player) return null;
+
+		return {
+			label: player.name,
+			href: `/players/${slug}`,
+			image: player.image,
+			eyebrow: player.sport,
+		};
+	})
+	.filter(Boolean);
+---
+
+<section id="featured-players" aria-label="Featured players">
+	<SectionHeader
+		eyebrow="Featured Players"
+		title="Collector Favorites"
+		subtitle="Explore athletes with strong collector interest, iconic cards, and future PlayerPulse potential."
+		align="center"
+	/>
+
+	<div class="mt-6">
+		<GridContainer columns="3" gap="default">
+			{featuredPlayers.map((player) => (
+				<PlayerNavigationTile
+                    name={player.label}
+                    href={player.href}
+                    image={player.image}
+                    eyebrow={player.eyebrow}
+                />
+			))}
+		</GridContainer>
+	</div>
+</section>

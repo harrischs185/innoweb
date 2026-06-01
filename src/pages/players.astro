@@ -1,11 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SectionWrapper from '../components/layout/SectionWrapper.astro';
+
+import PlayersHeroSection from '../components/players/PlayersHeroSection.astro';
 import PlayerSportNavigationSection from '../components/players/PlayerSportNavigationSection.astro';
+import FeaturedPlayersSection from '../components/players/FeaturedPlayersSection.astro';
 ---
+
 <Layout
-title="Players"
-description="Browse featured athletes by sport and discover player pages, collectibles, and hobby insights."
-noindex={false}
+	title="Players | Sports Cards & Collectibles | InnoAV Sports Collectables"
+	description="Explore player pages, featured athletes, sports card inventory, and future PlayerPulse insights from InnoAV Sports Collectables."
+	noindex={false}
 >
-        <PlayerSportNavigationSection />
+	<SectionWrapper spacing="tight" container="wide">
+		<PlayersHeroSection />
+	</SectionWrapper>
+
+	<SectionWrapper spacing="normal" container="wide">
+		<PlayerSportNavigationSection />
+	</SectionWrapper>
+
+	<SectionWrapper spacing="normal" container="wide">
+		<FeaturedPlayersSection />
+	</SectionWrapper>
 </Layout>

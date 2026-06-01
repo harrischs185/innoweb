@@ -8,6 +8,10 @@ import {
 	playerSportConfig,
 	type PlayerSportKey,
 } from '../../data/playerSports';
+import {
+	playerConfig,
+	type PlayerKey,
+} from '../../data/players';
 
 export async function getStaticPaths() {
 	return Object.keys(playerSportConfig).map((sport) => ({
@@ -17,6 +21,11 @@ export async function getStaticPaths() {
 
 const sport = Astro.params.sport as PlayerSportKey;
 const config = playerSportConfig[sport];
+const players = config.players.map((slug) => ({
+	...playerConfig[slug as PlayerKey],
+	slug,
+	href: `/players/${slug}`,
+}));
 ---
 <Layout
 title={config.title}
@@ -30,6 +39,6 @@ noindex={false}
             align="center"
         />
 
-        <PlayerNavigationSection players={config.players} />
+        <PlayerNavigationSection players={players} />
     </SectionWrapper>
 </Layout>

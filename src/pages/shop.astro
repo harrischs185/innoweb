@@ -1,12 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SectionWrapper from '../components/layout/SectionWrapper.astro';
+import ShopHeroSection from '../components/shop/ShopHeroSection.astro';
+import ShopToolbar from '../components/shop/ShopToolbar.astro';
+import ShopFilterSidebar from '../components/shop/ShopFilterSidebar.astro';
+import ShopFeatureCards from '../components/shop/ShopFeatureCards.astro';
+import ShopProductGrid from '../components/shop/ShopProductGrid.astro';
 ---
 <Layout
 title="Shop Sports Cards & Collectibles"
 description="Browse sports cards, autographs, graded cards, memorabilia, and featured collectibles across all categories."
 noindex={false}
 >
-    <p>
-        Page Content Goes Here
-    </p>
+        <ShopHeroSection />
+
+        <SectionWrapper>
+            <ShopToolbar />
+            <div class="grid gap-6 lg:grid-cols-[280px_1fr]">
+                <ShopFilterSidebar />
+                <div class="space-y-6">
+                    <ShopFeatureCards />
+                    <ShopProductGrid />
+                </div>
+            </div>
+        </SectionWrapper>
 </Layout>

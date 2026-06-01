@@ -1,5 +1,13 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import SectionWrapper from '../../components/layout/SectionWrapper.astro';
+
+import ShopHeroSection from '../../components/shop/ShopHeroSection.astro';
+import ShopToolbar from '../../components/shop/ShopToolbar.astro';
+import ShopFilterSidebar from '../../components/shop/ShopFilterSidebar.astro';
+import ShopFeatureCards from '../../components/shop/ShopFeatureCards.astro';
+import ShopProductGrid from '../../components/shop/ShopProductGrid.astro';
+
 import { categoryConfig, type CategoryKey } from '../../data/shopCategories';
 
 export async function getStaticPaths() {
@@ -12,10 +20,38 @@ const category = Astro.params.category as CategoryKey;
 const config = categoryConfig[category];
 ---
 <Layout
-title={`${config.title} | Shop Sports Cards`}
-description={config.description}
-noindex={false}
+	title={`${config.title} | Shop Sports Cards | InnoAV Sports Collectables`}
+	description={config.description}
+	noindex={false}
 >
-	<h1>{config.title}</h1>
-	<p>{config.description}</p>
+	<SectionWrapper spacing="tight" container="wide">
+		<ShopHeroSection
+			eyebrow="Shop Category"
+			title={config.title}
+			accent="Collector-Ready Finds."
+			description={config.description}
+			primaryHref="/shop"
+			primaryLabel="Shop All"
+			secondaryHref="/shop/new-arrivals"
+			secondaryLabel="New Arrivals"
+		/>
+	</SectionWrapper>
+
+	<SectionWrapper spacing="normal" container="wide">
+		<ShopToolbar />
+
+		<div class="grid gap-6 lg:grid-cols-[280px_1fr]">
+			<ShopFilterSidebar />
+
+			<div class="space-y-6">
+				<ShopFeatureCards />
+
+				<ShopProductGrid
+					category={category}
+					title={config.title}
+					eyebrow="Filtered Inventory"
+				/>
+			</div>
+		</div>
+	</SectionWrapper>
 </Layout>

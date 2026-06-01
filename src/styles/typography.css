@@ -226,9 +226,9 @@
             text-[0.60rem]
             sm:text-[1.05rem] 
             md:text-[1.25rem] 
-            lg:text-[1.85rem] 
-            xl:text-[2.15rem] 
-            2xl:text-[2.55rem]
+            lg:text-[1.55rem] 
+            xl:text-[1.75rem] 
+            2xl:text-[2.05rem]
             uppercase tracking-[0.28em] 
             text-amber-400;
 	}

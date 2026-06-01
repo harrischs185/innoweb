@@ -1,0 +1,93 @@
+---
+const categories = [
+	{ label: 'All Cards', href: '/shop' },
+	{ label: 'Graded Cards', href: '/shop/graded' },
+	{ label: 'Autographed', href: '/shop/autographed' },
+	{ label: "Bunker's Bargains", href: '/shop/bunkers-bargains', badge: 'HOT' },
+	{ label: "Bunker's TCG", href: '/shop/tcg' },
+	{ label: 'Featured', href: '/shop/featured' },
+];
+
+const filterGroups = [
+	'Sport',
+	'Player',
+	'Team',
+	'Condition / Grade',
+	'Series / Set',
+	'Year',
+];
+---
+
+<aside class="space-y-4">
+	<div class="overflow-hidden rounded-xl border border-slate-800 bg-slate-950/85">
+		<div class="flex items-center justify-between border-b border-slate-800 px-4 py-3">
+			<h2 class="type-body-prominent uppercase text-white">Category</h2>
+			<span class="text-amber-400">⌃</span>
+		</div>
+
+		<nav class="space-y-1 p-3">
+			{categories.map((category) => (
+				<a
+					href={category.href}
+					class="flex items-center justify-between rounded-md px-3 py-2 text-sm font-semibold text-slate-200 transition hover:bg-amber-400/10 hover:text-amber-300"
+				>
+					<span>{category.label}</span>
+
+					{category.badge && (
+						<span class="rounded bg-red-500 px-1.5 py-0.5 text-[10px] font-black uppercase text-white">
+							{category.badge}
+						</span>
+					)}
+				</a>
+			))}
+		</nav>
+
+		<div class="border-t border-slate-800 px-4 py-4">
+			<div class="flex items-center justify-between">
+				<h2 class="type-body-prominent uppercase text-white">Price Range</h2>
+				<span class="text-amber-400">⌃</span>
+			</div>
+
+			<div class="mt-4">
+				<div class="h-1 rounded-full bg-slate-800">
+					<div class="h-1 rounded-full bg-amber-400"></div>
+				</div>
+
+				<div class="mt-4 grid grid-cols-2 gap-3">
+					<div class="rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-300">
+						$ 0
+					</div>
+					<div class="rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-300">
+						$ 10,000+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{filterGroups.map((group) => (
+			<div class="flex items-center justify-between border-t border-slate-800 px-4 py-4">
+				<h2 class="type-body-prominent uppercase text-white">{group}</h2>
+				<span class="text-amber-400">+</span>
+			</div>
+		))}
+
+		<div class="border-t border-slate-800 p-4">
+			<label class="type-context-label text-sm mb-2 block text-slate-400">
+				Search
+			</label>
+
+			<div class="flex rounded-md border border-slate-700 bg-black">
+				<input
+					type="text"
+					placeholder="Search Player or Set..."
+					class="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm text-white outline-none placeholder:text-slate-500"
+				/>
+				<button class="px-3 text-amber-400">⌕</button>
+			</div>
+
+			<button class="mt-4 w-full rounded-md bg-gradient-to-b from-amber-300 to-amber-500 px-4 py-3 text-sm font-black uppercase text-black transition hover:brightness-110">
+				Apply Filters
+			</button>
+		</div>
+	</div>
+</aside>

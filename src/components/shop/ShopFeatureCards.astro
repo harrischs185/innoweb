@@ -1,0 +1,60 @@
+---
+import GridContainer from '../layout/GridContainer.astro';
+import SportNavigationCarousel from '../navigation/SportNavigationCarousel.astro';
+import SportNavigationTile from '../navigation/SportNavigationTile.astro';
+
+import newArrivalsImage from '../../assets/images/navigation/other.png';
+import gradedImage from '../../assets/images/navigation/graded.png';
+import autographedImage from '../../assets/images/navigation/autographed.png';
+
+const cards = [
+	{
+		label: 'New Arrivals',
+		href: '/shop/new-arrivals',
+		image: newArrivalsImage.src,
+		eyebrow: 'Shop',
+	},
+	{
+		label: 'Graded Cards',
+		href: '/shop/graded',
+		image: gradedImage.src,
+		eyebrow: 'Shop',
+	},
+	{
+		label: 'Autographed',
+		href: '/shop/autographed',
+		image: autographedImage.src,
+		eyebrow: 'Shop',
+	},
+];
+---
+
+<section aria-label="Featured shop categories">
+	<div class="lg:hidden">
+		<SportNavigationCarousel>
+			{cards.map((card) => (
+				<SportNavigationTile
+					label={card.label}
+					href={card.href}
+					image={card.image}
+					eyebrow={card.eyebrow}
+					class="shrink-0 basis-[72%] snap-start sm:basis-[42%]"
+				/>
+			))}
+		</SportNavigationCarousel>
+	</div>
+
+	<div class="hidden lg:block">
+		<GridContainer columns="3" gap="default">
+			{cards.map((card) => (
+				<SportNavigationTile
+					label={card.label}
+					href={card.href}
+					image={card.image}
+					eyebrow={card.eyebrow}
+					class="min-h-[190px]"
+				/>
+			))}
+		</GridContainer>
+	</div>
+</section>
