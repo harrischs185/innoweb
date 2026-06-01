@@ -157,11 +157,11 @@ export const playerConfig = {
 		description: 'Explore Lionel Messi cards, collectibles, and featured inventory.',
 		accent: 'amber',
 	},
-	'christian-ronaldo': {
-		name: 'Christian Ronaldo',
+	'cristiano-ronaldo': {
+		name: 'Cristiano Ronaldo',
 		sport: 'Soccer',
 		eyebrow: 'Featured Player',
-		description: 'Explore Christian Ronaldo cards, collectibles, and featured inventory.',
+		description: 'Explore Cristiano Ronaldo cards, collectibles, and featured inventory.',
 		accent: 'amber',
 	},    
 	'kylian-mbappe': {

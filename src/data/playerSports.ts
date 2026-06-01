@@ -1,29 +1,29 @@
-import judgeImage from '../assets/images/players/baseball/aaron-judge.png';
-import wittImage from '../assets/images/players/baseball/bobby-witt-jr.png';
-import delacruzImage from '../assets/images/players/baseball/elly-de-la-cruz.png';
-import troutImage from '../assets/images/players/baseball/mike-trout.png';
-import ohtaniImage from '../assets/images/players/baseball/shohei-ohtani.png';
-import jamesImage from '../assets/images/players/basketball/lebron-james.png';
-import doncicImage from '../assets/images/players/basketball/luka-doncic.png';
-import jordanImage from '../assets/images/players/basketball/michael-jordan.png';
-import curryImage from '../assets/images/players/basketball/stephen-curry.png';
-import wembyImage from '../assets/images/players/basketball/victor-wembanyama.png';
-import stroudImage from '../assets/images/players/football/cj-stroud.png';
-import allenImage from '../assets/images/players/football/josh-allen.png';
-import burrowImage from '../assets/images/players/football/joe-burrow.png';
-import herbertImage from '../assets/images/players/football/justin-herbert.png';
-import mahomesImage from '../assets/images/players/football/patrick-mahomes.png';
-import bradyImage from '../assets/images/players/football/tom-brady.png';
-import dechambeauImage from '../assets/images/players/golf/bryson-dechambeau.png';
-import mickelsonImage from '../assets/images/players/golf/phil-mickelson.png';
-import roryImage from '../assets/images/players/golf/rory-mcilroy.png';
-import schefflerImage from '../assets/images/players/golf/scottie-scheffler.png';
-import tigerImage from '../assets/images/players/golf/tiger-woods.png';
-import ronaldoImage from '../assets/images/players/soccer/christian-ronaldo.png';
-import haalandImage from '../assets/images/players/soccer/erling-haaland.png';
-import bellinghamImage from '../assets/images/players/soccer/jude-bellingham.png';
-import mbappeImage from '../assets/images/players/soccer/kylian-mbappe.png';
-import messiImage from '../assets/images/players/soccer/lionel-messi.png';
+import judgeImage from '../assets/images/players/baseball/aaron-judge/aaron-judge-mangaTile.png';
+import wittImage from '../assets/images/players/baseball/bobby-witt-jr/bobby-witt-jr-mangaTile.png';
+import delacruzImage from '../assets/images/players/baseball/elly-de-la-cruz/elly-de-la-cruz-mangaTile.png';
+import troutImage from '../assets/images/players/baseball/mike-trout/mike-trout-mangaTile.png';
+import ohtaniImage from '../assets/images/players/baseball/shohei-ohtani/shohei-ohtani-mangaTile.png';
+import jamesImage from '../assets/images/players/basketball/lebron-james/lebron-james-mangaTile.png';
+import doncicImage from '../assets/images/players/basketball/luka-doncic/luka-doncic-mangaTile.png';
+import jordanImage from '../assets/images/players/basketball/michael-jordan/michael-jordan-mangaTile.png';
+import curryImage from '../assets/images/players/basketball/stephen-curry/stephen-curry-mangaTile.png';
+import wembyImage from '../assets/images/players/basketball/victor-wembanyama/victor-wembanyama-mangaTile.png';
+import stroudImage from '../assets/images/players/football/cj-stroud/cj-stroud-mangaTile.png';
+import allenImage from '../assets/images/players/football/josh-allen/josh-allen-mangaTile.png';
+import burrowImage from '../assets/images/players/football/joe-burrow/joe-burrow-mangaTile.png';
+import herbertImage from '../assets/images/players/football/justin-herbert/justin-herbert-mangaTile.png';
+import mahomesImage from '../assets/images/players/football/patrick-mahomes/patrick-mahomes-mangaTile.png';
+import bradyImage from '../assets/images/players/football/tom-brady/tom-brady-mangaTile.png';
+import dechambeauImage from '../assets/images/players/golf/bryson-dechambeau/bryson-dechambeau-mangaTile.png';
+import mickelsonImage from '../assets/images/players/golf/phil-mickelson/phil-mickelson-mangaTile.png';
+import roryImage from '../assets/images/players/golf/rory-mcilroy/rory-mcilroy-mangaTile.png';
+import schefflerImage from '../assets/images/players/golf/scottie-scheffler/scottie-scheffler-mangaTile.png';
+import tigerImage from '../assets/images/players/golf/tiger-woods/tiger-woods-mangaTile.png';
+import ronaldoImage from '../assets/images/players/soccer/cristiano-ronaldo/cristiano-ronaldo-mangaTile.png';
+import haalandImage from '../assets/images/players/soccer/erling-haaland/erling-haaland-mangaTile.png';
+import bellinghamImage from '../assets/images/players/soccer/jude-bellingham/jude-bellingham-mangaTile.png';
+import mbappeImage from '../assets/images/players/soccer/kylian-mbappe/kylian-mbappe-mangaTile.png';
+import messiImage from '../assets/images/players/soccer/lionel-messi/lionel-messi-mangaTile.png';
 
 export const playerSportConfig = {
 	football: {
@@ -187,8 +187,8 @@ export const playerSportConfig = {
             meta: 'Modern Star', 
         },
         { 
-            name: 'Christian Ronaldo',
-            href: '/players/christian-ronaldo',
+            name: 'Cristiano Ronaldo',
+            href: '/players/cristiano-ronaldo',
             image: ronaldoImage.src,
             meta: 'Modern Star', 
         },
