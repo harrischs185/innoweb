@@ -1,7 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import SectionWrapper from '../../components/layout/SectionWrapper.astro';
-import SectionHeader from '../../components/layout/SectionHeader.astro';
+
+import PlayerHeroSection from '../../components/players/PlayerHeroSection.astro';
+import PlayerOverviewSection from '../../components/players/PlayerOverviewSection.astro';
+import ShopProductGrid from '../../components/shop/ShopProductGrid.astro';
 
 import {
 	playerConfig,
@@ -15,46 +18,34 @@ export async function getStaticPaths() {
 }
 
 const slug = Astro.params.slug as PlayerKey;
-const config = playerConfig[slug];
+
+const player = {
+	...playerConfig[slug],
+	slug,
+	href: `/players/${slug}`,
+};
 ---
 
 <Layout
-title={config.name}
-description={config.description}
-noindex={false}
+	title={`${player.name} | ${player.sport} Cards & Collectibles | InnoAV Sports Collectables`}
+	description={player.description}
+	noindex={false}
 >
 	<SectionWrapper spacing="tight" container="wide">
-		<SectionHeader
-			eyebrow={config.eyebrow}
-			title={config.name}
-			subtitle={config.description}
-			align="center"
-		/>
+		<PlayerHeroSection player={player} />
+	</SectionWrapper>
 
-		<div class="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-			<div class="rounded-2xl border border-slate-800 bg-slate-950 p-6">
-				<p class="text-sm uppercase tracking-wide text-amber-400">
-					{config.sport}
-				</p>
+	<SectionWrapper spacing="normal" container="wide">
+		<PlayerOverviewSection player={player} />
+	</SectionWrapper>
 
-				<h2 class="mt-2 text-2xl font-bold text-white">
-					Player Profile Shell
-				</h2>
-
-				<p class="mt-3 text-sm leading-relaxed text-slate-300">
-					This area will eventually contain player-specific profile content, market notes, PlayerPulse highlights, and curated links.
-				</p>
-			</div>
-
-			<div class="rounded-2xl border border-slate-800 bg-slate-950 p-6">
-				<h2 class="text-xl font-bold text-white">
-					Featured Inventory
-				</h2>
-
-				<p class="mt-3 text-sm text-slate-400">
-					Player-specific product cards will hydrate here.
-				</p>
-			</div>
+	<SectionWrapper spacing="normal" container="wide">
+		<div id="player-inventory">
+			<ShopProductGrid
+				player={player.name}
+				title={`${player.name} Inventory`}
+				eyebrow="Available Cards"
+			/>
 		</div>
 	</SectionWrapper>
 </Layout>

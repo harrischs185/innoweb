@@ -1,0 +1,54 @@
+---
+const {
+	player,
+} = Astro.props;
+---
+
+<section id="player-overview" aria-label={`${player.name} overview`}>
+	<div class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+		<div class="rounded-2xl border border-slate-800 bg-slate-950/85 p-6">
+			<p class="type-context-label text-amber-400">
+				Player Overview
+			</p>
+
+			<h2 class="type-section-title mt-2 text-white">
+				Why Collectors Watch {player.name}
+			</h2>
+
+			<p class="mt-4 text-sm leading-relaxed text-slate-300 lg:text-base">
+				{player.description}
+			</p>
+
+			<p class="mt-4 text-sm leading-relaxed text-slate-400">
+				This page is designed to become a player-specific discovery hub connecting cards, inventory, future PlayerPulse insights, and collector-focused content.
+			</p>
+		</div>
+
+		<div class="rounded-2xl border border-slate-800 bg-slate-950/85 p-6">
+			<p class="type-context-label text-amber-400">
+				Future PlayerPulse
+			</p>
+
+			<h2 class="type-panel-title mt-2 text-white">
+				Market Signals Coming Later
+			</h2>
+
+			<div class="mt-5 space-y-3">
+				<div class="rounded-xl border border-slate-800 bg-black/40 p-4">
+					<p class="text-xs uppercase tracking-wide text-slate-500">Collector Interest</p>
+					<p class="mt-1 text-lg font-black text-white">Pending</p>
+				</div>
+
+				<div class="rounded-xl border border-slate-800 bg-black/40 p-4">
+					<p class="text-xs uppercase tracking-wide text-slate-500">Inventory Match</p>
+					<p class="mt-1 text-lg font-black text-white">Pending</p>
+				</div>
+
+				<div class="rounded-xl border border-slate-800 bg-black/40 p-4">
+					<p class="text-xs uppercase tracking-wide text-slate-500">Content Links</p>
+					<p class="mt-1 text-lg font-black text-white">Pending</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
