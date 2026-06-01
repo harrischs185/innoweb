@@ -9,13 +9,10 @@ const {
 	class: extraClass = '',
 } = Astro.props;
 
-const debugClass = debug ? 'outline outline-1 outline-red-500' : '';
-
 const classes = [
 	'group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-950',
 	'min-h-[130px] sm:min-h-[150px] lg:min-h-[165px]',
 	'transition duration-300 hover:-translate-y-1 hover:border-amber-400/70 hover:shadow-[0_0_28px_rgba(245,158,11,0.16)]',
-	debugClass,
 	extraClass,
 ].filter(Boolean).join(' ');
 ---

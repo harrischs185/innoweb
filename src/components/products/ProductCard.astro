@@ -10,12 +10,10 @@ const {
 } = Astro.props;
 
 const productHref = href ?? `/product/${slug}`;
-const debugClass = debug ? 'outline outline-1 outline-red-500' : '';
 
 const classes = [
 	'group relative flex h-full flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-950',
 	'transition duration-300 hover:border-sky-500/70 hover:shadow-[0_0_24px_rgba(37,99,235,0.18)]',
-	debugClass,
 	extraClass,
 ].filter(Boolean).join(' ');
 ---
@@ -43,7 +41,7 @@ const classes = [
 
 			<div class="mt-auto pt-3">
 				<div class="inline-flex w-full items-center justify-center rounded-md border border-sky-500 px-3 py-2 text-[11px] font-bold uppercase tracking-wide text-white transition hover:bg-sky-500/10">
-					Add to Cart
+					View Product
 				</div>
 			</div>
 		</div>

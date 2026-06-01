@@ -9,13 +9,10 @@ const {
 	class: extraClass = '',
 } = Astro.props;
 
-const debugClass = debug ? 'border border-red-500' : '';
-
 const headerClasses = [
 	'w-full',
 	'bg-black',
 	'text-white',
-	debugClass,
 	extraClass,
 ].filter(Boolean).join(' ');
 ---

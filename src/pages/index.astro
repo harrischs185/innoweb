@@ -1,24 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import UtilityHeaderStrip from '../components/header/UtilityHeaderStrip.astro';
-import HeaderDivider from '../components/header/HeaderDivider.astro';
-import SiteHeader from '../components/header/SiteHeader.astro';
 import HeroSection from '../components/home/HeroSection.astro';
-import SportNavigationSection from '../components/home/SportNavigationSection.astro';
+import ShopSportNavigationSection from '../components/home/ShopSportNavigationSection.astro';
 import PromotionalRail from '../components/home/promos/PromotionalRail.astro';
-import NewArrivalsSection from '../components/home/promos/NewArrivalsSection.astro';
-import TrustAccessGrid from '../components/home/trust/TrustAccessGrid.astro';
+import NewArrivalsSection from '../components/home/NewArrivalsSection.astro';
 ---
-<Layout>
-    <main class="layout-page bg-black px-6 py-0 text-white md:px-12">
-        <UtilityHeaderStrip />
-        <HeaderDivider width="full" />
-        <SiteHeader />
-		<HeaderDivider />
+<Layout 
+title="InnoAV Sports Collectibles"
+description="Shop sports cards, autographs, graded collectibles, memorabilia, and hobby insights from InnoAV Sports Collectibles."
+noindex={false}
+>   
         <HeroSection />
-		<SportNavigationSection />
+		<ShopSportNavigationSection />
         <PromotionalRail />
         <NewArrivalsSection />
-        <TrustAccessGrid />
-    </main>
 </Layout>

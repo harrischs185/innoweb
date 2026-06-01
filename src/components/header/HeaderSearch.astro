@@ -5,11 +5,8 @@ const {
 	class: extraClass = '',
 } = Astro.props;
 
-const debugClass = debug ? 'border border-red-500' : '';
-
 const classes = [
 	'w-full',
-	debugClass,
 	extraClass,
 ].filter(Boolean).join(' ');
 ---

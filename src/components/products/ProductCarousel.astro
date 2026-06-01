@@ -4,11 +4,8 @@ const {
 	class: extraClass = '',
 } = Astro.props;
 
-const debugClass = debug ? 'outline outline-1 outline-red-500' : '';
-
 const classes = [
 	'relative',
-	debugClass,
 	extraClass,
 ].filter(Boolean).join(' ');
 ---

@@ -13,14 +13,11 @@ const {
 	class: extraClass = '',
 } = Astro.props;
 
-const debugClass = debug ? 'outline outline-1 outline-red-500' : '';
-
 const classes = [
 	'hidden lg:flex',
 	'items-center justify-center',
 	'gap-4 xl:gap-6 2xl:gap-8',
 	'py-3',
-	debugClass,
 	extraClass,
 ].filter(Boolean).join(' ');
 ---

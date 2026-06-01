@@ -1,10 +1,6 @@
 ---
 
 import Layout from '../../layouts/Layout.astro';
-import UtilityHeaderStrip from '../../components/header/UtilityHeaderStrip.astro';
-import HeaderDivider from '../../components/header/HeaderDivider.astro';
-import SiteHeader from '../../components/header/SiteHeader.astro';
-import TrustAccessGrid from '../../components/home/trust/TrustAccessGrid.astro';
 
 export async function getStaticPaths() {
 	return [
@@ -20,17 +16,27 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
+
+const productConfig = {
+	example: { title: 'Example Product' },
+	'example-1': { title: 'Example Product 1' },
+	'example-2': { title: 'Example Product 2' },
+	'example-3': { title: 'Example Product 3' },
+	'example-4': { title: 'Example Product 4' },
+	'example-5': { title: 'Example Product 5' },
+	'example-6': { title: 'Example Product 6' },
+	'gift-cards': { title: 'Gift Cards' },
+};
+
+const config = productConfig[slug];
 ---
 
 
-<Layout>
-    <main class="layout-page bg-black px-6 py-0 text-white md:px-12">
-        <UtilityHeaderStrip />
-        <HeaderDivider width="full" />
-        <SiteHeader />
-		<HeaderDivider />
-        <h1>Product Route Shell</h1>
-        <p>Current product slug: {slug}</p>
-        <TrustAccessGrid />
-    </main>
+<Layout
+title={config.title}
+description={config.description}
+noindex={false}
+>
+    <h1>Product Route Shell: {config.title}</h1>
+    <p>Current product slug: {slug}</p>
 </Layout>

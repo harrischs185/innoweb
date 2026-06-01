@@ -9,11 +9,8 @@ const {
 	class: extraClass = '',
 } = Astro.props;
 
-const debugClass = debug ? 'border border-red-500' : '';
-
 const classes = [
 	'flex items-center gap-3',
-	debugClass,
 	extraClass,
 ].filter(Boolean).join(' ');
 ---

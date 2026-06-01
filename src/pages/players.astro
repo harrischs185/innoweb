@@ -1,18 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import UtilityHeaderStrip from '../components/header/UtilityHeaderStrip.astro';
-import HeaderDivider from '../components/header/HeaderDivider.astro';
-import SiteHeader from '../components/header/SiteHeader.astro';
-import SportNavigationSection from '../components/players/SportNavigationSection.astro';
-import TrustAccessGrid from '../components/home/trust/TrustAccessGrid.astro';
+import PlayerSportNavigationSection from '../components/players/PlayerSportNavigationSection.astro';
 ---
-<Layout>
-    <main class="layout-page bg-black px-6 py-0 text-white md:px-12">
-        <UtilityHeaderStrip />
-        <HeaderDivider width="full" />
-        <SiteHeader />
-		<HeaderDivider />
-        <SportNavigationSection />
-        <TrustAccessGrid />
-    </main>
+<Layout
+title="Players"
+description="Browse featured athletes by sport and discover player pages, collectibles, and hobby insights."
+noindex={false}
+>
+        <PlayerSportNavigationSection />
 </Layout>

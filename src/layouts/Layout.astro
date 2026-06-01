@@ -1,5 +1,16 @@
 ---
 import '../styles/global.css';
+import UtilityHeaderStrip from '../components/header/UtilityHeaderStrip.astro';
+import HeaderDivider from '../components/header/HeaderDivider.astro';
+import SiteHeader from '../components/header/SiteHeader.astro';
+import TrustAccessGrid from '../components/home/trust/TrustAccessGrid.astro';
+
+const {
+	title = 'InnoAV Sports Collectibles',
+	description = 'Sports cards, collectibles, player pages, and hobby tools.',
+	noindex = false,
+    showFooterTrust = true,
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -10,10 +21,31 @@ import '../styles/global.css';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+
+        <meta
+            name="description"
+            content={description}
+        />
+
+        {noindex && (
+            <meta
+                name="robots"
+                content="noindex,nofollow"
+            />
+        )}
 	</head>
 	<body>
-		<slot />
+        <UtilityHeaderStrip />
+        <HeaderDivider width="full" />
+        <SiteHeader />
+        <HeaderDivider />
+
+        <main class="layout-page bg-black px-6 py-0 text-white md:px-12">
+            <slot />
+
+            {showFooterTrust && <TrustAccessGrid />}
+        </main>
 	</body>
 </html>
 

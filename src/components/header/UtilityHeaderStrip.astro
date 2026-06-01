@@ -20,7 +20,6 @@ const {
 } = Astro.props;
 
 const visibilityClass = visibleOnMobile ? 'flex' : 'hidden md:flex';
-const debugClass = debug ? 'border border-red-500' : '';
 
 const stripClasses = [
 	visibilityClass,
@@ -28,7 +27,6 @@ const stripClasses = [
 	'border-b border-amber-500/20',
 	'bg-black/95 text-slate-100',
 	'px-4 py-2',
-	debugClass,
 	extraClass,
 ].filter(Boolean).join(' ');
 

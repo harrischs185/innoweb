@@ -3,237 +3,26 @@ import Layout from '../../layouts/Layout.astro';
 import SectionWrapper from '../../components/layout/SectionWrapper.astro';
 import SectionHeader from '../../components/layout/SectionHeader.astro';
 
+import {
+	playerConfig,
+	type PlayerKey,
+} from '../../data/players';
+
 export async function getStaticPaths() {
-	return [
-        { params: { slug: 'josh-allen' } },
-        { params: { slug: 'patrick-mahomes' } },
-        { params: { slug: 'cj-stroud' } },
-        { params: { slug: 'tom-brady' } },
-        { params: { slug: 'justin-herbert' } },
-        { params: { slug: 'joe-burrow' } },
-
-        { params: { slug: 'shohei-ohtani' } },
-        { params: { slug: 'aaron-judge' } },
-        { params: { slug: 'bobby-witt-jr' } },
-        { params: { slug: 'mike-trout' } },
-        { params: { slug: 'elly-de-la-cruz' } },
-
-        { params: { slug: 'michael-jordan' } },
-        { params: { slug: 'lebron-james' } },
-        { params: { slug: 'stephen-curry' } },
-        { params: { slug: 'victor-wembanyama' } },
-        { params: { slug: 'luka-doncic' } },
-
-		{ params: { slug: 'tiger-woods' } },
-        { params: { slug: 'rory-mcilroy' } },
-        { params: { slug: 'scottie-scheffler' } },
-        { params: { slug: 'bryson-dechambeau' } },
-        { params: { slug: 'phil-mickelson' } },
-
-        { params: { slug: 'lionel-messi' } },
-        { params: { slug: 'christian-ronaldo' } },
-        { params: { slug: 'kylian-mbappe' } },
-        { params: { slug: 'erling-haaland' } },
-        { params: { slug: 'jude-bellingham' } },
-
-	];
+	return Object.keys(playerConfig).map((slug) => ({
+		params: { slug },
+	}));
 }
 
-const { slug } = Astro.params;
-
-const playerConfig = {
-	'josh-allen': {
-		name: 'Josh Allen',
-		sport: 'Football',
-		eyebrow: 'Featured Player',
-		description: 'Explore Josh Allen cards, rookies, slabs, and featured inventory.',
-		accent: 'blue',
-	},
-	'patrick-mahomes': {
-		name: 'Patrick Mahomes',
-		sport: 'Football',
-		eyebrow: 'Featured Player',
-		description: 'Explore Patrick Mahomes cards, rookies, slabs, and featured inventory.',
-		accent: 'blue',
-	},
-	'cj-stroud': {
-		name: 'CJ Stroud',
-		sport: 'Football',
-		eyebrow: 'Featured Player',
-		description: 'Explore CJ Stroud cards, rookies, slabs, and featured inventory.',
-		accent: 'blue',
-	},
-	'tom-brady': {
-		name: 'Tom Brady',
-		sport: 'Football',
-		eyebrow: 'Featured Player',
-		description: 'Explore Tom Brady cards, rookies, slabs, and featured inventory.',
-		accent: 'blue',
-	},
-    'justin-herbert': {
-		name: 'Justin Herbert',
-		sport: 'Football',
-		eyebrow: 'Featured Player',
-		description: 'Explore Justin Herbert cards, rookies, slabs, and featured inventory.',
-		accent: 'blue',
-	},
-    'joe-burrow': {
-		name: 'Joe Burrow',
-		sport: 'Football',
-		eyebrow: 'Featured Player',
-		description: 'Explore Joe Burrow cards, rookies, slabs, and featured inventory.',
-		accent: 'blue',
-	},
-
-	'shohei-ohtani': {
-		name: 'Shohei Ohtani',
-		sport: 'Baseball',
-		eyebrow: 'Featured Player',
-		description: 'Explore Shohei Ohtani cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'aaron-judge': {
-		name: 'Aarron Judge',
-		sport: 'Baseball',
-		eyebrow: 'Featured Player',
-		description: 'Explore Aarron Judge cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'bobby-witt-jr': {
-		name: 'Bobby Witt Jr.',
-		sport: 'Baseball',
-		eyebrow: 'Featured Player',
-		description: 'Explore Bobby Witt Jr. cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'mike-trout': {
-		name: 'Mike Trout',
-		sport: 'Baseball',
-		eyebrow: 'Featured Player',
-		description: 'Explore Mike Trout cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'elly-de-la-cruz': {
-		name: 'Elly De La Cruz',
-		sport: 'Baseball',
-		eyebrow: 'Featured Player',
-		description: 'Explore Elly De La Cruz cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-
-	'michael-jordan': {
-		name: 'Michael Jordan',
-		sport: 'Basketball',
-		eyebrow: 'Featured Player',
-		description: 'Explore Michael Jordan cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'lebron-james': {
-		name: 'LeBron James',
-		sport: 'Basketball',
-		eyebrow: 'Featured Player',
-		description: 'Explore LeBron James cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'stephen-curry': {
-		name: 'Stephen Curry',
-		sport: 'Basketball',
-		eyebrow: 'Featured Player',
-		description: 'Explore Stephen Curry cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'victor-wembanyama': {
-		name: 'Victor Wembanyama',
-		sport: 'Basketball',
-		eyebrow: 'Featured Player',
-		description: 'Explore Victor Wembanyama cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'luka-doncic': {
-		name: 'Luka Donic',
-		sport: 'Basketball',
-		eyebrow: 'Featured Player',
-		description: 'Explore Luka Donic cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-
-	'tiger-woods': {
-		name: 'Tiger Woods',
-		sport: 'Golf',
-		eyebrow: 'Featured Player',
-		description: 'Explore Tiger Woods cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'rory-mcilroy': {
-		name: 'Rory McIlroy',
-		sport: 'Golf',
-		eyebrow: 'Featured Player',
-		description: 'Explore Rory McIlroy cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'scottie-scheffler': {
-		name: 'Scottie Scheffler',
-		sport: 'Golf',
-		eyebrow: 'Featured Player',
-		description: 'Explore Scottie Scheffler cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'bryson-dechambeau': {
-		name: 'Bryson Dechambeau',
-		sport: 'Golf',
-		eyebrow: 'Featured Player',
-		description: 'Explore Bryson Dechambeau cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'phil-mickelson': {
-		name: 'Phil Mickelson',
-		sport: 'Golf',
-		eyebrow: 'Featured Player',
-		description: 'Explore Phil Mickelson cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-
-	'lionel-messi': {
-		name: 'Lionel Messi',
-		sport: 'Soccer',
-		eyebrow: 'Featured Player',
-		description: 'Explore Lionel Messi cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'christian-ronaldo': {
-		name: 'Christian Ronaldo',
-		sport: 'Soccer',
-		eyebrow: 'Featured Player',
-		description: 'Explore Christian Ronaldo cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},    
-	'kylian-mbappe': {
-		name: 'Kylian Mbappe',
-		sport: 'Soccer',
-		eyebrow: 'Featured Player',
-		description: 'Explore Kylian Mbappe cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'erling-haaland': {
-		name: 'Erling Haaland',
-		sport: 'Soccer',
-		eyebrow: 'Featured Player',
-		description: 'Explore Erling Haaland cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},
-	'jude-bellingham': {
-		name: 'Jude Bellingham',
-		sport: 'Soccer',
-		eyebrow: 'Featured Player',
-		description: 'Explore Jude Bellingham cards, collectibles, and featured inventory.',
-		accent: 'amber',
-	},    
-};
-
+const slug = Astro.params.slug as PlayerKey;
 const config = playerConfig[slug];
 ---
 
-<Layout title={config.name}>
+<Layout
+title={config.name}
+description={config.description}
+noindex={false}
+>
 	<SectionWrapper spacing="tight" container="wide">
 		<SectionHeader
 			eyebrow={config.eyebrow}
