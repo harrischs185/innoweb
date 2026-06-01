@@ -36,9 +36,10 @@ const {
 	class="hidden overflow-hidden rounded-3xl border border-slate-800 bg-cover bg-center bg-no-repeat lg:block"
 	style={`background-image: linear-gradient(90deg, rgba(2,6,23,0.95) 0%, rgba(3,7,18,0.75) 45%, rgba(2,6,23,0.35) 100%), url(${heroBackground.src});`}
 	>	
-		<ContentRail split="hero" gap="hero" align="stretch" debug={false}>
-			<div slot="primary" class="flex h-full min-h-full flex-col">
-				<div class="space-y-6">
+		<ContentRail split="hero" gap="hero" align="stretch" debug={false}
+		class="px-6 py-8 lg:px-8 lg:py-10 xl:px-10 xl:py-12">
+			<div slot="primary" class="flex h-full min-h-full flex-col lg:pl-4 xl:pl-6">
+				<div class="space-y-3">
 					<HeroContent />
 					<HeroTrustBar />
 				</div>

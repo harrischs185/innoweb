@@ -371,12 +371,12 @@
 
 	.type-body-prominent {
 		@apply 
-            text-[0.95rem] 
-            sm:text-[1.55rem] 
-            md:text-[1.95rem] 
-            lg:text-[3.15rem] 
-            xl:text-[3.55rem] 
-            2xl:text-[4.05rem]
+            text-[0.55rem] 
+            sm:text-[0.55rem] 
+            md:text-[0.65rem] 
+            lg:text-[0.75rem] 
+            xl:text-[0.85rem] 
+            2xl:text-[1.05rem]
             leading-relaxed 
             text-slate-300;
 	}

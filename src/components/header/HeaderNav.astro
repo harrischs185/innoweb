@@ -1,13 +1,13 @@
 ---
 const {
 	items = [
-		{ label: 'Shop', href: '/shop' },
-		{ label: 'Players', href: '/players' },
-        { label: 'New arrivals', href: '/shop/new-arrivals' },
-		{ label: 'Buy / Consign', href: '/consign' },
-        { label: 'About Us', href: '/about' },
-        { label: "Bunker's Breakdown", href: '/blog' },
-        { label: 'Gift Cards', href: 'product/gift-cards' },
+		{ label: 'SHOP', href: '/shop' },
+		{ label: 'PLAYERS', href: '/players' },
+        { label: 'NEW ARRIVALS', href: '/shop/new-arrivals' },
+		{ label: 'BUY / CONSIGN', href: '/consign' },
+        { label: 'ABOUT US', href: '/about' },
+        { label: "BUNKER'S BREAKDOWN", href: '/blog' },
+        { label: 'GIFT CARDS', href: 'product/gift-cards' },
 	],
 	debug = false,
 	class: extraClass = '',
@@ -26,7 +26,7 @@ const classes = [
 	{items.map((item) => (
 		<a
 			href={item.href}
-			class="type-utility-label text-slate-300 transition hover:text-amber-400"
+			class="type-body-prominent text-slate-300 transition hover:text-amber-400"
 		>
 			{item.label}
 		</a>
