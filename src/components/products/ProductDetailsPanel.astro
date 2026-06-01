@@ -1,0 +1,35 @@
+---
+const { product } = Astro.props;
+
+const details = [
+	{ label: 'Category', value: product.category ?? 'Collectibles' },
+	{ label: 'Tags', value: product.tags?.join(', ') ?? 'Featured' },
+	{ label: 'SKU', value: product.sku ?? 'Pending' },
+	{ label: 'Availability', value: product.availability ?? 'Preview' },
+];
+---
+
+<section aria-label="Product details">
+	<div class="rounded-2xl border border-slate-800 bg-slate-950/85 p-6">
+		<p class="type-context-label text-amber-400">
+			Product Details
+		</p>
+
+		<h2 class="type-panel-title mt-2 text-white">
+			Collector Information
+		</h2>
+
+		<div class="mt-5 grid gap-3 sm:grid-cols-2">
+			{details.map((item) => (
+				<div class="rounded-xl border border-slate-800 bg-black/40 p-4">
+					<p class="text-xs uppercase tracking-wide text-slate-500">
+						{item.label}
+					</p>
+					<p class="mt-1 text-sm font-bold text-white">
+						{item.value}
+					</p>
+				</div>
+			))}
+		</div>
+	</div>
+</section>

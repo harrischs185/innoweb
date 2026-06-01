@@ -1,42 +1,41 @@
 ---
-
 import Layout from '../../layouts/Layout.astro';
+import SectionWrapper from '../../components/layout/SectionWrapper.astro';
+
+import ProductHeroSection from '../../components/products/ProductHeroSection.astro';
+import ProductDetailsPanel from '../../components/products/ProductDetailsPanel.astro';
+import ProductTrustPanel from '../../components/products/ProductTrustPanel.astro';
+
+import { products } from '../../data/products';
 
 export async function getStaticPaths() {
-	return [
-        { params: { slug: 'example' } },
-		{ params: { slug: 'example-1' } },
-        { params: { slug: 'example-2' } },
-        { params: { slug: 'example-3' } },
-        { params: { slug: 'example-4' } },
-        { params: { slug: 'example-5' } },
-        { params: { slug: 'example-6' } },
-        { params: { slug: 'gift-cards' } },
-	];
+	return products.map((product) => ({
+		params: { slug: product.slug },
+	}));
 }
 
 const { slug } = Astro.params;
+const product = products.find((item) => item.slug === slug);
 
-const productConfig = {
-	example: { title: 'Example Product' },
-	'example-1': { title: 'Example Product 1' },
-	'example-2': { title: 'Example Product 2' },
-	'example-3': { title: 'Example Product 3' },
-	'example-4': { title: 'Example Product 4' },
-	'example-5': { title: 'Example Product 5' },
-	'example-6': { title: 'Example Product 6' },
-	'gift-cards': { title: 'Gift Cards' },
-};
-
-const config = productConfig[slug];
+if (!product) {
+	return Astro.redirect('/shop');
+}
 ---
 
-
 <Layout
-title={config.title}
-description={config.description}
-noindex={false}
+	title={`${product.title} | Sports Card Product | InnoAV Sports Collectables`}
+	description={`View ${product.title}, pricing, details, and collector-focused product information from InnoAV Sports Collectables.`}
+	noindex={false}
 >
-    <h1>Product Route Shell: {config.title}</h1>
-    <p>Current product slug: {slug}</p>
+	<SectionWrapper spacing="tight" container="wide">
+		<ProductHeroSection product={product} />
+	</SectionWrapper>
+
+	<SectionWrapper spacing="normal" container="wide">
+		<ProductDetailsPanel product={product} />
+	</SectionWrapper>
+
+	<SectionWrapper spacing="normal" container="wide">
+		<ProductTrustPanel />
+	</SectionWrapper>
 </Layout>
