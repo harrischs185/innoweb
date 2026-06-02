@@ -1,0 +1,83 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import SectionWrapper from '../../../components/layout/SectionWrapper.astro';
+import BlogArticleGrid from '../../../components/blog/BlogArticleGrid.astro';
+import BlogCategorySection from '../../../components/blog/BlogCategorySection.astro';
+
+import { getArticles } from '../../../data/articles';
+import { blogCategories } from '../../../data/blogCategories';
+
+export async function getStaticPaths() {
+	return blogCategories.map((category) => ({
+		params: { slug: category.slug },
+	}));
+}
+
+const { slug } = Astro.params;
+const category = blogCategories.find((item) => item.slug === slug);
+
+if (!category) {
+	return Astro.redirect('/blog');
+}
+
+const articles = await getArticles();
+
+const categoryArticles = articles.filter(
+	(article) => article.categorySlug === category.slug
+);
+---
+
+<Layout
+	title={`${category.title} | Bunker's Breakdown | InnoAV Sports Collectables`}
+	description={category.description}
+	noindex={false}
+>
+	<SectionWrapper spacing="tight" container="wide">
+		<section class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-950">
+			<div class="grid gap-8 p-6 lg:grid-cols-[0.85fr_1.15fr] lg:p-8 xl:p-10">
+				<div class="flex flex-col justify-center">
+
+					<h1 class="type-druk-gold  mt-3 ">
+						{category.title}
+					</h1>
+
+					<p class="mt-5 max-w-xl text-sm leading-relaxed text-slate-300 lg:text-base">
+						{category.description}
+					</p>
+
+					<p class="mt-4 max-w-xl text-sm leading-relaxed text-slate-400">
+						Explore Bunker’s breakdowns, guides, and collector-focused lessons in this category.
+					</p>
+
+					<div class="mt-6">
+						<a
+							href="/blog"
+							class="inline-flex rounded-md border border-sky-500 px-5 py-3 text-xs font-black uppercase text-white transition hover:bg-sky-500/10"
+						>
+							Back To Bunker's Breakdown
+						</a>
+					</div>
+				</div>
+
+				<div class="flex items-center justify-center">
+					{category.image && (
+						<img
+							src={category.image}
+							alt=""
+							aria-hidden="true"
+							class="w-full rounded-2xl border border-slate-800 object-contain shadow-[0_0_40px_rgba(0,0,0,0.35)]"
+						/>
+					)}
+				</div>
+			</div>
+		</section>
+	</SectionWrapper>
+
+	<SectionWrapper spacing="normal" container="wide">
+		<BlogArticleGrid articles={categoryArticles} />
+	</SectionWrapper>
+
+	<SectionWrapper spacing="normal" container="wide">
+		<BlogCategorySection />
+	</SectionWrapper>
+</Layout>

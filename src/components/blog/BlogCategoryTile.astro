@@ -1,0 +1,29 @@
+---
+const {
+	title = 'Category',
+	href = '#',
+	image = '',
+	class: extraClass = '',
+} = Astro.props;
+
+const classes = [
+	'group block overflow-hidden rounded-2xl border border-slate-800 bg-black',
+	'transition duration-300 hover:-translate-y-1 hover:border-amber-400/70 hover:shadow-[0_0_28px_rgba(245,158,11,0.16)]',
+	extraClass,
+]
+	.filter(Boolean)
+	.join(' ');
+---
+
+<a href={href} class={classes} aria-label={`Explore ${title}`}>
+	{image && (
+		<img
+			src={image}
+			alt=""
+			aria-hidden="true"
+			class="block h-auto w-full transition duration-300 group-hover:scale-[1.02]"
+		/>
+	)}
+
+	<span class="sr-only">{title}</span>
+</a>

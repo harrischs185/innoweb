@@ -1,12 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SectionWrapper from '../components/layout/SectionWrapper.astro';
+
+import BlogHeroSection from '../components/blog/BlogHeroSection.astro';
+import BlogFeaturedSection from '../components/blog/BlogFeaturedSection.astro';
+import BlogCategorySection from '../components/blog/BlogCategorySection.astro';
+import BlogArticleGrid from '../components/blog/BlogArticleGrid.astro';
+
+import { getArticles } from '../data/articles';
+
+const articles = await getArticles();
 ---
+
 <Layout
-title="Blog"
-description="Sports card news, collecting tips, hobby insights, market trends, and featured stories."
-noindex={false}
+	title="Bunker's Breakdown | Sports Card Blog | InnoAV Sports Collectables"
+	description="Read Bunker's Breakdown for sports card collecting guides, player analysis, market lessons, grading tips, and hobby education."
+	noindex={false}
 >
-    <p>
-        Page Content Goes Here
-    </p>
+	<SectionWrapper spacing="tight" container="wide">
+		<BlogHeroSection />
+	</SectionWrapper>
+
+	<SectionWrapper spacing="normal" container="wide">
+		<BlogCategorySection />
+	</SectionWrapper>
+
+	<SectionWrapper spacing="normal" container="wide">
+		<BlogFeaturedSection articles={articles} />
+	</SectionWrapper>
+
+	<SectionWrapper spacing="normal" container="wide">
+		<BlogArticleGrid articles={articles} />
+	</SectionWrapper>
 </Layout>

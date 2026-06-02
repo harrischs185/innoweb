@@ -1,0 +1,31 @@
+---
+const categories = [
+	'Beginner Guides',
+	'Card Identification',
+	'Grading',
+	'Market Analysis',
+	'Player Analysis',
+	'Collecting Tips',
+	'Storage & Protection',
+	'Set Spotlights',
+	'Hobby Culture',
+];
+---
+
+<section aria-label="Blog categories">
+	<div class="mb-4">
+		<p class="type-context-label text-amber-400">Browse By Topic</p>
+		<h2 class="type-section-title text-white">Bunker’s Playbook</h2>
+	</div>
+
+	<div class="flex gap-3 overflow-x-auto pb-2">
+		{categories.map((category) => (
+			<a
+				href={`/blog?category=${encodeURIComponent(category)}`}
+				class="type-context-label shrink-0 rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-slate-200 transition hover:border-amber-400 hover:text-amber-300"
+			>
+				{category}
+			</a>
+		))}
+	</div>
+</section>

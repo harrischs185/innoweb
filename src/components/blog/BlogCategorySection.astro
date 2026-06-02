@@ -1,0 +1,28 @@
+---
+import SectionHeader from '../layout/SectionHeader.astro';
+import GridContainer from '../layout/GridContainer.astro';
+import BlogCategoryTile from './BlogCategoryTile.astro';
+
+import { blogCategories } from '../../data/blogCategories';
+---
+
+<section aria-label="Blog categories">
+	<SectionHeader
+		eyebrow="Browse By Topic"
+		title="Bunker's Playbook"
+		subtitle="Pick a lane, run the sniff test, and dig into the hobby one breakdown at a time."
+		align="center"
+	/>
+
+	<div class="mt-6">
+		<GridContainer columns="4" gap="tight">
+			{blogCategories.map((category) => (
+				<BlogCategoryTile
+					title={category.title}
+					href={`/blog/category/${category.slug}`}
+					image={category.image}
+				/>
+			))}
+		</GridContainer>
+	</div>
+</section>
