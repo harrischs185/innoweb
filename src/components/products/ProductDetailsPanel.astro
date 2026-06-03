@@ -9,6 +9,20 @@ const details = [
 ];
 ---
 
+{product.description && (
+	<div class="mt-5 rounded-xl border border-slate-800 bg-black/40 p-4">
+		<p class="text-xs uppercase tracking-[0.08em] text-slate-500">
+			Description
+		</p>
+
+		<p class="mt-2 text-sm leading-relaxed text-slate-300">
+			{product.description}
+		</p>
+	</div>
+)}
+
+
+
 <section aria-label="Product details">
 	<div class="rounded-2xl border border-slate-800 bg-slate-950/85 p-6">
 		<p class="type-context-label text-amber-400">

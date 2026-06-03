@@ -7,7 +7,24 @@ readTime: "6 min read"
 status: "Featured"
 ---
 
-Alright folks... Bat Dog here.
+Alright folks... Bat Dog here. <br /><br /> Testing, is this thing on?
+
+*Collector note*  
+<br />
+**PSA 10**  
+<br />
+
+    - Centering
+    - Sharp corners
+    - Strong eye appeal
+
+    1. Buy cards you enjoy
+    2. Learn the market
+    3. Focus your collection
+
+[View our inventory](/shop)
+
+![Josh Allen Rookie](/images/blog/how-to-start-collecting-sports-cards/josh-allen-rookie.jpg)
 
 This article will become a practical beginner guide for new collectors.
 

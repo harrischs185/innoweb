@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SectionWrapper from '../components/layout/SectionWrapper.astro';
-
+import HeaderDivider from '../components/header/HeaderDivider.astro';
 import BlogHeroSection from '../components/blog/BlogHeroSection.astro';
 import BlogFeaturedSection from '../components/blog/BlogFeaturedSection.astro';
 import BlogCategorySection from '../components/blog/BlogCategorySection.astro';
@@ -20,16 +20,22 @@ const articles = await getArticles();
 	<SectionWrapper spacing="tight" container="wide">
 		<BlogHeroSection />
 	</SectionWrapper>
-
-	<SectionWrapper spacing="normal" container="wide">
+	
+	<HeaderDivider />
+	
+	<SectionWrapper spacing="tight" container="wide">
 		<BlogCategorySection />
 	</SectionWrapper>
 
-	<SectionWrapper spacing="normal" container="wide">
+	<HeaderDivider />
+
+	<SectionWrapper spacing="tight" container="wide">
 		<BlogFeaturedSection articles={articles} />
 	</SectionWrapper>
 
-	<SectionWrapper spacing="normal" container="wide">
+	<HeaderDivider />
+	
+	<SectionWrapper spacing="tight" container="wide">
 		<BlogArticleGrid articles={articles} />
 	</SectionWrapper>
 </Layout>

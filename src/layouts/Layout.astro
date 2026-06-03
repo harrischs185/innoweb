@@ -41,7 +41,7 @@ const {
         <SiteHeader />
         <HeaderDivider />
 
-        <main class="layout-page bg-black px-6 py-0 text-white md:px-12">
+        <main class="layout-page flex-1 bg-black px-6 py-0 text-white md:px-12">
             <slot />
 
             {showFooterTrust && <TrustAccessGrid />}
@@ -60,7 +60,6 @@ const {
 	}
 
     .layout-page {
-        min-height: 100vh;
         overflow-x: clip;
         background: black;
     }

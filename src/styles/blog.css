@@ -1,0 +1,29 @@
+.blog-content img {
+	display: block;
+	margin: 2rem auto;
+
+	max-width: 250px;
+
+	width: 100%;
+	height: auto;
+
+	border-radius: 1rem;
+
+	border: 1px solid rgba(71, 85, 105, 0.8);
+
+	box-shadow:
+		0 10px 20px rgba(0, 0, 0, 0.25),
+		0 0 0 1px rgba(245, 158, 11, 0.05);
+}
+
+.blog-content p {
+	line-height: 1.8;
+}
+
+.blog-content h2 {
+	margin-top: 2.5rem;
+}
+
+.blog-content h3 {
+	margin-top: 2rem;
+}

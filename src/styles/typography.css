@@ -16,7 +16,6 @@
 	);
 
       }
-
       .type-brush-hero {
 		font-family: 'RoadRage';
 		@apply inline-block 
@@ -43,8 +42,7 @@
             uppercase tracking-[0.06em] leading-none rotate-[-1deg] 
             bg-gradient-to-b from-white via-slate-200 to-slate-500
             bg-clip-text text-transparent drop-shadow-[0_6px_0_rgba(0,0,0,0.7)];
-        }
-
+      }
 	.type-brush-price {
 		font-family: 'RoadRage';
 		@apply 
@@ -58,7 +56,6 @@
             bg-gradient-to-b from-yellow-100 via-yellow-400 to-yellow-900 
             bg-clip-text text-transparent;
 	}
-
 	.type-druk-hero {
 		font-family: 'Druk';
 		@apply whitespace-nowrap
@@ -73,7 +70,6 @@
             bg-clip-text text-transparent shadow-lg drop-shadow-[0_9px_0_rgba(0,0,0,0.9)] 
             transition duration-300 hover:scale-105 hover:drop-shadow-[0_10px_0_rgba(0,0,0,0.85)];
 	}
-
 	.type-druk-heroclamp {
 		font-family: 'Druk';
 		@apply whitespace-nowrap
@@ -88,7 +84,6 @@
 		7.65rem
 	);
       }
-
 	.type-druk-clean {
 		font-family: 'Druk';
 		@apply whitespace-nowrap
@@ -102,7 +97,6 @@
             bg-gradient-to-b from-white via-slate-200 to-slate-600 
             bg-clip-text text-transparent;
 	}
-
       .type-druk-cleanclamp {
             font-family: 'Druk';
             @apply whitespace-nowrap
@@ -116,7 +110,6 @@
 		5.65rem
 	);
       }
-
  	.type-druk-gold {
 		font-family: 'Druk';
 		@apply whitespace-nowrap
@@ -131,7 +124,6 @@
             bg-clip-text text-transparent shadow-lg drop-shadow-[0_9px_0_rgba(0,0,0,0.9)] 
             transition duration-300 hover:scale-105 hover:drop-shadow-[0_10px_0_rgba(0,0,0,0.85)];
 	}
-
 	.type-ui-statement-polish {
 		font-family: 'Inter';
 		@apply 
@@ -144,7 +136,6 @@
             font-[300] leading-tight tracking-[-0.02em] 
             text-[#f1f1f1]/95;
 	}
-
 	.type-ui-statement-gold {
 		font-family: 'Inter';
 		@apply 
@@ -157,7 +148,6 @@
             font-[300] leading-[0.84] tracking-[-0.02em] 
             text-[#d89b16];
 	}
-
 	.type-ui-statement-bold {
 		font-family: 'Druk';
 		@apply 
@@ -170,7 +160,6 @@
             uppercase leading-none 
             text-white;
 	}
-
     .type-product-title {
 		@apply 
             text-[1.00rem]
@@ -182,7 +171,6 @@
         font-medium 
         text-slate-200;
 	}
-
 	.type-panel-title {
 		@apply 
             text-[0.75rem] 
@@ -194,7 +182,6 @@
         uppercase tracking-[0.22em] 
         text-amber-500;
 	}
-
       .type-promo-title {
  		@apply 
             text-[0.65rem] 
@@ -207,7 +194,6 @@
             uppercase tracking-wide 
             text-amber-400;
 	}
-
 	.type-section-title {
 		@apply 
             text-[0.80rem] 
@@ -232,7 +218,6 @@
             uppercase tracking-[0.28em] 
             text-amber-400;
 	}
-
 	.type-eyebrow-label {
 		@apply 
             text-[0.65rem]
@@ -244,7 +229,6 @@
             uppercase tracking-[0.2em] 
             text-slate-500;
 	}
-
 	.type-metadata {
 		@apply 
             text-[0.80rem]
@@ -255,7 +239,6 @@
             2xl:text-[2.65rem]
             text-slate-500;
 	}
-
 	.type-status-label {
 		@apply 
             text-[0.75rem] 
@@ -267,7 +250,6 @@
             font-bold uppercase tracking-[0.18em] 
             text-green-400;
 	}
-
 	.type-action-label {
 		@apply 
             text-[0.75rem] 
@@ -278,7 +260,6 @@
             2xl:text-[3.15rem]
             font-bold uppercase tracking-wide;
 	}
-
 	.type-cta-label {
 		@apply 
             text-[0.65rem] 
@@ -291,7 +272,6 @@
             uppercase tracking-wide 
             text-amber-400;
 	}
-
 	.type-data-timer {
 		font-family: 'Orbitron';
 		@apply 
@@ -304,7 +284,6 @@
             font-bold tracking-[0.1em] 
             text-slate-100;
 	}
-
 	.type-countdown-timer {
 		font-family: 'Orbitron';
 		@apply 
@@ -317,7 +296,6 @@
             font-bold tracking-[0.12em] 
             text-amber-400;
 	}
-
 	.type-price-primary {
 		font-family: 'Inter';
 		@apply 
@@ -330,7 +308,6 @@
             font-bold leading-none tracking-[-0.06em] 
             text-slate-200;
 	}
-
 	.type-price-compare {
 		font-family: 'Inter';
 		@apply 
@@ -343,7 +320,6 @@
             leading-none 
             text-slate-500 line-through;
 	}
-
 	.type-price-savings {
 		font-family: 'Inter';
 		@apply 
@@ -356,7 +332,6 @@
             font-medium 
             text-[#3fc75d];
 	}
-
 	.type-body {
 		@apply 
             text-[0.95rem] 
@@ -368,7 +343,6 @@
             leading-relaxed 
             text-slate-400;
 	}
-
 	.type-body-prominent {
 		@apply 
             text-[0.55rem] 
@@ -380,7 +354,6 @@
             leading-relaxed 
             text-slate-300;
 	}
-
 	.type-body-quiet {
 		@apply 
             text-[0.95rem] 
@@ -392,7 +365,6 @@
             leading-relaxed 
             text-slate-500;
 	}
-
 	.type-body-overlay {
 		@apply 
             text-[0.95rem] 
@@ -404,7 +376,6 @@
             leading-relaxed 
             text-white;
 	}
-
       .type-utility-label {
             font-family: 'Industry';
 
@@ -418,6 +389,4 @@
 
             letter-spacing: clamp(0.06em, 0.12vw, 0.14em);
       }
-
-
 }

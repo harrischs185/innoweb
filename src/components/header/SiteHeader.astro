@@ -20,14 +20,16 @@ const headerClasses = [
 <header class={headerClasses} role="banner">
 	<div class="layout-container-wide">
 		<div class="flex items-center justify-between gap-4 py-4 md:py-5">
-			<button
-				id="mobile-menu-button"
-				type="button"
-				class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 text-slate-200 lg:hidden"
-				aria-label="Open menu"
-			>
-				☰
-			</button>
+			<div class="flex w-20 justify-start md:w-28 lg:hidden">
+				<button
+					id="mobile-menu-button"
+					type="button"
+					class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 text-slate-200 lg:hidden"
+					aria-label="Open menu"
+				>
+					☰
+				</button>
+			</div>
 
 			<HeaderLogo debug={false} />
 
@@ -37,7 +39,9 @@ const headerClasses = [
 				</div>
 			</div>
 
-			<HeaderActions debug={false} />
+			<div class="flex w-20 justify-end md:w-28 lg:w-auto">
+				<HeaderActions debug={false} />
+			</div>
 		</div>
 
 		<nav

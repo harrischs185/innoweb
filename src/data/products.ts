@@ -13,6 +13,7 @@ export const products = [
 			wembyImage.src,
 		],
 		category: 'basketball',
+		description: 'Clean PSA 10 rookie card with strong collector appeal and clear slab presentation.',
 		tags: ['graded', 'rookie', 'basketball'],
 	},
 	{
@@ -25,6 +26,7 @@ export const products = [
 			jordanImage.src,
 		],
 		category: 'basketball',
+		description: 'Clean PSA 10 rookie card with strong collector appeal and clear slab presentation.',
 		tags: ['graded', 'rookie', 'basketball'],
 	},
 	{
@@ -37,6 +39,7 @@ export const products = [
 			wembyImage.src,
 		],
 		category: 'football',
+		description: 'Clean PSA 10 rookie card with strong collector appeal and clear slab presentation.',
 		tags: ['graded', 'rookie', 'football'],
 	},
 		{
@@ -49,6 +52,7 @@ export const products = [
 			wembyImage.src,
 		],
 		category: 'basketball',
+		description: 'Clean PSA 10 rookie card with strong collector appeal and clear slab presentation.',
 		tags: ['graded', 'rookie', 'basketball'],
 	},
 	{
@@ -61,6 +65,7 @@ export const products = [
 			jordanImage.src,
 		],
 		category: 'basketball',
+		description: 'Clean PSA 10 rookie card with strong collector appeal and clear slab presentation.',
 		tags: ['graded', 'rookie', 'basketball'],
 	},
 	{
@@ -73,6 +78,7 @@ export const products = [
 			joshAllenImage.src,
 		],
 		category: 'football',
+		description: 'Clean PSA 10 rookie card with strong collector appeal and clear slab presentation.',
 		tags: ['graded', 'rookie', 'football'],
 	},
 		{
@@ -85,6 +91,7 @@ export const products = [
 			wembyImage.src,
 		],
 		category: 'basketball',
+		description: 'Clean PSA 10 rookie card with strong collector appeal and clear slab presentation.',
 		tags: ['graded', 'rookie', 'basketball'],
 	},
 	{
@@ -97,6 +104,7 @@ export const products = [
 			jordanImage.src,
 		],
 		category: 'basketball',
+		description: 'Clean PSA 10 rookie card with strong collector appeal and clear slab presentation.',
 		tags: ['graded', 'rookie', 'basketball'],
 	},
 	{
@@ -109,6 +117,7 @@ export const products = [
 			joshAllenImage.src,
 		],
 		category: 'football',
+		description: 'Clean PSA 10 rookie card with strong collector appeal and clear slab presentation.',
 		tags: ['graded', 'rookie', 'football'],
 	},
 ] as const;
