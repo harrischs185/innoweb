@@ -3,6 +3,20 @@ import GridContainer from '../layout/GridContainer.astro';
 import SportNavigationCarousel from '../navigation/SportNavigationCarousel.astro';
 import PlayerNavigationTile from '../navigation/PlayerNavigationTile.astro';
 
+type PlayerNavigationItem = {
+	name: string;
+	href: string;
+	image?: string;
+	meta?: string;
+	eyebrow?: string;
+};
+
+interface Props {
+	players?: PlayerNavigationItem[];
+	debug?: boolean;
+}
+
+
 const {
 	players = [],
 	debug = false,

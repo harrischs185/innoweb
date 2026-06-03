@@ -1,4 +1,18 @@
 ---
+import type { boolean } from 'astro:schema';
+
+type HeaderNavItem = {
+	label: string;
+	href: string;
+};
+
+interface Props {
+	items?: HeaderNavItem[];
+	debug?: boolean;
+	class?: string; 
+}
+
+
 const {
 	items = [
 		{ label: 'SHOP', href: '/shop' },
@@ -7,7 +21,7 @@ const {
 		{ label: 'BUY / CONSIGN', href: '/consign' },
         { label: 'ABOUT US', href: '/about' },
         { label: "BUNKER'S BREAKDOWN", href: '/blog' },
-        { label: 'GIFT CARDS', href: 'product/gift-cards' },
+        { label: 'GIFT CARDS', href: '/gift-cards' },
 	],
 	debug = false,
 	class: extraClass = '',

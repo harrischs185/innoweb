@@ -21,6 +21,7 @@ const headerClasses = [
 	<div class="layout-container-wide">
 		<div class="flex items-center justify-between gap-4 py-4 md:py-5">
 			<button
+				id="mobile-menu-button"
 				type="button"
 				class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 text-slate-200 lg:hidden"
 				aria-label="Open menu"
@@ -39,6 +40,22 @@ const headerClasses = [
 			<HeaderActions debug={false} />
 		</div>
 
+		<nav
+			id="mobile-menu"
+			class="hidden border-t border-slate-800 py-4 lg:hidden"
+			aria-label="Mobile navigation"
+		>
+			<div class="flex flex-col gap-2">
+				<a href="/shop" class="type-body-prominent text-slate-300 hover:text-amber-400">SHOP</a>
+				<a href="/players" class="type-body-prominent text-slate-300 hover:text-amber-400">PLAYERS</a>
+				<a href="/shop/new-arrivals" class="type-body-prominent text-slate-300 hover:text-amber-400">NEW ARRIVALS</a>
+				<a href="/consign" class="type-body-prominent text-slate-300 hover:text-amber-400">BUY / CONSIGN</a>
+				<a href="/about" class="type-body-prominent text-slate-300 hover:text-amber-400">ABOUT US</a>
+				<a href="/blog" class="type-body-prominent text-slate-300 hover:text-amber-400">BUNKER'S BREAKDOWN</a>
+				<a href="/gift-cards" class="type-body-prominent text-slate-300 hover:text-amber-400">GIFT CARDS</a>
+			</div>
+		</nav>
+
 		<div class="pb-4 lg:hidden">
 			<HeaderSearch debug={false} />
 		</div>
@@ -46,3 +63,14 @@ const headerClasses = [
 		<HeaderNav debug={false} />
 	</div>
 </header>
+
+<script>
+	const button = document.getElementById('mobile-menu-button');
+	const menu = document.getElementById('mobile-menu');
+
+	if (button && menu) {
+		button.addEventListener('click', () => {
+			menu.classList.toggle('hidden');
+		});
+	}
+</script>

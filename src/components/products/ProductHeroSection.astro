@@ -1,20 +1,51 @@
 ---
+type ProductImage = string;
+
 const { product } = Astro.props;
 
-const tags = product.tags ?? [];
+const tags: string[] = product.tags ?? [];
+
+const productImages: ProductImage[] = product.images?.length
+	? product.images
+	: product.image
+		? [product.image]
+		: [];
+
+const primaryImage = productImages[0];
 ---
 
 <section class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-950">
 	<div class="grid gap-8 p-6 lg:grid-cols-[1.25fr_0.75fr] lg:p-8 xl:p-10">
-		<div class="rounded-2xl border border-slate-800 bg-black/40 p-4 shadow-[0_0_40px_rgba(0,0,0,0.35)]">
-			<div class="aspect-[3/4] overflow-hidden rounded-xl bg-black">
-				{product.image && (
-					<img
-						src={product.image}
-						alt={product.title}
-						class="h-full w-full object-contain"
-					/>
-				)}
+		<div class="grid gap-4 lg:grid-cols-[88px_1fr]">
+			{productImages.length > 1 && (
+				<div class="flex gap-3 overflow-x-auto lg:flex-col lg:overflow-visible">
+					{productImages.map((image: string, index: number) => (
+						<button
+							type="button"
+							class="h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-slate-700 bg-black p-1"
+							data-product-image={image}
+						>
+							<img
+								src={image}
+								alt={`${product.title} image ${index + 1}`}
+								class="h-full w-full object-contain"
+							/>
+						</button>
+					))}
+				</div>
+			)}
+
+			<div class="rounded-2xl border border-slate-800 bg-black/40 p-4 shadow-[0_0_40px_rgba(0,0,0,0.35)]">
+				<div class="aspect-[3/4] overflow-hidden rounded-xl bg-black">
+					{primaryImage && (
+						<img
+							id="product-main-image"
+							src={primaryImage}
+							alt={product.title}
+							class="h-full w-full object-contain"
+						/>
+					)}
+				</div>
 			</div>
 		</div>
 
@@ -67,3 +98,23 @@ const tags = product.tags ?? [];
 		</div>
 	</div>
 </section>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const mainImage = document.getElementById('product-main-image');
+
+		if (!mainImage) return;
+
+		document
+			.querySelectorAll('[data-product-image]')
+			.forEach((thumbnail) => {
+				thumbnail.addEventListener('click', () => {
+					const image = thumbnail.getAttribute('data-product-image');
+
+					if (image) {
+						mainImage.setAttribute('src', image);
+					}
+				});
+			});
+	});
+</script>

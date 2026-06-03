@@ -1,12 +1,36 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SectionWrapper from '../components/layout/SectionWrapper.astro';
+
+import ConsignmentHeroSection from '../components/consignment/ConsignmentHeroSection.astro';
+import ConsignmentFeeTable from '../components/consignment/ConsignmentFeeTable.astro';
+import ConsignmentBenefitsGrid from '../components/consignment/ConsignmentBenefitsGrid.astro';
+import ConsignmentServiceTierSection from '../components/consignment/ConsignmentServiceTierSection.astro';
+import ConsignmentTrustStrip from '../components/consignment/ConsignmentTrustStrip.astro';
+import ConsignmentFinalCTA from '../components/consignment/ConsignmentFinalCTA.astro';
 ---
+
 <Layout
-title="Consign Your Collection"
-description="Sell sports cards and collectibles through InnoAV Sports Collectibles with professional listing and consignment services."
-noindex={false}
+	title="Buy / Consign | Sports Card Consignment | InnoAV Sports Collectables"
+	description="Consign sports cards and collectibles with InnoAV Sports Collectables. We handle presentation, listing, selling, and payout support."
+	noindex={false}
 >
-    <p>
-        Page Content Goes Here
-    </p>
+	<SectionWrapper spacing="tight" container="wide">
+		<ConsignmentHeroSection />
+	</SectionWrapper>
+    <SectionWrapper spacing="normal" container="wide">
+        <ConsignmentFeeTable />
+    </SectionWrapper>
+    <SectionWrapper spacing="normal" container="wide">
+        <ConsignmentServiceTierSection />
+    </SectionWrapper>
+    <SectionWrapper spacing="normal" container="wide">
+        <ConsignmentTrustStrip />
+    </SectionWrapper>
+    <SectionWrapper spacing="normal" container="wide">
+        <ConsignmentFinalCTA />
+    </SectionWrapper>
+    <SectionWrapper spacing="normal" container="wide">
+        <ConsignmentBenefitsGrid />
+    </SectionWrapper>
 </Layout>

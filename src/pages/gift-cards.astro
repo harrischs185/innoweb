@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionWrapper from '../components/layout/SectionWrapper.astro';
+---
+
+<Layout
+	title="Gift Cards | InnoAV Sports Collectables"
+	description="Give collectors the freedom to choose with InnoAV Sports Collectables gift cards."
+	noindex={false}
+>
+	<SectionWrapper spacing="tight" container="wide">
+		<section class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-950">
+			<div class="grid gap-8 p-6 lg:grid-cols-[0.95fr_1.05fr] lg:p-8 xl:p-10">
+				<div class="flex flex-col justify-center">
+					<p class="type-context-label text-amber-400">
+						Gift Cards
+					</p>
+
+					<h1 class="type-druk-cleanclamp mt-3 text-white">
+						Let Them Pick The Hit.
+					</h1>
+
+					<p class="mt-5 max-w-xl text-sm leading-relaxed text-slate-300 lg:text-base">
+						InnoAV gift cards are planned as a future commerce feature for collectors who want to give the hobby without guessing the exact card.
+					</p>
+
+					<div class="mt-6 flex flex-wrap gap-3">
+						<a
+							href="/shop"
+							class="inline-flex rounded-md bg-gradient-to-b from-amber-300 to-amber-500 px-5 py-3 text-xs font-black uppercase text-black transition hover:brightness-110"
+						>
+							Shop Cards
+						</a>
+
+						<a
+							href="/about"
+							class="inline-flex rounded-md border border-sky-500 px-5 py-3 text-xs font-black uppercase text-white transition hover:bg-sky-500/10"
+						>
+							Contact Us
+						</a>
+					</div>
+				</div>
+
+				<div class="rounded-2xl border border-amber-400/30 bg-gradient-to-br from-amber-400/15 via-slate-950 to-black p-6 shadow-[0_0_40px_rgba(245,158,11,0.10)]">
+					<p class="type-context-label text-amber-400">
+						Coming Soon
+					</p>
+
+					<h2 class="type-section-title mt-2 text-white">
+						Digital Gift Card Support
+					</h2>
+
+					<p class="mt-4 text-sm leading-relaxed text-slate-400 lg:text-base">
+						Gift card purchase, redemption, and checkout behavior will be implemented during the commerce phase.
+					</p>
+
+					<div class="mt-6 grid gap-3 sm:grid-cols-3">
+						<div class="rounded-xl border border-slate-800 bg-black/40 p-4 text-center text-sm font-black text-white">
+							$25
+						</div>
+						<div class="rounded-xl border border-slate-800 bg-black/40 p-4 text-center text-sm font-black text-white">
+							$50
+						</div>
+						<div class="rounded-xl border border-slate-800 bg-black/40 p-4 text-center text-sm font-black text-white">
+							$100
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</SectionWrapper>
+</Layout>

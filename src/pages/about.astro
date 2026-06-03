@@ -1,12 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SectionWrapper from '../components/layout/SectionWrapper.astro';
+
+import AboutHeroSection from '../components/about/AboutHeroSection.astro';
+import AboutContactPanel from '../components/about/AboutContactPanel.astro';
+import AboutTrustStrip from '../components/about/AboutTrustStrip.astro';
 ---
-<Layout 
-title="About InnoAV Sports Collectibles"
-description="Learn about InnoAV Sports Collectibles, our mission, collecting philosophy, and commitment to the hobby."
-noindex={false}
->       
-    <p>
-        Page Content Goes Here
-    </p>
+
+<Layout
+	title="About InnoAV | Contact & Collector Trust | InnoAV Sports Collectables"
+	description="Learn about InnoAV Sports Collectables, a collector-focused sports card shop built around authenticity, trust, secure shipping, and hobby passion."
+	noindex={false}
+>
+	<SectionWrapper spacing="tight" container="wide">
+		<AboutHeroSection />
+	</SectionWrapper>
+    
+    <SectionWrapper spacing="normal" container="wide">
+        <AboutContactPanel />
+    </SectionWrapper>
+
+    <SectionWrapper spacing="normal" container="wide">
+        <AboutTrustStrip />
+    </SectionWrapper>
 </Layout>

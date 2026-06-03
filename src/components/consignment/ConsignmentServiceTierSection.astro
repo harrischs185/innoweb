@@ -1,0 +1,87 @@
+---
+const tiers = [
+	{
+		name: 'Fast Burn',
+		subtitle: 'Move Inventory Quickly',
+		description:
+			'Ideal for lower-end inventory where speed and simplicity matter more than maximizing every dollar.',
+		highlights: [
+			'Quick Listing',
+			'High Visibility',
+			'Rapid Turnaround',
+		],
+	},
+	{
+		name: 'Diamond In The Rough',
+		subtitle: 'Balanced Approach',
+		description:
+			'The sweet spot for most collectors looking to maximize value while maintaining healthy sales velocity.',
+		highlights: [
+			'Market-Based Pricing',
+			'Collector Presentation',
+			'Strong Exposure',
+		],
+		featured: true,
+	},
+	{
+		name: 'Gem Elite',
+		subtitle: 'Premium Consignment',
+		description:
+			'Designed for high-value cards and collectibles that deserve maximum attention and presentation.',
+		highlights: [
+			'Premium Placement',
+			'Enhanced Presentation',
+			'Maximum Value Focus',
+		],
+	},
+];
+---
+
+<section aria-label="Consignment service levels">
+	<div class="mb-5 text-center">
+		<p class="type-context-label text-amber-400">
+			Service Levels
+		</p>
+
+		<h2 class="type-section-title mt-2 text-white">
+			Choose Your Approach
+		</h2>
+
+		<p class="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-400 lg:text-base">
+			Not every collection has the same goals. Pick the strategy that best fits your inventory.
+		</p>
+	</div>
+
+	<div class="grid gap-5 lg:grid-cols-3">
+		{tiers.map((tier) => (
+			<div
+				class:list={[
+					'rounded-3xl border bg-slate-950/90 p-6',
+					tier.featured
+						? 'border-amber-400/60 shadow-[0_0_30px_rgba(245,158,11,0.12)]'
+						: 'border-slate-800',
+				]}
+			>
+				<p class="type-context-label text-amber-400">
+					{tier.subtitle}
+				</p>
+
+				<h3 class="type-panel-title mt-2 text-white">
+					{tier.name}
+				</h3>
+
+				<p class="mt-4 text-sm leading-relaxed text-slate-400">
+					{tier.description}
+				</p>
+
+				<ul class="mt-5 space-y-2">
+					{tier.highlights.map((item) => (
+						<li class="text-sm text-slate-300">
+							✓ {item}
+						</li>
+					))}
+				</ul>
+			</div>
+		))}
+	</div>
+</section>

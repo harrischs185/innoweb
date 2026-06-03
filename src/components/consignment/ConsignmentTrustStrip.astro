@@ -1,0 +1,36 @@
+---
+const trustItems = [
+	{
+		label: 'Transparent Process',
+		copy: 'Clear expectations before cards are listed.',
+	},
+	{
+		label: 'Collector Owned',
+		copy: 'Built by people who actually understand the hobby.',
+	},
+	{
+		label: 'Secure Handling',
+		copy: 'Cards are treated like inventory that matters.',
+	},
+	{
+		label: 'Seller Focused',
+		copy: 'The goal is simple: move cards well.',
+	},
+];
+---
+
+<section aria-label="Consignment trust">
+	<div class="grid gap-4 rounded-3xl border border-slate-800 bg-slate-950/85 p-5 md:grid-cols-2 xl:grid-cols-4">
+		{trustItems.map((item) => (
+			<div class="rounded-2xl border border-slate-800 bg-black/35 p-4">
+				<p class="type-context-label text-amber-400">
+					{item.label}
+				</p>
+
+				<p class="mt-2 text-sm leading-relaxed text-slate-400">
+					{item.copy}
+				</p>
+			</div>
+		))}
+	</div>
+</section>
