@@ -18,6 +18,12 @@ return Object.keys(categoryConfig).map((category) => ({
 
 const category = Astro.params.category as CategoryKey;
 const config = categoryConfig[category];
+const shopGridProps =
+	config.filterType === 'sport'
+		? { sport: config.filterValue }
+		: config.filterType === 'category'
+			? { category: config.filterValue }
+			: {};
 ---
 <Layout
 	title={`${config.title} | Shop Sports Cards | InnoAV Sports Collectables`}
@@ -47,7 +53,7 @@ const config = categoryConfig[category];
 				<ShopFeatureCards />
 
 				<ShopProductGrid
-					category={category}
+					{...shopGridProps}
 					title={config.title}
 					eyebrow="Filtered Inventory"
 				/>

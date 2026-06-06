@@ -9,6 +9,8 @@ import {
 
 const {
 	category,
+	sport,
+	player,
 	limit,
 	title = 'Shop All Cards',
 	eyebrow = 'Browse Inventory',
@@ -19,6 +21,13 @@ const queryParams = new URLSearchParams();
 if (category) {
 	queryParams.set('category', category);
 }
+if (sport) {
+	queryParams.set('sport', sport);
+}
+
+if (player) {
+	queryParams.set('player', player);
+}
 
 const productPath = queryParams.toString()
 	? `/products?${queryParams.toString()}`
@@ -26,7 +35,7 @@ const productPath = queryParams.toString()
 
 const response =
 	await fetchCardFlow<CardFlowListResponse<CardFlowProductSummary>>(productPath);
-		
+
 const products = response.data.map(adaptProductCard);
 
 const visibleProducts = limit
