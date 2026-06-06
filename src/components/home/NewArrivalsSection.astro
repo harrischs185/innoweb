@@ -3,51 +3,14 @@ import SectionWrapper from '../layout/SectionWrapper.astro';
 import ProductCarousel from '../products/ProductCarousel.astro';
 import ProductCard from '../products/ProductCard.astro';
 
-import card1 from '../../assets/images/Products/card-1.jpg';
-import card2 from '../../assets/images/products/card-2.jpg';
-import card3 from '../../assets/images/products/card-3.jpg';
-import card4 from '../../assets/images/products/card-4.jpg';
-import card5 from '../../assets/images/products/card-5.jpg';
-import card6 from '../../assets/images/products/card-6.jpg';
+import { fetchCardFlow, type CardFlowListResponse } from '../../lib/cardflowApi';
+import {
+	adaptProductCard,
+	type CardFlowProductSummary,
+} from '../../lib/adapters/productAdapter';
 
-const products = [
-	{
-		title: '2023 Prizm Black Shimmer Victor Wembanyama PSA 10',
-		price: '$1,249.99',
-		image: card1.src,
-		slug: "example-1",
-	},
-	{
-		title: "1986 Fleer Michael Jordan Rookie PSA 10",
-		price: '$100,299.99',
-		image: card2.src,
-		slug: 'example-2',
-	},
-	{
-		title: '2018 Panini Prizm Josh Allen Rookie PSA 10',
-		price: '$319.99',
-		image: card3.src,
-		slug: 'example-3',
-	},
-	{
-		title: '1986 Fleer Michael Jordan Rookie PSA 10',
-		price: '$100,299.99',
-		image: card4.src,
-		slug: 'example-4',
-	},
-	{
-		title: '2018 Panini Prizm Josh Allen Rookie PSA 10',
-		price: '$319.99',
-		image: card5.src,
-		slug: 'example-5',
-	},
-	{
-		title: '2023 Prizm Black Shimmer Victor Wembanyama PSA 10',
-		price: '$1,249.99',
-		image: card6.src,
-		slug: 'example-6',
-	},
-];
+const response = await fetchCardFlow<CardFlowListResponse<CardFlowProductSummary>>('/products');
+const products = response.data.map(adaptProductCard);
 ---
 
 <SectionWrapper spacing="flush" container="wide">

@@ -22,10 +22,10 @@ export type CardFlowProductSummary = {
 export type InnoWebProductCard = {
   sku: string;
   title: string;
+  price: string;
+  image: string;
+  slug: string;
   href: string;
-  imageSrc: string | null;
-  imageAlt: string;
-  priceLabel: string;
   sportName: string | null;
   availabilityStatus: string | null;
 };
@@ -34,10 +34,10 @@ export function adaptProductCard(product: CardFlowProductSummary): InnoWebProduc
   return {
     sku: product.sku,
     title: product.title,
-    href: `/products/${product.slug}`,
-    imageSrc: product.primaryImage?.url ?? null,
-    imageAlt: product.primaryImage?.altText ?? product.title,
-    priceLabel: product.price == null ? 'Price coming soon' : `$${Number(product.price).toFixed(2)}`,
+    price: product.price == null ? 'Price coming soon' : `$${Number(product.price).toFixed(2)}`,
+    image: product.primaryImage?.url ?? '',
+    slug: product.slug,
+    href: `/product/${product.slug}`,
     sportName: product.sport?.name ?? null,
     availabilityStatus: product.availabilityStatus,
   };

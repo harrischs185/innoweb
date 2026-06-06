@@ -1,5 +1,7 @@
 const API_BASE_URL = import.meta.env.PUBLIC_CARDFLOW_API_BASE_URL;
 
+console.log(import.meta.env.PUBLIC_CARDFLOW_API_BASE_URL);
+
 if (!API_BASE_URL) {
   throw new Error('Missing PUBLIC_CARDFLOW_API_BASE_URL');
 }
