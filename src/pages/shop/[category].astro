@@ -23,7 +23,9 @@ const shopGridProps =
 		? { sport: config.filterValue }
 		: config.filterType === 'category'
 			? { category: config.filterValue }
-			: {};
+			: config.filterType === 'collection'
+				? { collection: config.filterValue }
+				: {};
 ---
 <Layout
 	title={`${config.title} | Shop Sports Cards | InnoAV Sports Collectables`}

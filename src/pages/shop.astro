@@ -6,6 +6,8 @@ import ShopToolbar from '../components/shop/ShopToolbar.astro';
 import ShopFilterSidebar from '../components/shop/ShopFilterSidebar.astro';
 import ShopFeatureCards from '../components/shop/ShopFeatureCards.astro';
 import ShopProductGrid from '../components/shop/ShopProductGrid.astro';
+
+const collection = Astro.url.searchParams.get('collection');
 ---
 <Layout
 title="Shop Sports Cards & Collectibles"
@@ -20,7 +22,11 @@ noindex={false}
                 <ShopFilterSidebar />
                 <div class="space-y-6">
                     <ShopFeatureCards />
-                    <ShopProductGrid />
+                    <ShopProductGrid
+                        collection={collection}
+                        title={collection === 'featured-products' ? 'Featured QB Collection' : 'Shop All Cards'}
+                        eyebrow={collection ? 'Featured Collection' : 'Browse Inventory'}
+                    />
                 </div>
             </div>
         </SectionWrapper>

@@ -11,6 +11,7 @@ const {
 	category,
 	sport,
 	player,
+	collection,
 	limit,
 	title = 'Shop All Cards',
 	eyebrow = 'Browse Inventory',
@@ -27,6 +28,10 @@ if (sport) {
 
 if (player) {
 	queryParams.set('player', player);
+}
+
+if (collection) {
+  queryParams.set('collection', collection);
 }
 
 const productPath = queryParams.toString()

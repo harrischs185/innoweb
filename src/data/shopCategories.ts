@@ -77,6 +77,12 @@ export const categoryConfig = {
 		filterType: 'category',
 		filterValue: 'bunkers-bargains',
 	},
+	'featured-products': {
+		title: 'Featured QB Collection',
+		description: 'Featured quarterback cards and collectibles.',
+		filterType: 'collection',
+		filterValue: 'featured-products',
+	},
 } as const;
 
 export type CategoryKey = keyof typeof categoryConfig;
