@@ -44,6 +44,7 @@ export type CardFlowProductDetail = {
 		displayOrder: number;
 		role: string;
 		roleConfidence: string;
+		isPrimary: boolean;
 	}[];
 	availabilityStatus: string | null;
 	listingStatus: string | null;
@@ -97,7 +98,15 @@ export function adaptProductDetail(product: CardFlowProductDetail): InnoWebProdu
 		price: formatPrice(product.price),
 		slug: product.slug,
 		sku: product.sku,
-		images: product.images.map((image) => image.url),
+		images: [
+			...product.images
+				.filter((image) => image.isPrimary)
+				.map((image) => image.url),
+
+			...product.images
+				.filter((image) => !image.isPrimary)
+				.map((image) => image.url),
+			],
 		category: product.sport?.name ?? product.categories[0]?.name ?? 'Collectibles',
 		description,
 		tags,
