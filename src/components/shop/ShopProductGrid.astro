@@ -14,9 +14,19 @@ const {
 	eyebrow = 'Browse Inventory',
 } = Astro.props;
 
-const response =
-	await fetchCardFlow<CardFlowListResponse<CardFlowProductSummary>>('/products');
+const queryParams = new URLSearchParams();
 
+if (category) {
+	queryParams.set('category', category);
+}
+
+const productPath = queryParams.toString()
+	? `/products?${queryParams.toString()}`
+	: '/products';
+
+const response =
+	await fetchCardFlow<CardFlowListResponse<CardFlowProductSummary>>(productPath);
+		
 const products = response.data.map(adaptProductCard);
 
 const visibleProducts = limit
