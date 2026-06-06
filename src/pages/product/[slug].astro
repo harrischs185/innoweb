@@ -6,20 +6,33 @@ import ProductHeroSection from '../../components/products/ProductHeroSection.ast
 import ProductDetailsPanel from '../../components/products/ProductDetailsPanel.astro';
 import ProductTrustPanel from '../../components/products/ProductTrustPanel.astro';
 
-import { products } from '../../data/products';
+import { fetchCardFlow, type CardFlowDetailResponse, type CardFlowListResponse } from '../../lib/cardflowApi';
+import {
+	adaptProductDetail,
+	type CardFlowProductDetail,
+} from '../../lib/adapters/productDetailAdapter';
+import type { CardFlowProductSummary } from '../../lib/adapters/productAdapter';
 
 export async function getStaticPaths() {
-	return products.map((product) => ({
+	const response =
+		await fetchCardFlow<CardFlowListResponse<CardFlowProductSummary>>('/products');
+
+	return response.data.map((product) => ({
 		params: { slug: product.slug },
 	}));
 }
 
 const { slug } = Astro.params;
-const product = products.find((item) => item.slug === slug);
 
-if (!product) {
+const response = await fetchCardFlow<CardFlowDetailResponse<CardFlowProductDetail>>(
+	`/products/${slug}`,
+);
+
+if (!response.data) {
 	return Astro.redirect('/shop');
 }
+
+const product = adaptProductDetail(response.data);
 ---
 
 <Layout
