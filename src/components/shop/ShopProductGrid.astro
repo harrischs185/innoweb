@@ -1,6 +1,11 @@
 ---
 import ProductCard from '../products/ProductCard.astro';
-import { products } from '../../data/products';
+
+import { fetchCardFlow, type CardFlowListResponse } from '../../lib/cardflowApi';
+import {
+	adaptProductCard,
+	type CardFlowProductSummary,
+} from '../../lib/adapters/productAdapter';
 
 const {
 	category,
@@ -9,21 +14,20 @@ const {
 	eyebrow = 'Browse Inventory',
 } = Astro.props;
 
-const filteredProducts = category
-	? products.filter((product) =>
-			product.category === category || product.tags.includes(category)
-		)
-	: products;
+const response =
+	await fetchCardFlow<CardFlowListResponse<CardFlowProductSummary>>('/products');
+
+const products = response.data.map(adaptProductCard);
 
 const visibleProducts = limit
-	? filteredProducts.slice(0, limit)
-	: filteredProducts;
+	? products.slice(0, limit)
+	: products;
 ---
 
 <section aria-label="Shop products">
 	<div class="mb-4 flex items-end justify-between gap-4">
 		<div>
-			<p class="type-context-label text-amber-400">Browse Inventory</p>
+			<p class="type-context-label text-amber-400">{eyebrow}</p>
 			<h2 class="type-section-title text-white">{title}</h2>
 		</div>
 
