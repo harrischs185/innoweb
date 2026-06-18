@@ -1,0 +1,50 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const orderNumber = Astro.url.searchParams.get('order');
+---
+
+<Layout
+  title="Checkout Cancelled"
+  description="Your checkout was cancelled or not completed."
+  noindex={true}
+>
+  <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="rounded-3xl border border-amber-500/40 bg-slate-950/90 p-8 text-center shadow-[0_0_40px_rgba(0,0,0,0.35)]">
+      <p class="type-context-label text-amber-300">
+        Checkout Not Completed
+      </p>
+
+      <h1 class="type-section-title mt-3 text-white">
+        Your checkout was cancelled.
+      </h1>
+
+      {orderNumber && (
+        <p class="mt-5 text-sm font-bold uppercase tracking-wide text-slate-300">
+          Order: {orderNumber}
+        </p>
+      )}
+
+      <p class="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-slate-300">
+        No payment was confirmed from this page. The item may remain reserved
+        briefly until the checkout reservation expires.
+      </p>
+
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a
+          href="/cart"
+          class="inline-flex rounded-md bg-gradient-to-b from-amber-300 to-amber-500 px-6 py-3 text-xs font-black uppercase text-black transition hover:brightness-110"
+        >
+          Return To Cart
+        </a>
+
+        <a
+          href="/shop"
+          class="inline-flex rounded-md border border-sky-500 px-6 py-3 text-xs font-black uppercase text-white transition hover:bg-sky-500/10"
+        >
+          Continue Shopping
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

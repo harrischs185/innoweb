@@ -1,19 +1,67 @@
 const API_BASE_URL = import.meta.env.PUBLIC_CARDFLOW_API_BASE_URL;
 
-console.log(import.meta.env.PUBLIC_CARDFLOW_API_BASE_URL);
-
 if (!API_BASE_URL) {
   throw new Error('Missing PUBLIC_CARDFLOW_API_BASE_URL');
 }
 
-export async function fetchCardFlow<T>(path: string): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${path}`);
+export class CardFlowApiError extends Error {
+  status: number;
+  statusText: string;
+  body: unknown;
 
-  if (!response.ok) {
-    throw new Error(`CardFlow API request failed: ${response.status} ${response.statusText}`);
+  constructor(status: number, statusText: string, body: unknown) {
+    super(`CardFlow API request failed: ${status} ${statusText}`);
+    this.name = 'CardFlowApiError';
+    this.status = status;
+    this.statusText = statusText;
+    this.body = body;
+  }
+}
+
+async function parseResponseBody(response: Response) {
+  const text = await response.text();
+
+  if (!text) {
+    return null;
   }
 
-  return response.json() as Promise<T>;
+  try {
+    return JSON.parse(text);
+  } catch {
+    return text;
+  }
+}
+
+export async function fetchCardFlow<T>(path: string): Promise<T> {
+  const response = await fetch(`${API_BASE_URL}${path}`);
+  const body = await parseResponseBody(response);
+
+  if (!response.ok) {
+    throw new CardFlowApiError(response.status, response.statusText, body);
+  }
+
+  return body as T;
+}
+
+export async function postCardFlow<T>(
+  path: string,
+  requestBody: unknown,
+): Promise<T> {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestBody),
+  });
+
+  const body = await parseResponseBody(response);
+
+  if (!response.ok) {
+    throw new CardFlowApiError(response.status, response.statusText, body);
+  }
+
+  return body as T;
 }
 
 export type CardFlowListResponse<T> = {

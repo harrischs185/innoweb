@@ -1,12 +1,405 @@
 ---
 import Layout from '../layouts/Layout.astro';
 ---
+
 <Layout
-title="Shopping Cart"
-description="Review items currently in your shopping cart."
-noindex={true}
+  title="Shopping Cart"
+  description="Review your cart and begin secure checkout."
+  noindex={true}
 >
-    <p>
-        Page Content Goes Here
-    </p>
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="rounded-3xl border border-slate-800 bg-slate-950/90 p-6 shadow-[0_0_40px_rgba(0,0,0,0.35)] lg:p-8">
+      <p class="type-context-label text-amber-400">
+        Secure Checkout
+      </p>
+
+      <div class="mt-2 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <h1 class="type-section-title text-white">
+            Shopping Cart
+          </h1>
+
+          <p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-300">
+            Your cart is validated against CardFlow before checkout. Prices,
+            availability, and inventory status come from the backend.
+          </p>
+        </div>
+
+        <a
+          href="/shop"
+          class="inline-flex rounded-md border border-sky-500 px-5 py-3 text-xs font-black uppercase text-white transition hover:bg-sky-500/10"
+        >
+          Continue Shopping
+        </a>
+      </div>
+
+      <div
+        id="cart-alert"
+        class="mt-6 hidden rounded-xl border p-4 text-sm font-bold"
+      ></div>
+
+      <div
+        id="cart-loading"
+        class="mt-8 rounded-2xl border border-slate-800 bg-black/35 p-6 text-slate-300"
+      >
+        Validating cart...
+      </div>
+
+      <div
+        id="cart-empty"
+        class="mt-8 hidden rounded-2xl border border-slate-800 bg-black/35 p-8 text-center"
+      >
+        <h2 class="type-panel-title text-white">
+          Your cart is empty.
+        </h2>
+
+        <p class="mt-3 text-sm text-slate-300">
+          Add a card from the shop to begin checkout.
+        </p>
+
+        <a
+          href="/shop"
+          class="mt-6 inline-flex rounded-md bg-gradient-to-b from-amber-300 to-amber-500 px-6 py-3 text-xs font-black uppercase text-black transition hover:brightness-110"
+        >
+          Browse Shop
+        </a>
+      </div>
+
+      <div id="cart-content" class="mt-8 hidden grid gap-6 lg:grid-cols-[1fr_340px]">
+        <div id="cart-items" class="grid gap-4"></div>
+
+        <aside class="h-fit rounded-2xl border border-slate-800 bg-black/40 p-6">
+          <p class="type-context-label text-amber-400">
+            Order Summary
+          </p>
+
+          <div class="mt-5 space-y-3 text-sm">
+            <div class="flex justify-between text-slate-300">
+              <span>Subtotal</span>
+              <span id="cart-subtotal" class="font-bold text-white">$0.00</span>
+            </div>
+
+            <div class="flex justify-between text-slate-300">
+              <span>Total</span>
+              <span id="cart-total" class="font-black text-white">$0.00</span>
+            </div>
+          </div>
+
+          <button
+            id="checkout-button"
+            type="button"
+            class="mt-6 w-full rounded-md bg-gradient-to-b from-amber-300 to-amber-500 px-6 py-3 text-xs font-black uppercase text-black transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled
+          >
+            Checkout
+          </button>
+
+          <button
+            id="clear-cart-button"
+            type="button"
+            class="mt-3 w-full rounded-md border border-slate-700 px-6 py-3 text-xs font-black uppercase text-slate-300 transition hover:border-red-400 hover:text-red-300"
+          >
+            Clear Cart
+          </button>
+
+          <p id="checkout-note" class="mt-4 text-xs leading-relaxed text-slate-500">
+            Checkout redirects to Stripe. Payment and inventory status are
+            confirmed by CardFlow after Stripe webhook processing.
+          </p>
+        </aside>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<script>
+  import {
+    CardFlowApiError,
+    postCardFlow,
+  } from '../lib/cardflowApi';
+  import {
+    clearCart,
+    readCart,
+    removeFromCart,
+  } from '../lib/cartStorage';
+
+  type CheckoutValidationItem = {
+    sku: string;
+    title?: string;
+    quantity?: number;
+    unitPrice?: string;
+    lineTotal?: string;
+    isBuyable?: boolean;
+    commerceStatus?: string;
+    commerceLabel?: string;
+    reason?: string;
+  };
+
+  type CheckoutValidationResponse = {
+    ok: boolean;
+    items?: CheckoutValidationItem[];
+    subtotalAmount?: string;
+    totalAmount?: string;
+    currency?: string;
+    errors?: {
+      sku?: string;
+      code?: string;
+      message?: string;
+    }[];
+  };
+
+  type CheckoutCreateResponse = {
+    ok: boolean;
+    orderNumber: string;
+    checkoutUrl: string;
+    stripeSessionId: string;
+    reservationExpiresAt: string;
+  };
+
+  const loadingEl = document.getElementById('cart-loading');
+  const emptyEl = document.getElementById('cart-empty');
+  const contentEl = document.getElementById('cart-content');
+  const itemsEl = document.getElementById('cart-items');
+  const alertEl = document.getElementById('cart-alert');
+  const subtotalEl = document.getElementById('cart-subtotal');
+  const totalEl = document.getElementById('cart-total');
+  const checkoutButton = document.getElementById('checkout-button') as HTMLButtonElement | null;
+  const clearCartButton = document.getElementById('clear-cart-button') as HTMLButtonElement | null;
+
+  function escapeHtml(value: unknown) {
+    return String(value ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+
+  function formatMoney(value: unknown, currency = 'USD') {
+    const numericValue = Number(value);
+
+    if (!Number.isFinite(numericValue)) {
+      return String(value ?? '');
+    }
+
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency,
+    }).format(numericValue);
+  }
+
+  function showAlert(message: string, tone: 'error' | 'info' = 'error') {
+    if (!alertEl) {
+      return;
+    }
+
+    alertEl.className = [
+      'mt-6 rounded-xl border p-4 text-sm font-bold',
+      tone === 'error'
+        ? 'border-red-500/50 bg-red-500/10 text-red-200'
+        : 'border-sky-500/50 bg-sky-500/10 text-sky-200',
+    ].join(' ');
+
+    alertEl.textContent = message;
+    alertEl.classList.remove('hidden');
+  }
+
+  function hideAlert() {
+    alertEl?.classList.add('hidden');
+  }
+
+  function setLoading(isLoading: boolean) {
+    loadingEl?.classList.toggle('hidden', !isLoading);
+  }
+
+  function showEmptyCart() {
+    setLoading(false);
+    hideAlert();
+    emptyEl?.classList.remove('hidden');
+    contentEl?.classList.add('hidden');
+  }
+
+  function bindRemoveButtons() {
+    document.querySelectorAll('[data-remove-sku]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const sku = button.getAttribute('data-remove-sku');
+
+        if (!sku) {
+          return;
+        }
+
+        removeFromCart(sku);
+        void loadCart();
+      });
+    });
+  }
+
+  function renderValidation(validation: CheckoutValidationResponse) {
+    setLoading(false);
+
+    const items = validation.items ?? [];
+    const currency = validation.currency ?? 'USD';
+
+    if (items.length === 0) {
+      showEmptyCart();
+      return;
+    }
+
+    emptyEl?.classList.add('hidden');
+    contentEl?.classList.remove('hidden');
+
+    if (itemsEl) {
+      itemsEl.innerHTML = items
+        .map((item) => {
+          const statusClass = item.isBuyable
+            ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-200'
+            : 'border-red-500/40 bg-red-500/10 text-red-200';
+
+          return `
+            <article class="rounded-2xl border border-slate-800 bg-black/35 p-5">
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <p class="text-xs font-black uppercase tracking-[0.12em] text-slate-500">
+                    SKU ${escapeHtml(item.sku)}
+                  </p>
+
+                  <h2 class="mt-2 text-lg font-black text-white">
+                    ${escapeHtml(item.title ?? item.sku)}
+                  </h2>
+
+                  <div class="mt-3 inline-flex rounded-full border px-3 py-1 text-xs font-black uppercase ${statusClass}">
+                    ${escapeHtml(item.commerceLabel ?? item.commerceStatus ?? 'Pending')}
+                  </div>
+
+                  ${
+                    item.reason
+                      ? `<p class="mt-3 text-sm text-red-200">${escapeHtml(item.reason)}</p>`
+                      : ''
+                  }
+                </div>
+
+                <div class="text-left sm:text-right">
+                  <p class="text-sm text-slate-400">Quantity ${escapeHtml(item.quantity ?? 1)}</p>
+                  <p class="mt-2 text-xl font-black text-white">
+                    ${escapeHtml(formatMoney(item.lineTotal ?? item.unitPrice, currency))}
+                  </p>
+
+                  <button
+                    type="button"
+                    data-remove-sku="${escapeHtml(item.sku)}"
+                    class="mt-4 rounded-md border border-slate-700 px-4 py-2 text-xs font-black uppercase text-slate-300 transition hover:border-red-400 hover:text-red-300"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </article>
+          `;
+        })
+        .join('');
+    }
+
+    if (subtotalEl) {
+      subtotalEl.textContent = formatMoney(validation.subtotalAmount ?? 0, currency);
+    }
+
+    if (totalEl) {
+      totalEl.textContent = formatMoney(validation.totalAmount ?? 0, currency);
+    }
+
+    if (checkoutButton) {
+      checkoutButton.disabled = !validation.ok;
+    }
+
+    if (!validation.ok) {
+      const errorMessage =
+        validation.errors?.[0]?.message ??
+        'One or more cart items are not available for checkout.';
+
+      showAlert(errorMessage);
+    } else {
+      hideAlert();
+    }
+
+    bindRemoveButtons();
+  }
+
+  async function loadCart() {
+    const cart = readCart();
+
+    if (cart.length === 0) {
+      showEmptyCart();
+      return;
+    }
+
+    setLoading(true);
+    emptyEl?.classList.add('hidden');
+    contentEl?.classList.add('hidden');
+
+    try {
+      const validation = await postCardFlow<CheckoutValidationResponse>(
+        '/checkout/validate',
+        { items: cart },
+      );
+
+      renderValidation(validation);
+    } catch (error) {
+      setLoading(false);
+      console.error('Cart validation failed', error);
+
+      if (error instanceof CardFlowApiError && error.body && typeof error.body === 'object') {
+        renderValidation(error.body as CheckoutValidationResponse);
+        return;
+      }
+
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Unknown cart validation error.';
+
+      showAlert(`Cart validation failed: ${message}`);
+    }
+  }
+
+  checkoutButton?.addEventListener('click', async () => {
+    const cart = readCart();
+
+    if (cart.length === 0) {
+      showEmptyCart();
+      return;
+    }
+
+    checkoutButton.disabled = true;
+    checkoutButton.textContent = 'Creating checkout...';
+
+    try {
+      const checkout = await postCardFlow<CheckoutCreateResponse>(
+        '/checkout',
+        { items: cart },
+      );
+
+      if (!checkout.ok || !checkout.checkoutUrl) {
+        throw new Error('Checkout did not return a Stripe URL.');
+      }
+
+      window.location.assign(checkout.checkoutUrl);
+    } catch (error) {
+      checkoutButton.disabled = false;
+      checkoutButton.textContent = 'Checkout';
+
+      if (error instanceof CardFlowApiError && error.body && typeof error.body === 'object') {
+        renderValidation(error.body as CheckoutValidationResponse);
+        return;
+      }
+
+      showAlert('Checkout could not be created. Please try again.');
+    }
+  });
+
+  clearCartButton?.addEventListener('click', () => {
+    clearCart();
+    showEmptyCart();
+  });
+
+  void loadCart();
+</script>

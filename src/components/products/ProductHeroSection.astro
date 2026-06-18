@@ -6,115 +6,177 @@ const { product } = Astro.props;
 const tags: string[] = product.tags ?? [];
 
 const productImages: ProductImage[] = product.images?.length
-	? product.images
-	: product.image
-		? [product.image]
-		: [];
+        ? product.images
+        : product.image
+                ? [product.image]
+                : [];
 
 const primaryImage = productImages[0];
+
+const normalizedAvailability = String(product.availability ?? '')
+        .trim()
+        .toLowerCase();
+
+const isBuyable =
+        typeof product.isBuyable === 'boolean'
+                ? product.isBuyable
+                : product.commerceStatus
+                        ? product.commerceStatus === 'buyable'
+                        : normalizedAvailability === 'available';
+
+const commerceLabel =
+        product.commerceLabel ??
+        product.availability ??
+        (isBuyable ? 'Available' : 'Not Available');
+
+const canAddToCart = Boolean(product.sku) && isBuyable;
 ---
 
 <section class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-950">
-	<div class="grid gap-8 p-6 lg:grid-cols-[1.25fr_0.75fr] lg:p-8 xl:p-10">
-		<div class="grid gap-4 lg:grid-cols-[88px_1fr]">
-			{productImages.length > 1 && (
-				<div class="flex gap-3 overflow-x-auto lg:flex-col lg:overflow-visible">
-					{productImages.map((image: string, index: number) => (
-						<button
-							type="button"
-							class="h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-slate-700 bg-black p-1"
-							data-product-image={image}
-						>
-							<img
-								src={image}
-								alt={`${product.title} image ${index + 1}`}
-								class="h-full w-full object-contain"
-							/>
-						</button>
-					))}
-				</div>
-			)}
+        <div class="grid gap-8 p-6 lg:grid-cols-[1.25fr_0.75fr] lg:p-8 xl:p-10">
+                <div class="grid gap-4 lg:grid-cols-[88px_1fr]">
+                        {productImages.length > 1 && (
+                                <div class="flex gap-3 overflow-x-auto lg:flex-col lg:overflow-visible">
+                                        {productImages.map((image: string, index: number) => (
+                                                <button
+                                                        type="button"
+                                                        class="h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-slate-700 bg-black p-1"
+                                                        data-product-image={image}
+                                                >
+                                                        <img
+                                                                src={image}
+                                                                alt={`${product.title} image ${index + 1}`}
+                                                                class="h-full w-full object-contain"
+                                                        />
+                                                </button>
+                                        ))}
+                                </div>
+                        )}
 
-			<div class="rounded-2xl border border-slate-800 bg-black/40 p-4 shadow-[0_0_40px_rgba(0,0,0,0.35)]">
-				<div class="aspect-[3/4] overflow-hidden rounded-xl bg-black">
-					{primaryImage && (
-						<img
-							id="product-main-image"
-							src={primaryImage}
-							alt={product.title}
-							class="h-full w-full object-contain"
-						/>
-					)}
-				</div>
-			</div>
-		</div>
+                        <div class="rounded-2xl border border-slate-800 bg-black/40 p-4 shadow-[0_0_40px_rgba(0,0,0,0.35)]">
+                                <div class="aspect-[3/4] overflow-hidden rounded-xl bg-black">
+                                        {primaryImage && (
+                                                <img
+                                                        id="product-main-image"
+                                                        src={primaryImage}
+                                                        alt={product.title}
+                                                        class="h-full w-full object-contain"
+                                                />
+                                        )}
+                                </div>
+                        </div>
+                </div>
 
-		<div class="flex flex-col justify-center">
-			<p class="type-context-label text-amber-400">
-				Product Detail
-			</p>
+                <div class="flex flex-col justify-center">
+                        <p class="type-context-label text-amber-400">
+                                Product Detail
+                        </p>
 
-			<h1 class="type-section-title mt-2 text-white">
-				{product.title}
-			</h1>
+                        <h1 class="type-section-title mt-2 text-white">
+                                {product.title}
+                        </h1>
 
-			{tags.length > 0 && (
-				<div class="mt-4 flex flex-wrap gap-2">
-					{tags.map((tag) => (
-						<span class="rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-xs font-black uppercase tracking-wide text-amber-300">
-							{tag}
-						</span>
-					))}
-				</div>
-			)}
+                        {tags.length > 0 && (
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                        {tags.map((tag) => (
+                                                <span class="rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-xs font-black uppercase tracking-wide text-amber-300">
+                                                        {tag}
+                                                </span>
+                                        ))}
+                                </div>
+                        )}
 
-			<p class="mt-6 text-4xl font-black text-white">
-				{product.price}
-			</p>
+                        <p class="mt-6 text-4xl font-black text-white">
+                                {product.price}
+                        </p>
 
-			<div class="mt-6 flex flex-wrap gap-3">
-				<a
-					href="/cart"
-					class="inline-flex rounded-md bg-gradient-to-b from-amber-300 to-amber-500 px-6 py-3 text-xs font-black uppercase text-black transition hover:brightness-110"
-				>
-					View Cart Preview
-				</a>
+                        <div class="mt-4 inline-flex w-fit rounded-full border border-slate-700 bg-black/40 px-3 py-1 text-xs font-black uppercase tracking-wide text-slate-300">
+                                {commerceLabel}
+                        </div>
 
-				<a
-					href="/shop"
-					class="inline-flex rounded-md border border-sky-500 px-6 py-3 text-xs font-black uppercase text-white transition hover:bg-sky-500/10"
-				>
-					Back To Shop
-				</a>
-			</div>
+                        <div class="mt-6 flex flex-wrap gap-3">
+                                <button
+                                        type="button"
+                                        data-add-to-cart-sku={product.sku}
+                                        class="inline-flex rounded-md bg-gradient-to-b from-amber-300 to-amber-500 px-6 py-3 text-xs font-black uppercase text-black transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                                        disabled={!canAddToCart}
+                                >
+                                        {canAddToCart ? 'Add To Cart' : 'Not Available'}
+                                </button>
 
-			<p class="mt-5 max-w-xl text-sm leading-relaxed text-slate-300 lg:text-base">
-				Collector-ready inventory presented with clear imagery, transparent details, and future CardFlow-powered availability.
-			</p>
+                                <a
+                                        href="/cart"
+                                        class="inline-flex rounded-md border border-amber-500 px-6 py-3 text-xs font-black uppercase text-amber-300 transition hover:bg-amber-500/10"
+                                >
+                                        View Cart
+                                </a>
 
-			<p class="mt-4 text-xs uppercase tracking-[0.12em] text-slate-500">
-				Add to cart and checkout behavior deferred until commerce implementation.
-			</p>
-		</div>
-	</div>
+                                <a
+                                        href="/shop"
+                                        class="inline-flex rounded-md border border-sky-500 px-6 py-3 text-xs font-black uppercase text-white transition hover:bg-sky-500/10"
+                                >
+                                        Back To Shop
+                                </a>
+                        </div>
+
+                        <p
+                                id="add-to-cart-feedback"
+                                class="mt-4 hidden text-sm font-bold text-emerald-300"
+                        >
+                                Added to cart.
+                        </p>
+
+                        <p class="mt-5 max-w-xl text-sm leading-relaxed text-slate-300 lg:text-base">
+                                Collector-ready inventory presented with clear imagery, transparent details, and CardFlow-powered availability.
+                        </p>
+
+                        <p class="mt-4 text-xs uppercase tracking-[0.12em] text-slate-500">
+                                Checkout validates price and availability again before creating a secure Stripe session.
+                        </p>
+                </div>
+        </div>
 </section>
 
 <script>
-	document.addEventListener('DOMContentLoaded', () => {
-		const mainImage = document.getElementById('product-main-image');
+        import { addToCart } from '../../lib/cartStorage';
 
-		if (!mainImage) return;
+        document.addEventListener('DOMContentLoaded', () => {
+                const mainImage = document.getElementById('product-main-image');
 
-		document
-			.querySelectorAll('[data-product-image]')
-			.forEach((thumbnail) => {
-				thumbnail.addEventListener('click', () => {
-					const image = thumbnail.getAttribute('data-product-image');
+                if (mainImage) {
+                        document
+                                .querySelectorAll('[data-product-image]')
+                                .forEach((thumbnail) => {
+                                        thumbnail.addEventListener('click', () => {
+                                                const image = thumbnail.getAttribute('data-product-image');
 
-					if (image) {
-						mainImage.setAttribute('src', image);
-					}
-				});
-			});
-	});
+                                                if (image) {
+                                                        mainImage.setAttribute('src', image);
+                                                }
+                                        });
+                                });
+                }
+
+                document
+                        .querySelectorAll('[data-add-to-cart-sku]')
+                        .forEach((button) => {
+                                button.addEventListener('click', () => {
+                                        const sku = button.getAttribute('data-add-to-cart-sku');
+
+                                        if (!sku) {
+                                                return;
+                                        }
+
+                                        addToCart(sku);
+
+                                        const feedback = document.getElementById('add-to-cart-feedback');
+
+                                        if (feedback) {
+                                                feedback.classList.remove('hidden');
+                                        }
+
+                                        button.textContent = 'Added To Cart';
+                                });
+                        });
+        });
 </script>

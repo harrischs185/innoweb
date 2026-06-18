@@ -52,21 +52,104 @@ export type CardFlowProductDetail = {
 };
 
 export type InnoWebProductDetail = {
-	title: string;
-	price: string;
-	slug: string;
-	sku: string;
-	images: string[];
-	category: string;
-	description: string | null;
-	tags: string[];
-	availability: string;
+        title: string;
+        price: string;
+        slug: string;
+        sku: string;
+        images: string[];
+        category: string;
+        description: string | null;
+        tags: string[];
+        availability: string;
+        isBuyable: boolean;
+        commerceStatus:
+                | 'buyable'
+                | 'hidden'
+                | 'unavailable'
+                | 'sold'
+                | 'not_owned'
+                | 'missing_price';
+        commerceLabel: string;
+        commerceReason: string;
 };
 
 function formatPrice(price: string | number | null): string {
 	if (price == null) return 'Price coming soon';
 
 	return `$${Number(price).toFixed(2)}`;
+}
+
+function normalizeStatus(value: string | null | undefined) {
+        return value?.trim().toLowerCase() ?? null;
+}
+
+function getNumericPrice(price: string | number | null) {
+        if (price == null) {
+                return null;
+        }
+
+        const parsed = Number(price);
+
+        return Number.isFinite(parsed) ? parsed : null;
+}
+
+function getCommerceState(product: CardFlowProductDetail) {
+        const availabilityStatus = normalizeStatus(product.availabilityStatus);
+        const inventoryStatus = normalizeStatus(product.inventoryStatus);
+        const listingStatus = normalizeStatus(product.listingStatus);
+        const price = getNumericPrice(product.price);
+
+        if (listingStatus && listingStatus !== 'published') {
+                return {
+                        isBuyable: false,
+                        commerceStatus: 'hidden' as const,
+                        commerceLabel: 'Hidden',
+                        commerceReason: 'Product is not published.',
+                };
+        }
+
+        if (availabilityStatus === 'sold' || inventoryStatus === 'sold') {
+                return {
+                        isBuyable: false,
+                        commerceStatus: 'sold' as const,
+                        commerceLabel: 'Sold',
+                        commerceReason: 'Product has already been sold.',
+                };
+        }
+
+        if (availabilityStatus !== 'available') {
+                return {
+                        isBuyable: false,
+                        commerceStatus: 'unavailable' as const,
+                        commerceLabel: 'Unavailable',
+                        commerceReason: 'Product is not currently available for purchase.',
+                };
+        }
+
+        if (inventoryStatus !== 'owned') {
+                return {
+                        isBuyable: false,
+                        commerceStatus: 'not_owned' as const,
+                        commerceLabel: 'Not Available',
+                        commerceReason: 'Product inventory is not currently owned and available for sale.',
+                };
+        }
+
+        if (price === null || price <= 0) {
+                return {
+                        isBuyable: false,
+                        commerceStatus: 'missing_price' as const,
+                        commerceLabel: 'Price unavailable',
+                        commerceReason: 'Product does not have a valid purchase price.',
+                };
+        }
+
+        return {
+                isBuyable: true,
+                commerceStatus: 'buyable' as const,
+                commerceLabel: 'Available',
+                commerceReason: 'Product is available for purchase.',
+        };
 }
 
 export function adaptProductDetail(product: CardFlowProductDetail): InnoWebProductDetail {
@@ -93,6 +176,8 @@ export function adaptProductDetail(product: CardFlowProductDetail): InnoWebProdu
 		product.shortDescription ??
 		(generatedDescription.length > 0 ? generatedDescription : null);
    
+	const commerceState = getCommerceState(product);
+
 	return {
 		title: product.title,
 		price: formatPrice(product.price),
@@ -110,6 +195,10 @@ export function adaptProductDetail(product: CardFlowProductDetail): InnoWebProdu
 		category: product.sport?.name ?? product.categories[0]?.name ?? 'Collectibles',
 		description,
 		tags,
-		availability: product.availabilityStatus ?? 'Preview',
+		availability: commerceState.commerceLabel,
+		isBuyable: commerceState.isBuyable,
+		commerceStatus: commerceState.commerceStatus,
+		commerceLabel: commerceState.commerceLabel,
+		commerceReason: commerceState.commerceReason,
 	};
 }

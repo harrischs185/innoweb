@@ -1,25 +1,52 @@
 ---
 const {
-	debug = false,
-	class: extraClass = '',
+        debug = false,
+        class: extraClass = '',
 } = Astro.props;
 
 const classes = [
-	'flex items-center gap-3',
-	extraClass,
+        'flex items-center gap-3',
+        extraClass,
 ].filter(Boolean).join(' ');
 ---
 
 <div class={classes}>
-	<a href="/account" class="hidden text-sm text-slate-300 hover:text-amber-400 md:inline">
-		Account
-	</a>
+        <a href="/account" class="hidden text-sm text-slate-300 hover:text-amber-400 md:inline">
+                Account
+        </a>
 
-	<a
-		href="/cart"
-		class="flex h-10 w-10 items-center justify-center rounded-full border border-amber-500/50 text-amber-400 hover:border-amber-400 hover:bg-amber-400/10"
-		aria-label="Cart"
-	>
-		🛒
-	</a>
+        <a
+                href="/cart"
+                class="relative flex h-10 items-center justify-center rounded-full border border-amber-500/50 px-4 text-xs font-black uppercase tracking-wide text-amber-400 hover:border-amber-400 hover:bg-amber-400/10"
+                aria-label="Cart"
+        >
+                Cart
+
+                <span
+                        id="cart-count"
+                        class="ml-2 hidden min-w-5 rounded-full bg-amber-400 px-1.5 py-0.5 text-center text-[10px] font-black text-black"
+                >
+                        0
+                </span>
+        </a>
 </div>
+
+<script>
+        import { getCartCount } from '../../lib/cartStorage';
+
+        function updateCartCount() {
+                const countEl = document.getElementById('cart-count');
+
+                if (!countEl) {
+                        return;
+                }
+
+                const count = getCartCount();
+
+                countEl.textContent = String(count);
+                countEl.classList.toggle('hidden', count === 0);
+        }
+
+        document.addEventListener('DOMContentLoaded', updateCartCount);
+        window.addEventListener('innoweb-cart-updated', updateCartCount);
+</script>
