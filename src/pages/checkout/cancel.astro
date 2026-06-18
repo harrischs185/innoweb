@@ -1,7 +1,5 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-
-const orderNumber = Astro.url.searchParams.get('order');
 ---
 
 <Layout
@@ -19,15 +17,18 @@ const orderNumber = Astro.url.searchParams.get('order');
         Your checkout was cancelled.
       </h1>
 
-      {orderNumber && (
-        <p class="mt-5 text-sm font-bold uppercase tracking-wide text-slate-300">
-          Order: {orderNumber}
-        </p>
-      )}
+      <p
+        id="checkout-cancel-order"
+        class="mt-5 hidden text-sm font-bold uppercase tracking-wide text-slate-300"
+      >
+        Order: <span id="checkout-cancel-order-number"></span>
+      </p>
 
-      <p class="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-slate-300">
-        No payment was confirmed from this page. The item may remain reserved
-        briefly until the checkout reservation expires.
+      <p
+        id="checkout-cancel-status"
+        class="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-slate-300"
+      >
+        No payment was confirmed from this page. Checking checkout status...
       </p>
 
       <div class="mt-8 flex flex-wrap justify-center gap-3">
@@ -48,3 +49,69 @@ const orderNumber = Astro.url.searchParams.get('order');
     </div>
   </section>
 </Layout>
+
+<script>
+  import { postCardFlow } from '../../lib/cardflowApi';
+
+  type CheckoutCancelResponse = {
+    ok: true;
+    orderNumber: string;
+    status: 'cancelled' | 'already_cancelled';
+    reservationStatus: 'released' | 'already_released';
+  };
+
+  const statusElement = document.querySelector<HTMLElement>(
+    '#checkout-cancel-status',
+  );
+  const orderElement = document.querySelector<HTMLElement>(
+    '#checkout-cancel-order',
+  );
+  const orderNumberElement = document.querySelector<HTMLElement>(
+    '#checkout-cancel-order-number',
+  );
+
+  const orderNumber = new URLSearchParams(window.location.search)
+    .get('order')
+    ?.trim();
+
+  async function releaseCheckoutHold() {
+    if (!statusElement) {
+      return;
+    }
+
+    if (!orderNumber) {
+      statusElement.textContent =
+        'No payment was confirmed from this page. Your cart has not been cleared, but no order reference was provided for automatic checkout release.';
+      return;
+    }
+
+    if (orderElement && orderNumberElement) {
+      orderNumberElement.textContent = orderNumber;
+      orderElement.classList.remove('hidden');
+    }
+
+    statusElement.textContent =
+      'No payment was confirmed from this page. Releasing the checkout hold so your cart can be used again immediately.';
+
+    try {
+      const response = await postCardFlow<CheckoutCancelResponse>(
+        '/checkout/cancel',
+        {
+          orderNumber,
+        },
+      );
+
+      statusElement.textContent =
+        response.status === 'already_cancelled'
+          ? 'No payment was completed. This checkout was already cancelled, and your cart is still saved.'
+          : 'No payment was completed. The checkout hold has been released, and your cart is still saved.';
+    } catch (error) {
+      console.error('Checkout cancellation failed', error);
+
+      statusElement.textContent =
+        'No payment was completed. Your cart is still saved, but the checkout hold could not be released automatically. The item may remain reserved until the checkout session expires.';
+    }
+  }
+
+  releaseCheckoutHold();
+</script>
