@@ -1,4 +1,78 @@
 ---
+import { fetchCardFlow } from '../../lib/cardflowApi';
+
+type ShopFilterOptionsResponse = {
+        data: {
+                sports: Array<{ value: string; label: string }>;
+                players: Array<{ value: string; label: string }>;
+                teams: Array<{ value: string; label: string }>;
+                conditions: string[];
+                gradeCompanies: string[];
+                gradeValues: string[];
+                sets: string[];
+                years: number[];
+                priceRange: {
+                        min: number | null;
+                        max: number | null;
+                };
+        };
+};
+
+const currentPath = Astro.url.pathname;
+const currentSearch = Astro.url.searchParams.get('q') ?? '';
+const currentMinPrice = Astro.url.searchParams.get('minPrice') ?? '';
+const currentMaxPrice = Astro.url.searchParams.get('maxPrice') ?? '';
+const currentSport = Astro.url.searchParams.get('sport') ?? '';
+const currentPlayer = Astro.url.searchParams.get('player') ?? '';
+const currentTeam = Astro.url.searchParams.get('team') ?? '';
+const currentCondition = Astro.url.searchParams.get('condition') ?? '';
+const currentGradeCompany = Astro.url.searchParams.get('gradeCompany') ?? '';
+const currentGradeValue = Astro.url.searchParams.get('gradeValue') ?? '';
+const currentSetName = Astro.url.searchParams.get('setName') ?? '';
+const currentYear = Astro.url.searchParams.get('year') ?? '';
+
+const filterOptionsParams = new URLSearchParams();
+
+if (currentSport) {
+        filterOptionsParams.set('sport', currentSport);
+}
+
+const filterOptionsPath = filterOptionsParams.toString()
+        ? `/products/filters?${filterOptionsParams.toString()}`
+        : '/products/filters';
+
+const filterOptionsResponse =
+        await fetchCardFlow<ShopFilterOptionsResponse>(filterOptionsPath);
+
+const filterOptions = filterOptionsResponse.data;
+
+const normalizedCurrentPath = currentPath.replace(/\/$/, '');
+
+const hasCategoryFilter = normalizedCurrentPath !== '/shop';
+const hasPriceFilter = Boolean(currentMinPrice || currentMaxPrice);
+const hasSportFilter = Boolean(currentSport);
+const hasPlayerFilter = Boolean(currentPlayer);
+const hasTeamFilter = Boolean(currentTeam);
+
+const hasConditionGradeFilter = Boolean(
+        currentCondition ||
+        currentGradeCompany ||
+        currentGradeValue
+);
+
+const hasSetFilter = Boolean(currentSetName);
+const hasYearFilter = Boolean(currentYear);
+
+const minimumPricePlaceholder =
+        filterOptions.priceRange.min === null
+                ? '0'
+                : filterOptions.priceRange.min.toFixed(2);
+
+const maximumPricePlaceholder =
+        filterOptions.priceRange.max === null
+                ? '10000'
+                : filterOptions.priceRange.max.toFixed(2);
+
 const categories = [
 	{ label: 'All Cards', href: '/shop' },
 	{ label: 'Graded Cards', href: '/shop/graded' },
@@ -7,87 +81,581 @@ const categories = [
 	{ label: "Bunker's TCG", href: '/shop/tcg' },
 	{ label: 'Featured', href: '/shop/featured' },
 ];
-
-const filterGroups = [
-	'Sport',
-	'Player',
-	'Team',
-	'Condition / Grade',
-	'Series / Set',
-	'Year',
-];
 ---
 
 <aside class="space-y-4">
-	<div class="overflow-hidden rounded-xl border border-slate-800 bg-slate-950/85">
-		<div class="flex items-center justify-between border-b border-slate-800 px-4 py-3">
-			<h2 class="type-body-prominent uppercase text-white">Category</h2>
-			<span class="text-amber-400">⌃</span>
-		</div>
+        <form
+                method="get"
+                action={currentPath}
+                data-shop-filter-form
+                data-preserve-shop-scroll
+                class="overflow-hidden rounded-xl border border-slate-800 bg-slate-950/85"
+        >
+                <details class="group" open>
+                        <summary class="flex cursor-pointer list-none items-center justify-between border-b border-slate-800 px-4 py-3">
+                                <h2
+                                        class:list={[
+                                                'type-body-prominent uppercase text-white transition',
+                                                hasCategoryFilter && 'font-black group-open:font-semibold',
+                                        ]}
+                                >
+                                        Category
+                                </h2>
 
-		<nav class="space-y-1 p-3">
-			{categories.map((category) => (
-				<a
-					href={category.href}
-					class="flex items-center justify-between rounded-md px-3 py-2 text-sm font-semibold text-slate-200 transition hover:bg-amber-400/10 hover:text-amber-300"
-				>
-					<span>{category.label}</span>
+                                <span
+                                        aria-hidden="true"
+                                        class="text-amber-400 group-open:hidden"
+                                >
+                                        +
+                                </span>
 
-					{category.badge && (
-						<span class="rounded bg-red-500 px-1.5 py-0.5 text-[10px] font-black uppercase text-white">
-							{category.badge}
-						</span>
-					)}
-				</a>
-			))}
-		</nav>
+                                <span
+                                        aria-hidden="true"
+                                        class="hidden text-amber-400 group-open:inline"
+                                >
+                                        ^
+                                </span>
+                        </summary>
 
-		<div class="border-t border-slate-800 px-4 py-4">
-			<div class="flex items-center justify-between">
-				<h2 class="type-body-prominent uppercase text-white">Price Range</h2>
-				<span class="text-amber-400">⌃</span>
-			</div>
+                        <nav class="space-y-1 p-3">
+                                {categories.map((category) => (
+                                        <a
+                                                href={category.href}
+                                                data-preserve-shop-scroll
+                                                class="flex items-center justify-between rounded-md px-3 py-2 text-sm font-semibold text-slate-200 transition hover:bg-amber-400/10 hover:text-amber-300"
+                                        >
+                                                <span>{category.label}</span>
 
-			<div class="mt-4">
-				<div class="h-1 rounded-full bg-slate-800">
-					<div class="h-1 rounded-full bg-amber-400"></div>
-				</div>
+                                                {category.badge && (
+                                                        <span class="rounded bg-red-500 px-1.5 py-0.5 text-[10px] font-black uppercase text-white">
+                                                                {category.badge}
+                                                        </span>
+                                                )}
+                                        </a>
+                                ))}
+                        </nav>
+                </details>
 
-				<div class="mt-4 grid grid-cols-2 gap-3">
-					<div class="rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-300">
-						$ 0
-					</div>
-					<div class="rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-300">
-						$ 10,000+
-					</div>
-				</div>
-			</div>
-		</div>
+                <details
+                        class="group border-t border-slate-800"
+                        open={Boolean(currentMinPrice || currentMaxPrice)}
+                >
+                        <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-4">
+                                <h2
+                                        class:list={[
+                                                'type-body-prominent uppercase text-white transition',
+                                                hasPriceFilter && 'font-black group-open:font-semibold',
+                                        ]}
+                                >
+                                        Price Range
+                                </h2>
 
-		{filterGroups.map((group) => (
-			<div class="flex items-center justify-between border-t border-slate-800 px-4 py-4">
-				<h2 class="type-body-prominent uppercase text-white">{group}</h2>
-				<span class="text-amber-400">+</span>
-			</div>
-		))}
+                                <span
+                                        aria-hidden="true"
+                                        class="text-amber-400 group-open:hidden"
+                                >
+                                        +
+                                </span>
+
+                                <span
+                                        aria-hidden="true"
+                                        class="hidden text-amber-400 group-open:inline"
+                                >
+                                        ^
+                                </span>
+                        </summary>
+
+                        <div class="px-4 pb-4">
+                                <div class="h-1 rounded-full bg-slate-800">
+                                        <div class="h-1 rounded-full bg-amber-400"></div>
+                                </div>
+
+                                <div class="mt-4 grid grid-cols-2 gap-3">
+                                        <label class="block">
+                                                <span class="sr-only">Minimum price</span>
+
+                                                <input
+                                                        type="number"
+                                                        name="minPrice"
+                                                        min="0"
+                                                        step="0.01"
+                                                        value={currentMinPrice}
+                                                        placeholder={`$ ${minimumPricePlaceholder}`}
+                                                        class="w-full rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-white outline-none placeholder:text-slate-500 focus:border-amber-400"
+                                                />
+                                        </label>
+
+                                        <label class="block">
+                                                <span class="sr-only">Maximum price</span>
+
+                                                <input
+                                                        type="number"
+                                                        name="maxPrice"
+                                                        min="0"
+                                                        step="0.01"
+                                                        value={currentMaxPrice}
+                                                        placeholder={`$ ${maximumPricePlaceholder}`}
+                                                        class="w-full rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-white outline-none placeholder:text-slate-500 focus:border-amber-400"
+                                                />
+                                        </label>
+                                </div>
+                        </div>
+                </details>
+
+                <details
+                        class="group border-t border-slate-800"
+                        open={Boolean(currentSport)}
+                >
+                        <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-4">
+                                <h2
+                                        class:list={[
+                                                'type-body-prominent uppercase text-white transition',
+                                                hasSportFilter && 'font-black group-open:font-semibold',
+                                        ]}
+                                >
+                                        Sport
+                                </h2>
+                                <span
+                                        aria-hidden="true"
+                                        class="text-amber-400 group-open:hidden"
+                                >
+                                        +
+                                </span>
+
+                                <span
+                                        aria-hidden="true"
+                                        class="hidden text-amber-400 group-open:inline"
+                                >
+                                        ^
+                                </span>
+                        </summary>
+
+                        <fieldset class="space-y-2 px-4 pb-4">
+                                <legend class="sr-only">Filter by sport</legend>
+
+                                <label class="flex cursor-pointer items-center gap-3 rounded-md px-2 py-2 text-sm text-slate-300 hover:bg-amber-400/10 hover:text-amber-300">
+                                        <input
+                                                type="radio"
+                                                name="sport"
+                                                value=""
+                                                checked={!currentSport}
+                                                class="accent-amber-400"
+                                        />
+                                        <span>All Sports</span>
+                                </label>
+
+                                {filterOptions.sports.map((sport) => (
+                                        <label class="flex cursor-pointer items-center gap-3 rounded-md px-2 py-2 text-sm text-slate-300 hover:bg-amber-400/10 hover:text-amber-300">
+                                                <input
+                                                        type="radio"
+                                                        name="sport"
+                                                        value={sport.value}
+                                                        checked={currentSport === sport.value}
+                                                        class="accent-amber-400"
+                                                />
+                                                <span>{sport.label}</span>
+                                        </label>
+                                ))}
+                        </fieldset>
+                </details>
+
+                <details
+                        class="group border-t border-slate-800"
+                        open={Boolean(currentPlayer)}
+                >
+                        <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-4">
+                                <h2
+                                        class:list={[
+                                                'type-body-prominent uppercase text-white transition',
+                                                hasPlayerFilter && 'font-black group-open:font-semibold',
+                                        ]}
+                                >
+                                        Player
+                                </h2>
+                                <span
+                                        aria-hidden="true"
+                                        class="text-amber-400 group-open:hidden"
+                                >
+                                        +
+                                </span>
+
+                                <span
+                                        aria-hidden="true"
+                                        class="hidden text-amber-400 group-open:inline"
+                                >
+                                        ^
+                                </span>
+                        </summary>
+
+                        <div class="px-4 pb-4">
+                                <label class="sr-only" for="shop-player-filter">
+                                        Filter by player
+                                </label>
+
+                                <select
+                                        id="shop-player-filter"
+                                        name="player"
+                                        class="w-full rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-200 outline-none focus:border-amber-400"
+                                >
+                                        <option value="" selected={!currentPlayer}>
+                                                All Players
+                                        </option>
+
+                                        {filterOptions.players.map((player) => (
+                                                <option
+                                                        value={player.value}
+                                                        selected={currentPlayer === player.value}
+                                                >
+                                                        {player.label}
+                                                </option>
+                                        ))}
+                                </select>
+                        </div>
+                </details>
+
+                <details
+                        class="group border-t border-slate-800"
+                        open={Boolean(currentTeam)}
+                >
+                        <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-4">
+                                <h2
+                                        class:list={[
+                                                'type-body-prominent uppercase text-white transition',
+                                                hasTeamFilter && 'font-black group-open:font-semibold',
+                                        ]}
+                                >
+                                        Team
+                                </h2>
+                                <span
+                                        aria-hidden="true"
+                                        class="text-amber-400 group-open:hidden"
+                                >
+                                        +
+                                </span>
+
+                                <span
+                                        aria-hidden="true"
+                                        class="hidden text-amber-400 group-open:inline"
+                                >
+                                        ^
+                                </span>
+                        </summary>
+
+                        <div class="px-4 pb-4">
+                                <label class="sr-only" for="shop-team-filter">
+                                        Filter by team
+                                </label>
+
+                                <select
+                                        id="shop-team-filter"
+                                        name="team"
+                                        class="w-full rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-200 outline-none focus:border-amber-400"
+                                >
+                                        <option value="" selected={!currentTeam}>
+                                                All Teams
+                                        </option>
+
+                                        {filterOptions.teams.map((team) => (
+                                                <option
+                                                        value={team.value}
+                                                        selected={currentTeam === team.value}
+                                                >
+                                                        {team.label}
+                                                </option>
+                                        ))}
+                                </select>
+                        </div>
+                </details>
+
+                <details
+                        class="group border-t border-slate-800"
+                        open={Boolean(
+                                currentCondition ||
+                                currentGradeCompany ||
+                                currentGradeValue
+                        )}
+                >
+                        <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-4">
+                                <h2
+                                        class:list={[
+                                                'type-body-prominent uppercase text-white transition',
+                                                hasConditionGradeFilter && 'font-black group-open:font-semibold',
+                                        ]}
+                                >
+                                        Condition / Grade
+                                </h2>
+                                <span
+                                        aria-hidden="true"
+                                        class="text-amber-400 group-open:hidden"
+                                >
+                                        +
+                                </span>
+
+                                <span
+                                        aria-hidden="true"
+                                        class="hidden text-amber-400 group-open:inline"
+                                >
+                                        ^
+                                </span>
+                        </summary>
+
+                        <div class="space-y-3 px-4 pb-4">
+                                <label class="block">
+                                        <span class="type-context-label mb-1 block text-xs text-slate-400">
+                                                Condition
+                                        </span>
+
+                                        <select
+                                                name="condition"
+                                                class="w-full rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-200 outline-none focus:border-amber-400"
+                                        >
+                                                <option value="" selected={!currentCondition}>
+                                                        All Conditions
+                                                </option>
+
+                                                {filterOptions.conditions.map((condition) => (
+                                                        <option
+                                                                value={condition}
+                                                                selected={currentCondition === condition}
+                                                        >
+                                                                {condition}
+                                                        </option>
+                                                ))}
+                                        </select>
+                                </label>
+
+                                <label class="block">
+                                        <span class="type-context-label mb-1 block text-xs text-slate-400">
+                                                Grading Company
+                                        </span>
+
+                                        <select
+                                                name="gradeCompany"
+                                                class="w-full rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-200 outline-none focus:border-amber-400"
+                                        >
+                                                <option value="" selected={!currentGradeCompany}>
+                                                        All Grading Companies
+                                                </option>
+
+                                                {filterOptions.gradeCompanies.map((company) => (
+                                                        <option
+                                                                value={company}
+                                                                selected={currentGradeCompany === company}
+                                                        >
+                                                                {company}
+                                                        </option>
+                                                ))}
+                                        </select>
+                                </label>
+
+                                <label class="block">
+                                        <span class="type-context-label mb-1 block text-xs text-slate-400">
+                                                Grade
+                                        </span>
+
+                                        <select
+                                                name="gradeValue"
+                                                class="w-full rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-200 outline-none focus:border-amber-400"
+                                        >
+                                                <option value="" selected={!currentGradeValue}>
+                                                        All Grades
+                                                </option>
+
+                                                {filterOptions.gradeValues.map((gradeValue) => (
+                                                        <option
+                                                                value={gradeValue}
+                                                                selected={currentGradeValue === gradeValue}
+                                                        >
+                                                                {gradeValue}
+                                                        </option>
+                                                ))}
+                                        </select>
+                                </label>
+                        </div>
+                </details>
+
+                <details
+                        class="group border-t border-slate-800"
+                        open={Boolean(currentSetName)}
+                >
+                        <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-4">
+                                <h2
+                                        class:list={[
+                                                'type-body-prominent uppercase text-white transition',
+                                                hasSetFilter && 'font-black group-open:font-semibold',
+                                        ]}
+                                >
+                                        Series / Set
+                                </h2>
+                                <span
+                                        aria-hidden="true"
+                                        class="text-amber-400 group-open:hidden"
+                                >
+                                        +
+                                </span>
+
+                                <span
+                                        aria-hidden="true"
+                                        class="hidden text-amber-400 group-open:inline"
+                                >
+                                        ^
+                                </span>
+                        </summary>
+
+                        <div class="px-4 pb-4">
+                                <label class="sr-only" for="shop-set-filter">
+                                        Filter by series or set
+                                </label>
+
+                                <select
+                                        id="shop-set-filter"
+                                        name="setName"
+                                        class="w-full rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-200 outline-none focus:border-amber-400"
+                                >
+                                        <option value="" selected={!currentSetName}>
+                                                All Sets
+                                        </option>
+
+                                        {filterOptions.sets.map((setName) => (
+                                                <option
+                                                        value={setName}
+                                                        selected={currentSetName === setName}
+                                                >
+                                                        {setName}
+                                                </option>
+                                        ))}
+                                </select>
+                        </div>
+                </details>
+
+                <details
+                        class="group border-t border-slate-800"
+                        open={Boolean(currentYear)}
+                >
+                        <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-4">
+                                <h2
+                                        class:list={[
+                                                'type-body-prominent uppercase text-white transition',
+                                                hasYearFilter && 'font-black group-open:font-semibold',
+                                        ]}
+                                >
+                                        Year
+                                </h2>
+                                <span
+                                        aria-hidden="true"
+                                        class="text-amber-400 group-open:hidden"
+                                >
+                                        +
+                                </span>
+
+                                <span
+                                        aria-hidden="true"
+                                        class="hidden text-amber-400 group-open:inline"
+                                >
+                                        ^
+                                </span>
+                        </summary>
+
+                        <div class="px-4 pb-4">
+                                <label class="sr-only" for="shop-year-filter">
+                                        Filter by year
+                                </label>
+
+                                <select
+                                        id="shop-year-filter"
+                                        name="year"
+                                        class="w-full rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-200 outline-none focus:border-amber-400"
+                                >
+                                        <option value="" selected={!currentYear}>
+                                                All Years
+                                        </option>
+
+                                        {filterOptions.years.map((year) => (
+                                                <option
+                                                        value={String(year)}
+                                                        selected={currentYear === String(year)}
+                                                >
+                                                        {year}
+                                                </option>
+                                        ))}
+                                </select>
+                        </div>
+                </details>
 
 		<div class="border-t border-slate-800 p-4">
-			<label class="type-context-label text-sm mb-2 block text-slate-400">
-				Search
-			</label>
+
 
 			<div class="flex rounded-md border border-slate-700 bg-black">
 				<input
-					type="text"
-					placeholder="Search Player or Set..."
-					class="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm text-white outline-none placeholder:text-slate-500"
-				/>
+                                        type="search"
+                                        name="q"
+                                        value={currentSearch}
+                                        autocomplete="off"
+                                        placeholder="Search Player or Set..."
+                                        class="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm text-white outline-none placeholder:text-slate-500"
+                                />
 				<button class="px-3 text-amber-400">⌕</button>
 			</div>
 
-			<button class="mt-4 w-full rounded-md bg-gradient-to-b from-amber-300 to-amber-500 px-4 py-3 text-sm font-black uppercase text-black transition hover:brightness-110">
-				Apply Filters
-			</button>
+			<button
+                                type="submit"
+                                class="mt-4 w-full rounded-md bg-gradient-to-b from-amber-300 to-amber-500 px-4 py-3 text-sm font-black uppercase text-black transition hover:brightness-110"
+                        >
+                                Apply Filters
+                        </button>
 		</div>
-	</div>
+        </form>
 </aside>
+
+<script>
+        function bindSportDependentFilters() {
+                const form = document.querySelector<HTMLFormElement>(
+                        '[data-shop-filter-form]',
+                );
+
+                if (
+                        !form ||
+                        form.dataset.sportDependenciesBound === 'true'
+                ) {
+                        return;
+                }
+
+                form.dataset.sportDependenciesBound = 'true';
+
+                form.addEventListener('change', (event) => {
+                        const target = event.target;
+
+                        if (
+                                !(target instanceof HTMLInputElement) ||
+                                target.name !== 'sport'
+                        ) {
+                                return;
+                        }
+
+                        const dependentFilterNames = [
+                                'player',
+                                'team',
+                                'condition',
+                                'gradeCompany',
+                                'gradeValue',
+                                'setName',
+                                'year',
+                        ];
+
+                        for (const name of dependentFilterNames) {
+                                const control = form.elements.namedItem(name);
+
+                                if (control instanceof HTMLSelectElement) {
+                                        control.value = '';
+                                }
+                        }
+                });
+        }
+
+        bindSportDependentFilters();
+
+        document.addEventListener(
+                'astro:page-load',
+                bindSportDependentFilters,
+        );
+</script>

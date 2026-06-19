@@ -19,6 +19,34 @@ const {
 
 const queryParams = new URLSearchParams();
 
+const passthroughFilterKeys = [
+        'q',
+        'search',
+        'sport',
+        'player',
+        'team',
+        'year',
+        'brand',
+        'setName',
+        'subset',
+        'parallel',
+        'condition',
+        'gradeCompany',
+        'gradeValue',
+        'autographed',
+        'minPrice',
+        'maxPrice',
+        'sort',
+] as const;
+
+for (const key of passthroughFilterKeys) {
+        const value = Astro.url.searchParams.get(key)?.trim();
+
+        if (value) {
+                queryParams.set(key, value);
+        }
+}
+
 if (category) {
 	queryParams.set('category', category);
 }
@@ -38,8 +66,17 @@ const productPath = queryParams.toString()
 	? `/products?${queryParams.toString()}`
 	: '/products';
 
+console.log('[SHOP GRID] Browser URL:', Astro.url.toString());
+console.log('[SHOP GRID] CardFlow request:', productPath);
+
 const response =
 	await fetchCardFlow<CardFlowListResponse<CardFlowProductSummary>>(productPath);
+
+console.log(
+        '[SHOP GRID] CardFlow result:',
+        response.meta?.count ?? response.data.length,
+        response.data.map((product) => product.sku),
+);
 
 const products = response.data.map(adaptProductCard);
 
@@ -48,7 +85,10 @@ const visibleProducts = limit
 	: products;
 ---
 
-<section aria-label="Shop products">
+<section
+        aria-label="Shop products"
+        data-shop-result-count={visibleProducts.length}
+>
 	<div class="mb-4 flex items-end justify-between gap-4">
 		<div>
 			<p class="type-context-label text-amber-400">{eyebrow}</p>

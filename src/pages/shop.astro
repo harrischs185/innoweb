@@ -1,4 +1,6 @@
 ---
+export const prerender = false;
+
 import Layout from '../layouts/Layout.astro';
 import SectionWrapper from '../components/layout/SectionWrapper.astro';
 import ShopHeroSection from '../components/shop/ShopHeroSection.astro';
@@ -31,3 +33,89 @@ noindex={false}
             </div>
         </SectionWrapper>
 </Layout>
+
+<script>
+        const shopScrollStorageKey = 'innoweb:shop-scroll-position';
+
+        function saveShopScrollPosition() {
+                sessionStorage.setItem(
+                        shopScrollStorageKey,
+                        String(window.scrollY),
+                );
+        }
+
+        function bindShopScrollPreservation() {
+                document
+                        .querySelectorAll('[data-preserve-shop-scroll]')
+                        .forEach((element) => {
+                                if (
+                                        element instanceof HTMLFormElement &&
+                                        element.dataset.shopScrollBound !== 'true'
+                                ) {
+                                        element.dataset.shopScrollBound = 'true';
+                                        element.addEventListener(
+                                                'submit',
+                                                saveShopScrollPosition,
+                                        );
+                                }
+
+                                if (
+                                        element instanceof HTMLAnchorElement &&
+                                        element.dataset.shopScrollBound !== 'true'
+                                ) {
+                                        element.dataset.shopScrollBound = 'true';
+                                        element.addEventListener(
+                                                'click',
+                                                saveShopScrollPosition,
+                                        );
+                                }
+                        });
+        }
+
+        function restoreShopScrollPosition() {
+                const storedPosition =
+                        sessionStorage.getItem(shopScrollStorageKey);
+
+                if (storedPosition === null) {
+                        return;
+                }
+
+                sessionStorage.removeItem(shopScrollStorageKey);
+
+                const scrollPosition = Number(storedPosition);
+
+                if (!Number.isFinite(scrollPosition)) {
+                        return;
+                }
+
+                requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                                window.scrollTo({
+                                        top: scrollPosition,
+                                        left: 0,
+                                        behavior: 'auto',
+                                });
+                        });
+                });
+        }
+
+        bindShopScrollPreservation();
+
+        if (document.readyState === 'complete') {
+                restoreShopScrollPosition();
+        } else {
+                window.addEventListener(
+                        'load',
+                        restoreShopScrollPosition,
+                        { once: true },
+                );
+        }
+
+        document.addEventListener(
+                'astro:page-load',
+                () => {
+                        bindShopScrollPreservation();
+                        restoreShopScrollPosition();
+                },
+        );
+</script>

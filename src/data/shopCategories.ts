@@ -83,6 +83,12 @@ export const categoryConfig = {
 		filterType: 'collection',
 		filterValue: 'featured-products',
 	},
+	featured: {
+                title: 'Featured Products',
+                description: 'Browse featured sports cards and collectibles.',
+                filterType: 'collection',
+                filterValue: 'featured-products',
+    },
 } as const;
 
 export type CategoryKey = keyof typeof categoryConfig;

@@ -1,31 +1,136 @@
 ---
-const {
-	resultCount = '1,248',
-} = Astro.props;
+const currentPath = Astro.url.pathname;
+const currentSort = Astro.url.searchParams.get('sort') ?? 'newest';
+
+const preservedParams = [...Astro.url.searchParams.entries()].filter(
+        ([key, value]) => key !== 'sort' && value.trim() !== '',
+);
 ---
 
 <div class="mb-4 flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-950/80 p-3 sm:flex-row sm:items-center sm:justify-between">
-	<div class="flex items-center gap-4">
-		<p class="type-body-prominent uppercase text-white">
-			Filter By
-		</p>
+        <div class="flex items-center gap-4">
+                <p class="type-body-prominent uppercase text-white">
+                        Filter By
+                </p>
 
-		<button class="type-context-label text-sm text-amber-400 transition hover:text-amber-300">
-			↻ Reset
-		</button>
+                <a
+                        href="/shop"
+						data-preserve-shop-scroll
+                        class="type-context-label text-sm text-amber-400 transition hover:text-amber-300"
+                >
+                        ↻ Reset
+                </a>
 
-		<p class="type-context-label text-sm text-slate-400">
-			{resultCount} Results
-		</p>
-	</div>
+                <p class="type-context-label text-sm text-slate-400">
+                        <span id="shop-result-count">—</span> Results
+                </p>
+        </div>
 
-	<label class="flex items-center gap-2">
-		<span class="type-context-label text-sm text-slate-400">Sort by</span>
-		<select class="rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-200 outline-none focus:border-amber-400">
-			<option>Featured</option>
-			<option>Newest</option>
-			<option>Price: Low to High</option>
-			<option>Price: High to Low</option>
-		</select>
-	</label>
+        <form method="get" action={currentPath} data-preserve-shop-scroll class="flex items-center gap-2">
+                {preservedParams.map(([name, value]) => (
+                        <input type="hidden" name={name} value={value} />
+                ))}
+
+                <label class="flex items-center gap-2">
+                        <span class="type-context-label text-sm text-slate-400">
+                                Sort by
+                        </span>
+
+                        <select
+                                name="sort"
+                                class="rounded-md border border-slate-700 bg-black px-3 py-2 text-sm text-slate-200 outline-none focus:border-amber-400"
+                                onchange="this.form.submit()"
+                        >
+                                <option
+                                        value="newest"
+                                        selected={currentSort === 'newest'}
+                                >
+                                        Newest
+                                </option>
+
+                                <option
+                                        value="price_asc"
+                                        selected={currentSort === 'price_asc'}
+                                >
+                                        Price: Low to High
+                                </option>
+
+                                <option
+                                        value="price_desc"
+                                        selected={currentSort === 'price_desc'}
+                                >
+                                        Price: High to Low
+                                </option>
+
+                                <option
+                                        value="year_desc"
+                                        selected={currentSort === 'year_desc'}
+                                >
+                                        Year: Newest to Oldest
+                                </option>
+
+                                <option
+                                        value="year_asc"
+                                        selected={currentSort === 'year_asc'}
+                                >
+                                        Year: Oldest to Newest
+                                </option>
+
+                                <option
+                                        value="title_asc"
+                                        selected={currentSort === 'title_asc'}
+                                >
+                                        Title: A to Z
+                                </option>
+
+                                <option
+                                        value="title_desc"
+                                        selected={currentSort === 'title_desc'}
+                                >
+                                        Title: Z to A
+                                </option>
+                        </select>
+                </label>
+
+                <noscript>
+                        <button
+                                type="submit"
+                                class="rounded-md border border-amber-400/50 px-3 py-2 text-sm text-amber-300"
+                        >
+                                Apply
+                        </button>
+                </noscript>
+        </form>
 </div>
+
+<script>
+        function updateShopResultCount() {
+                const grid = document.querySelector(
+                        '[data-shop-result-count]',
+                );
+
+                const count = document.querySelector('#shop-result-count');
+
+                if (!(grid instanceof HTMLElement)) {
+                        return;
+                }
+
+                if (!(count instanceof HTMLElement)) {
+                        return;
+                }
+
+                count.textContent = grid.dataset.shopResultCount ?? '0';
+        }
+
+        if (document.readyState === 'loading') {
+                document.addEventListener(
+                        'DOMContentLoaded',
+                        updateShopResultCount,
+                        { once: true },
+                );
+        } else {
+                updateShopResultCount();
+        }
+
+        document.addEventListener('astro:page-load', updateShopResultCount);
+</script>
