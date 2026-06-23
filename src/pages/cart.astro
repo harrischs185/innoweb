@@ -21,7 +21,7 @@ import Layout from '../layouts/Layout.astro';
 
           <p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-300">
             Your cart is validated against CardFlow before checkout. Prices,
-            availability, and inventory status come from the backend.
+            availability, inventory status, and shipping come from the backend.
           </p>
         </div>
 
@@ -36,11 +36,15 @@ import Layout from '../layouts/Layout.astro';
       <div
         id="cart-alert"
         class="mt-6 hidden rounded-xl border p-4 text-sm font-bold"
+        role="status"
+        aria-live="polite"
       ></div>
 
       <div
         id="cart-loading"
         class="mt-8 rounded-2xl border border-slate-800 bg-black/35 p-6 text-slate-300"
+        role="status"
+        aria-live="polite"
       >
         Validating cart...
       </div>
@@ -73,27 +77,55 @@ import Layout from '../layouts/Layout.astro';
             Order Summary
           </p>
 
-        <div class="mt-5 space-y-3 text-sm">
-          <div class="flex justify-between text-slate-300">
-            <span>Subtotal</span>
-            <span id="cart-subtotal" class="font-bold text-white">$0.00</span>
+          <div class="mt-5 space-y-3 text-sm">
+            <div class="flex justify-between text-slate-300">
+              <span>Subtotal</span>
+              <span id="cart-subtotal" class="font-bold text-white">$0.00</span>
+            </div>
+
+            <div class="flex justify-between gap-4 text-slate-300">
+              <span id="cart-shipping-label">Shipping</span>
+              <span id="cart-shipping" class="font-bold text-white">$0.00</span>
+            </div>
+
+            <p
+              id="cart-shipping-progress"
+              class="hidden text-xs leading-relaxed text-amber-300"
+            ></p>
+
+            <div class="flex justify-between text-slate-300">
+              <span>Tax</span>
+              <span id="cart-tax" class="font-bold text-white">$0.00</span>
+            </div>
+
+            <div class="flex justify-between border-t border-slate-800 pt-3 text-slate-300">
+              <span>Total</span>
+              <span id="cart-total" class="font-black text-white">$0.00</span>
+            </div>
           </div>
 
-          <div class="flex justify-between gap-4 text-slate-300">
-            <span id="cart-shipping-label">Shipping</span>
-            <span id="cart-shipping" class="font-bold text-white">$0.00</span>
+          <div
+            id="cart-shipment-summary"
+            class="mt-5 hidden rounded-xl border border-slate-800 bg-slate-950/70 p-4"
+          >
+            <p id="cart-shipment-count" class="text-xs font-black uppercase tracking-[0.12em] text-slate-300"></p>
+            <div id="cart-parcel-breakdown" class="mt-3 flex flex-wrap gap-2"></div>
           </div>
 
-          <p
-            id="cart-shipping-progress"
-            class="hidden text-xs leading-relaxed text-amber-300"
-          ></p>
-
-          <div class="flex justify-between border-t border-slate-800 pt-3 text-slate-300">
-            <span>Total</span>
-            <span id="cart-total" class="font-black text-white">$0.00</span>
+          <div
+            id="cart-shipping-protections"
+            class="mt-4 hidden rounded-xl border border-sky-500/30 bg-sky-500/10 p-4"
+          >
+            <p class="text-xs font-black uppercase tracking-[0.12em] text-sky-200">
+              Included Shipping Protections
+            </p>
+            <ul id="cart-protection-list" class="mt-3 space-y-2 text-xs leading-relaxed text-sky-100"></ul>
           </div>
-        </div>
+
+          <div
+            id="cart-shipping-review"
+            class="mt-4 hidden rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 text-xs leading-relaxed text-amber-100"
+          ></div>
 
           <button
             id="checkout-button"
@@ -145,17 +177,39 @@ import Layout from '../layouts/Layout.astro';
     reason?: string;
   };
 
+  type CheckoutShippingMethod =
+    | 'economy_letter'
+    | 'standard_tracked'
+    | 'known_large_item'
+    | 'mixed'
+    | 'free_threshold'
+    | 'conservative_estimate';
+
   type CheckoutShippingPolicyResponse = {
-    method: 'flat_rate' | 'free_threshold';
+    method: CheckoutShippingMethod;
     label: string;
     version: string;
+    baseShippingAmount: string;
     freeShippingThreshold: string;
     remainingForFreeShipping: string;
+    freeShippingQualified: boolean;
+    parcelCounts: {
+      economyLetter: number;
+      standardTracked: number;
+      knownLargeItem: number;
+      customLarge: number;
+      total: number;
+    };
+    premiumPackagingRequired: boolean;
+    insuranceRequired: boolean;
+    signatureRequired: boolean;
+    signatureConfirmation: 'STANDARD' | null;
+    shippingReviewRequired: boolean;
   };
 
   type CheckoutValidationResponse = {
     ok: boolean;
-    items?: CheckoutValidationItem[];
+    items: CheckoutValidationItem[];
     subtotalAmount?: string;
     shippingAmount?: string;
     taxAmount?: string;
@@ -183,18 +237,21 @@ import Layout from '../layouts/Layout.astro';
   const itemsEl = document.getElementById('cart-items');
   const alertEl = document.getElementById('cart-alert');
   const subtotalEl = document.getElementById('cart-subtotal');
+  const shippingLabelEl = document.getElementById('cart-shipping-label');
+  const shippingEl = document.getElementById('cart-shipping');
+  const shippingProgressEl = document.getElementById('cart-shipping-progress');
+  const taxEl = document.getElementById('cart-tax');
   const totalEl = document.getElementById('cart-total');
-  const shippingLabelEl = document.getElementById(
-    'cart-shipping-label',
-  );
-  const shippingEl = document.getElementById(
-    'cart-shipping',
-  );
-  const shippingProgressEl = document.getElementById(
-    'cart-shipping-progress',
-  );
+  const shipmentSummaryEl = document.getElementById('cart-shipment-summary');
+  const shipmentCountEl = document.getElementById('cart-shipment-count');
+  const parcelBreakdownEl = document.getElementById('cart-parcel-breakdown');
+  const shippingProtectionsEl = document.getElementById('cart-shipping-protections');
+  const protectionListEl = document.getElementById('cart-protection-list');
+  const shippingReviewEl = document.getElementById('cart-shipping-review');
   const checkoutButton = document.getElementById('checkout-button') as HTMLButtonElement | null;
   const clearCartButton = document.getElementById('clear-cart-button') as HTMLButtonElement | null;
+
+  let hasRenderedCart = false;
 
   function escapeHtml(value: unknown) {
     return String(value ?? '')
@@ -216,6 +273,53 @@ import Layout from '../layouts/Layout.astro';
       style: 'currency',
       currency,
     }).format(numericValue);
+  }
+
+  function isRecord(value: unknown): value is Record<string, unknown> {
+    return value !== null && typeof value === 'object';
+  }
+
+  function isCheckoutValidationResponse(
+    value: unknown,
+  ): value is CheckoutValidationResponse {
+    return (
+      isRecord(value) &&
+      typeof value.ok === 'boolean' &&
+      Array.isArray(value.items)
+    );
+  }
+
+  function getErrorMessage(error: unknown, fallback: string) {
+    if (error instanceof CardFlowApiError) {
+      if (typeof error.body === 'string' && error.body.trim()) {
+        return error.body;
+      }
+
+      if (isRecord(error.body)) {
+        const message = error.body.message;
+
+        if (typeof message === 'string' && message.trim()) {
+          return message;
+        }
+
+        if (Array.isArray(message)) {
+          const firstMessage = message.find(
+            (entry): entry is string =>
+              typeof entry === 'string' && Boolean(entry.trim()),
+          );
+
+          if (firstMessage) {
+            return firstMessage;
+          }
+        }
+      }
+    }
+
+    if (error instanceof Error && error.message) {
+      return error.message;
+    }
+
+    return fallback;
   }
 
   function showAlert(message: string, tone: 'error' | 'info' = 'error') {
@@ -242,11 +346,50 @@ import Layout from '../layouts/Layout.astro';
     loadingEl?.classList.toggle('hidden', !isLoading);
   }
 
+  function setCheckoutButton(disabled: boolean, label = 'Checkout') {
+    if (!checkoutButton) {
+      return;
+    }
+
+    checkoutButton.disabled = disabled;
+    checkoutButton.textContent = label;
+  }
+
+  function resetShippingDetails() {
+    shippingProgressEl?.classList.add('hidden');
+    shipmentSummaryEl?.classList.add('hidden');
+    shippingProtectionsEl?.classList.add('hidden');
+    shippingReviewEl?.classList.add('hidden');
+
+    if (shippingProgressEl) {
+      shippingProgressEl.textContent = '';
+    }
+
+    if (shipmentCountEl) {
+      shipmentCountEl.textContent = '';
+    }
+
+    if (parcelBreakdownEl) {
+      parcelBreakdownEl.innerHTML = '';
+    }
+
+    if (protectionListEl) {
+      protectionListEl.innerHTML = '';
+    }
+
+    if (shippingReviewEl) {
+      shippingReviewEl.textContent = '';
+    }
+  }
+
   function showEmptyCart() {
     setLoading(false);
     hideAlert();
+    setCheckoutButton(true);
+    resetShippingDetails();
     emptyEl?.classList.remove('hidden');
     contentEl?.classList.add('hidden');
+    hasRenderedCart = false;
   }
 
   function bindRemoveButtons() {
@@ -264,70 +407,208 @@ import Layout from '../layouts/Layout.astro';
     });
   }
 
-  function renderValidation(validation: CheckoutValidationResponse) {
+  function renderItems(items: CheckoutValidationItem[], currency: string) {
+    if (!itemsEl) {
+      return;
+    }
+
+    itemsEl.innerHTML = items
+      .map((item) => {
+        const validationUnavailable =
+          item.commerceStatus === 'validation_unavailable';
+        const statusClass = item.isBuyable
+          ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-200'
+          : validationUnavailable
+            ? 'border-amber-500/40 bg-amber-500/10 text-amber-200'
+            : 'border-red-500/40 bg-red-500/10 text-red-200';
+        const authoritativePrice = item.lineTotal ?? item.unitPrice;
+        const displayedPrice = authoritativePrice !== undefined
+          ? formatMoney(authoritativePrice, currency)
+          : 'Price unavailable';
+
+        return `
+          <article class="rounded-2xl border border-slate-800 bg-black/35 p-5">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <p class="text-xs font-black uppercase tracking-[0.12em] text-slate-500">
+                  SKU ${escapeHtml(item.sku)}
+                </p>
+
+                <h2 class="mt-2 text-lg font-black text-white">
+                  ${escapeHtml(item.title ?? item.sku)}
+                </h2>
+
+                <div class="mt-3 inline-flex rounded-full border px-3 py-1 text-xs font-black uppercase ${statusClass}">
+                  ${escapeHtml(item.commerceLabel ?? item.commerceStatus ?? 'Pending')}
+                </div>
+
+                ${
+                  item.reason
+                    ? `<p class="mt-3 text-sm ${validationUnavailable ? 'text-amber-200' : 'text-red-200'}">${escapeHtml(item.reason)}</p>`
+                    : ''
+                }
+              </div>
+
+              <div class="text-left sm:text-right">
+                <p class="text-sm text-slate-400">Quantity ${escapeHtml(item.quantity ?? 1)}</p>
+                <p class="mt-2 text-xl font-black text-white">
+                  ${escapeHtml(displayedPrice)}
+                </p>
+
+                <button
+                  type="button"
+                  data-remove-sku="${escapeHtml(item.sku)}"
+                  class="mt-4 rounded-md border border-slate-700 px-4 py-2 text-xs font-black uppercase text-slate-300 transition hover:border-red-400 hover:text-red-300"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      })
+      .join('');
+  }
+
+  function renderShippingPolicy(
+    policy: CheckoutShippingPolicyResponse | undefined,
+    currency: string,
+  ) {
+    resetShippingDetails();
+
+    if (!policy) {
+      return;
+    }
+
+    if (shippingProgressEl) {
+      if (policy.freeShippingQualified) {
+        const waivedAmount = Number(policy.baseShippingAmount);
+        shippingProgressEl.textContent =
+          Number.isFinite(waivedAmount) && waivedAmount > 0
+            ? `Free shipping applied. ${formatMoney(policy.baseShippingAmount, currency)} in eligible shipping charges was waived.`
+            : 'Free shipping has been applied.';
+        shippingProgressEl.classList.remove('hidden');
+      } else {
+        const remainingForFreeShipping = Number(
+          policy.remainingForFreeShipping,
+        );
+
+        if (
+          Number.isFinite(remainingForFreeShipping) &&
+          remainingForFreeShipping > 0
+        ) {
+          shippingProgressEl.textContent =
+            `Add ${formatMoney(policy.remainingForFreeShipping, currency)} more for free shipping.`;
+          shippingProgressEl.classList.remove('hidden');
+        }
+      }
+    }
+
+    const parcelBreakdown = [
+      ['Economy Letter', policy.parcelCounts.economyLetter],
+      ['Standard Tracked', policy.parcelCounts.standardTracked],
+      ['Known Large Item', policy.parcelCounts.knownLargeItem],
+      ['Custom Large', policy.parcelCounts.customLarge],
+    ].filter(([, count]) => Number(count) > 0) as [string, number][];
+
+    if (
+      shipmentSummaryEl &&
+      shipmentCountEl &&
+      parcelBreakdownEl &&
+      policy.parcelCounts.total > 0
+    ) {
+      shipmentCountEl.textContent =
+        policy.parcelCounts.total === 1
+          ? '1 Shipment'
+          : `${policy.parcelCounts.total} Shipments`;
+
+      parcelBreakdownEl.innerHTML = parcelBreakdown
+        .map(([label, count]) => `
+          <span class="rounded-full border border-slate-700 bg-black/30 px-3 py-1 text-xs font-bold text-slate-300">
+            ${escapeHtml(count)} ${escapeHtml(label)}
+          </span>
+        `)
+        .join('');
+
+      shipmentSummaryEl.classList.remove('hidden');
+    }
+
+    const protections: string[] = [];
+
+    if (policy.premiumPackagingRequired) {
+      protections.push('Premium packaging included');
+    }
+
+    if (policy.insuranceRequired) {
+      protections.push('Full-value insurance included');
+    }
+
+    if (policy.signatureRequired) {
+      protections.push(
+        policy.signatureConfirmation === 'STANDARD'
+          ? 'Standard signature confirmation included'
+          : 'Signature confirmation included',
+      );
+    }
+
+    if (
+      shippingProtectionsEl &&
+      protectionListEl &&
+      protections.length > 0
+    ) {
+      protectionListEl.innerHTML = protections
+        .map((protection) => `<li>• ${escapeHtml(protection)}</li>`)
+        .join('');
+      shippingProtectionsEl.classList.remove('hidden');
+    }
+
+    if (shippingReviewEl && policy.shippingReviewRequired) {
+      shippingReviewEl.textContent =
+        'This shipment requires manual fulfillment review. The customer shipping charge shown here remains the authoritative checkout amount.';
+      shippingReviewEl.classList.remove('hidden');
+    }
+  }
+
+  function unavailableItemsFromLocalCart(
+    reason: string,
+  ): CheckoutValidationItem[] {
+    return readCart().map((item) => ({
+      sku: item.sku,
+      quantity: item.quantity,
+      isBuyable: false,
+      commerceStatus: 'validation_unavailable',
+      commerceLabel: 'Validation unavailable',
+      reason,
+    }));
+  }
+
+  function renderValidation(
+    validation: CheckoutValidationResponse,
+    notice?: string,
+  ) {
     setLoading(false);
 
-    const items = validation.items ?? [];
     const currency = validation.currency ?? 'USD';
+    const localCart = readCart();
+    const items = validation.items.length > 0
+      ? validation.items
+      : localCart.length > 0
+        ? unavailableItemsFromLocalCart(
+            validation.errors?.[0]?.message ??
+              'CardFlow could not confirm current availability.',
+          )
+        : [];
 
     if (items.length === 0) {
       showEmptyCart();
       return;
     }
 
+    hasRenderedCart = true;
     emptyEl?.classList.add('hidden');
     contentEl?.classList.remove('hidden');
 
-    if (itemsEl) {
-      itemsEl.innerHTML = items
-        .map((item) => {
-          const statusClass = item.isBuyable
-            ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-200'
-            : 'border-red-500/40 bg-red-500/10 text-red-200';
-
-          return `
-            <article class="rounded-2xl border border-slate-800 bg-black/35 p-5">
-              <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <p class="text-xs font-black uppercase tracking-[0.12em] text-slate-500">
-                    SKU ${escapeHtml(item.sku)}
-                  </p>
-
-                  <h2 class="mt-2 text-lg font-black text-white">
-                    ${escapeHtml(item.title ?? item.sku)}
-                  </h2>
-
-                  <div class="mt-3 inline-flex rounded-full border px-3 py-1 text-xs font-black uppercase ${statusClass}">
-                    ${escapeHtml(item.commerceLabel ?? item.commerceStatus ?? 'Pending')}
-                  </div>
-
-                  ${
-                    item.reason
-                      ? `<p class="mt-3 text-sm text-red-200">${escapeHtml(item.reason)}</p>`
-                      : ''
-                  }
-                </div>
-
-                <div class="text-left sm:text-right">
-                  <p class="text-sm text-slate-400">Quantity ${escapeHtml(item.quantity ?? 1)}</p>
-                  <p class="mt-2 text-xl font-black text-white">
-                    ${escapeHtml(formatMoney(item.lineTotal ?? item.unitPrice, currency))}
-                  </p>
-
-                  <button
-                    type="button"
-                    data-remove-sku="${escapeHtml(item.sku)}"
-                    class="mt-4 rounded-md border border-slate-700 px-4 py-2 text-xs font-black uppercase text-slate-300 transition hover:border-red-400 hover:text-red-300"
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            </article>
-          `;
-        })
-        .join('');
-    }
+    renderItems(items, currency);
 
     if (subtotalEl) {
       subtotalEl.textContent =
@@ -348,6 +629,13 @@ import Layout from '../layouts/Layout.astro';
           : 'Unavailable';
     }
 
+    if (taxEl) {
+      taxEl.textContent =
+        validation.taxAmount !== undefined
+          ? formatMoney(validation.taxAmount, currency)
+          : 'Unavailable';
+    }
+
     if (totalEl) {
       totalEl.textContent =
         validation.totalAmount !== undefined
@@ -355,48 +643,17 @@ import Layout from '../layouts/Layout.astro';
           : 'Unavailable';
     }
 
-    if (shippingProgressEl) {
-      shippingProgressEl.textContent = '';
-      shippingProgressEl.classList.add('hidden');
-
-      const shippingPolicy = validation.shippingPolicy;
-
-      if (validation.ok && shippingPolicy) {
-        if (shippingPolicy.method === 'free_threshold') {
-          shippingProgressEl.textContent =
-            'Free shipping has been applied.';
-          shippingProgressEl.classList.remove('hidden');
-        } else {
-          const remainingForFreeShipping = Number(
-            shippingPolicy.remainingForFreeShipping,
-          );
-
-          if (
-            Number.isFinite(remainingForFreeShipping) &&
-            remainingForFreeShipping > 0
-          ) {
-            shippingProgressEl.textContent =
-              `Add ${formatMoney(
-                shippingPolicy.remainingForFreeShipping,
-                currency,
-              )} more for free shipping.`;
-
-            shippingProgressEl.classList.remove('hidden');
-          }
-        }
-      }
-    }
-
-    if (checkoutButton) {
-      checkoutButton.disabled = !validation.ok;
-    }
+    renderShippingPolicy(validation.shippingPolicy, currency);
+    setCheckoutButton(!validation.ok);
 
     if (!validation.ok) {
-      const errorMessage =
-        validation.errors?.[0]?.message ??
-        'One or more cart items are not available for checkout.';
-
-      showAlert(errorMessage);
+      showAlert(
+        notice ??
+          validation.errors?.[0]?.message ??
+          'One or more cart items are not available for checkout.',
+      );
+    } else if (notice) {
+      showAlert(notice);
     } else {
       hideAlert();
     }
@@ -404,7 +661,7 @@ import Layout from '../layouts/Layout.astro';
     bindRemoveButtons();
   }
 
-  async function loadCart() {
+  async function loadCart(notice?: string) {
     const cart = readCart();
 
     if (cart.length === 0) {
@@ -412,9 +669,13 @@ import Layout from '../layouts/Layout.astro';
       return;
     }
 
+    setCheckoutButton(true, 'Validating...');
     setLoading(true);
     emptyEl?.classList.add('hidden');
-    contentEl?.classList.add('hidden');
+
+    if (!hasRenderedCart) {
+      contentEl?.classList.add('hidden');
+    }
 
     try {
       const validation = await postCardFlow<CheckoutValidationResponse>(
@@ -422,22 +683,43 @@ import Layout from '../layouts/Layout.astro';
         { items: cart },
       );
 
-      renderValidation(validation);
+      renderValidation(validation, notice);
     } catch (error) {
-      setLoading(false);
       console.error('Cart validation failed', error);
 
-      if (error instanceof CardFlowApiError && error.body && typeof error.body === 'object') {
-        renderValidation(error.body as CheckoutValidationResponse);
+      if (
+        error instanceof CardFlowApiError &&
+        isCheckoutValidationResponse(error.body)
+      ) {
+        renderValidation(error.body, notice);
         return;
       }
 
-      const message =
-        error instanceof Error
-          ? error.message
-          : 'Unknown cart validation error.';
+      const message = getErrorMessage(
+        error,
+        'CardFlow could not confirm current cart availability.',
+      );
 
-      showAlert(`Cart validation failed: ${message}`);
+      if (!hasRenderedCart) {
+        renderValidation(
+          {
+            ok: false,
+            items: unavailableItemsFromLocalCart(message),
+            errors: [
+              {
+                code: 'validation_unavailable',
+                message,
+              },
+            ],
+          },
+          message,
+        );
+        return;
+      }
+
+      setLoading(false);
+      setCheckoutButton(true);
+      showAlert(message);
     }
   }
 
@@ -449,8 +731,7 @@ import Layout from '../layouts/Layout.astro';
       return;
     }
 
-    checkoutButton.disabled = true;
-    checkoutButton.textContent = 'Creating checkout...';
+    setCheckoutButton(true, 'Creating checkout...');
 
     try {
       const checkout = await postCardFlow<CheckoutCreateResponse>(
@@ -464,15 +745,14 @@ import Layout from '../layouts/Layout.astro';
 
       window.location.assign(checkout.checkoutUrl);
     } catch (error) {
-      checkoutButton.disabled = false;
-      checkoutButton.textContent = 'Checkout';
+      console.error('Checkout creation failed', error);
 
-      if (error instanceof CardFlowApiError && error.body && typeof error.body === 'object') {
-        renderValidation(error.body as CheckoutValidationResponse);
-        return;
-      }
+      const message = getErrorMessage(
+        error,
+        'Checkout could not be created. CardFlow will revalidate the cart.',
+      );
 
-      showAlert('Checkout could not be created. Please try again.');
+      await loadCart(message);
     }
   });
 
