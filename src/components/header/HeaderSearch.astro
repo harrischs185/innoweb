@@ -9,20 +9,85 @@ const classes = [
 	'w-full',
 	extraClass,
 ].filter(Boolean).join(' ');
+
+const currentQuery = Astro.url.searchParams.get('q')?.trim() ?? '';
 ---
 
-<form class={classes} role="search" action="/search" method="get">
-	<label class="sr-only" for="site-search">
-		Search
-	</label>
-
+<form
+	class={classes}
+	role="search"
+	action="/shop"
+	method="get"
+	data-header-search-form
+	data-debug={debug ? 'true' : undefined}
+>
 	<div class="flex items-center rounded-full border border-slate-700 bg-slate-950 px-5 py-2 text-sm text-slate-400 focus-within:border-amber-500/70">
 		<input
-			id="site-search"
 			name="q"
 			type="search"
+			aria-label="Search the catalog"
+			value={currentQuery}
+			autocomplete="off"
 			placeholder={placeholder}
-			class="w-full bg-transparent text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none"
+			class="min-w-0 flex-1 bg-transparent text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none"
 		/>
+
+		<button
+			type="submit"
+			aria-label="Search the catalog"
+			class="ml-3 shrink-0 rounded-full text-slate-400 transition hover:text-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/70"
+		>
+			<svg
+				aria-hidden="true"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				class="h-5 w-5"
+			>
+				<circle cx="11" cy="11" r="8"></circle>
+				<path d="m21 21-4.35-4.35"></path>
+			</svg>
+		</button>
 	</div>
 </form>
+
+<script>
+	function bindHeaderSearchForms() {
+		const forms = document.querySelectorAll<HTMLFormElement>(
+			'[data-header-search-form]',
+		);
+
+		for (const form of forms) {
+			if (form.dataset.headerSearchBound === 'true') {
+				continue;
+			}
+
+			form.dataset.headerSearchBound = 'true';
+
+			form.addEventListener('submit', (event) => {
+				const input = form.elements.namedItem('q');
+
+				if (!(input instanceof HTMLInputElement)) {
+					return;
+				}
+
+				const query = input.value.trim();
+
+				if (!query) {
+					event.preventDefault();
+					input.value = '';
+					input.focus();
+					return;
+				}
+
+				input.value = query;
+			});
+		}
+	}
+
+	bindHeaderSearchForms();
+	document.addEventListener('astro:page-load', bindHeaderSearchForms);
+</script>
