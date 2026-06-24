@@ -93,13 +93,18 @@ import Layout from '../layouts/Layout.astro';
               class="hidden text-xs leading-relaxed text-amber-300"
             ></p>
 
-            <div class="flex justify-between text-slate-300">
+            <div class="flex items-start justify-between gap-4 text-slate-300">
               <span>Tax</span>
-              <span id="cart-tax" class="font-bold text-white">$0.00</span>
+              <span
+                id="cart-tax"
+                class="max-w-[180px] text-right text-xs font-bold leading-relaxed text-amber-300"
+              >
+                Calculated at secure checkout
+              </span>
             </div>
 
-            <div class="flex justify-between border-t border-slate-800 pt-3 text-slate-300">
-              <span>Total</span>
+            <div class="flex items-start justify-between gap-4 border-t border-slate-800 pt-3 text-slate-300">
+              <span id="cart-total-label">Estimated total before tax</span>
               <span id="cart-total" class="font-black text-white">$0.00</span>
             </div>
           </div>
@@ -145,8 +150,9 @@ import Layout from '../layouts/Layout.astro';
           </button>
 
           <p id="checkout-note" class="mt-4 text-xs leading-relaxed text-slate-500">
-            Checkout redirects to Stripe. Payment and inventory status are
-            confirmed by CardFlow after Stripe webhook processing.
+            Checkout redirects to Stripe, where your shipping address and sales tax
+            are finalized securely. Payment and inventory status are confirmed by
+            CardFlow after Stripe webhook processing.
           </p>
         </aside>
       </div>
@@ -207,6 +213,12 @@ import Layout from '../layouts/Layout.astro';
     shippingReviewRequired: boolean;
   };
 
+  type TaxCalculationStatus =
+    | 'pending'
+    | 'calculated'
+    | 'not_required'
+    | 'failed';
+
   type CheckoutValidationResponse = {
     ok: boolean;
     items: CheckoutValidationItem[];
@@ -214,6 +226,7 @@ import Layout from '../layouts/Layout.astro';
     shippingAmount?: string;
     taxAmount?: string;
     totalAmount?: string;
+    taxCalculationStatus?: TaxCalculationStatus;
     currency?: string;
     shippingPolicy?: CheckoutShippingPolicyResponse;
     errors?: {
@@ -241,6 +254,7 @@ import Layout from '../layouts/Layout.astro';
   const shippingEl = document.getElementById('cart-shipping');
   const shippingProgressEl = document.getElementById('cart-shipping-progress');
   const taxEl = document.getElementById('cart-tax');
+  const totalLabelEl = document.getElementById('cart-total-label');
   const totalEl = document.getElementById('cart-total');
   const shipmentSummaryEl = document.getElementById('cart-shipment-summary');
   const shipmentCountEl = document.getElementById('cart-shipment-count');
@@ -273,6 +287,29 @@ import Layout from '../layouts/Layout.astro';
       style: 'currency',
       currency,
     }).format(numericValue);
+  }
+
+  function moneyToCents(value: unknown): number | null {
+    if (typeof value !== 'string' && typeof value !== 'number') {
+      return null;
+    }
+
+    const normalized = String(value).trim();
+
+    if (!/^\d+(?:\.\d{1,2})?$/.test(normalized)) {
+      return null;
+    }
+
+    const [wholePart, fractionalPart = ''] = normalized.split('.');
+    const wholeCents = Number(wholePart) * 100;
+    const fractionalCents = Number(fractionalPart.padEnd(2, '0'));
+    const totalCents = wholeCents + fractionalCents;
+
+    return Number.isSafeInteger(totalCents) ? totalCents : null;
+  }
+
+  function formatCents(cents: number, currency = 'USD') {
+    return formatMoney((cents / 100).toFixed(2), currency);
   }
 
   function isRecord(value: unknown): value is Record<string, unknown> {
@@ -629,18 +666,61 @@ import Layout from '../layouts/Layout.astro';
           : 'Unavailable';
     }
 
+    const taxIsPending =
+      validation.taxCalculationStatus === 'pending';
+
     if (taxEl) {
-      taxEl.textContent =
-        validation.taxAmount !== undefined
-          ? formatMoney(validation.taxAmount, currency)
-          : 'Unavailable';
+      if (taxIsPending) {
+        taxEl.textContent = 'Calculated at secure checkout';
+        taxEl.className =
+          'max-w-[180px] text-right text-xs font-bold leading-relaxed text-amber-300';
+      } else if (validation.taxAmount !== undefined) {
+        taxEl.textContent = formatMoney(
+          validation.taxAmount,
+          currency,
+        );
+        taxEl.className = 'font-bold text-white';
+      } else {
+        taxEl.textContent = 'Unavailable';
+        taxEl.className =
+          'max-w-[180px] text-right text-xs font-bold leading-relaxed text-amber-300';
+      }
     }
 
-    if (totalEl) {
-      totalEl.textContent =
-        validation.totalAmount !== undefined
-          ? formatMoney(validation.totalAmount, currency)
-          : 'Unavailable';
+    if (validation.totalAmount !== undefined) {
+      if (totalLabelEl) {
+        totalLabelEl.textContent = 'Total';
+      }
+
+      if (totalEl) {
+        totalEl.textContent = formatMoney(
+          validation.totalAmount,
+          currency,
+        );
+      }
+    } else {
+      if (totalLabelEl) {
+        totalLabelEl.textContent = taxIsPending
+          ? 'Estimated total before tax'
+          : 'Estimated total';
+      }
+
+      if (totalEl) {
+        const subtotalCents = moneyToCents(
+          validation.subtotalAmount,
+        );
+        const shippingCents = moneyToCents(
+          validation.shippingAmount,
+        );
+
+        totalEl.textContent =
+          subtotalCents !== null && shippingCents !== null
+            ? formatCents(
+                subtotalCents + shippingCents,
+                currency,
+              )
+            : 'Unavailable';
+      }
     }
 
     renderShippingPolicy(validation.shippingPolicy, currency);
