@@ -1,6 +1,6 @@
-import wembyImage from '../assets/images/products/card-1.jpg';
-import jordanImage from '../assets/images/products/card-2.jpg';
-import joshAllenImage from '../assets/images/products/card-3.jpg';
+import wembyImage from '../assets/images/Products/card-1.jpg';
+import jordanImage from '../assets/images/Products/card-2.jpg';
+import joshAllenImage from '../assets/images/Products/card-3.jpg';
 
 export const products = [
 	{
