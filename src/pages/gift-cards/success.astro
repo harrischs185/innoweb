@@ -1,0 +1,85 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+import SectionWrapper from '../../components/layout/SectionWrapper.astro';
+---
+
+<Layout title="Gift Card Purchase | InnoAV Sports Collectables" description="Your gift card purchase is being confirmed." noindex={true}>
+  <SectionWrapper spacing="tight" container="narrow">
+    <section class="rounded-2xl border border-slate-800 bg-slate-950 p-6 text-center lg:p-10">
+      <p class="type-context-label text-amber-400">Gift Card Purchase</p>
+      <h1 class="type-section-title mt-3 text-white">Confirming Your Gift Card</h1>
+      <p id="gift-card-status" class="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-slate-300" aria-live="polite">
+        Stripe has returned you to InnoAV. CardFlow is confirming payment and issuing the gift card.
+      </p>
+      <div id="gift-card-detail" class="mx-auto mt-6 hidden max-w-md rounded-xl border border-slate-800 bg-black/30 p-4 text-left text-sm text-slate-300"></div>
+      <a href="/shop" class="mt-7 inline-flex rounded-md bg-amber-400 px-5 py-3 text-xs font-black uppercase text-black hover:bg-amber-300">Continue Shopping</a>
+    </section>
+  </SectionWrapper>
+</Layout>
+
+<script>
+  import { fetchCardFlow } from '../../lib/cardflowApi';
+
+  type PurchaseStatus = {
+    ok: true;
+    purchaseId: string;
+    orderNumber: string;
+    paymentStatus: string;
+    issued: boolean;
+    amount: string;
+    currency: string;
+    recipientName: string;
+    recipientEmail: string;
+    communications: {
+      recipient: { status: string } | null;
+    };
+  };
+
+  const statusElement = document.querySelector<HTMLElement>('#gift-card-status');
+  const detailElement = document.querySelector<HTMLElement>('#gift-card-detail');
+  const purchaseId = new URLSearchParams(window.location.search).get('purchase');
+
+  const sleep = (milliseconds: number) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+  async function poll() {
+    if (!purchaseId || !statusElement) {
+      if (statusElement) statusElement.textContent = 'No gift card purchase reference was provided.';
+      return;
+    }
+
+    for (let attempt = 0; attempt < 12; attempt += 1) {
+      try {
+        const purchase = await fetchCardFlow<PurchaseStatus>(`/gift-cards/purchases/${encodeURIComponent(purchaseId)}`);
+
+        if (purchase.issued) {
+          const deliveryStatus = purchase.communications.recipient?.status ?? 'queued';
+          statusElement.textContent = deliveryStatus === 'delivered'
+            ? 'Payment is confirmed and the gift card email has been delivered.'
+            : deliveryStatus === 'bounced' || deliveryStatus === 'failed'
+              ? 'Payment is confirmed and the gift card is active, but email delivery needs attention. We have retained the order for support.'
+              : 'Payment is confirmed, the gift card is active, and recipient delivery is queued.';
+
+          if (detailElement) {
+            detailElement.classList.remove('hidden');
+            detailElement.textContent = `Order ${purchase.orderNumber} | $${purchase.amount} ${purchase.currency} | Recipient: ${purchase.recipientName} (${purchase.recipientEmail})`;
+          }
+          return;
+        }
+
+        if (purchase.paymentStatus === 'failed') {
+          statusElement.textContent = 'This gift card checkout was not completed.';
+          return;
+        }
+      } catch (error) {
+        console.error('Gift card status check failed.', error);
+      }
+
+      await sleep(2000);
+    }
+
+    statusElement.textContent = 'Payment confirmation is taking longer than expected. Your purchase reference has been retained and no second payment is needed.';
+  }
+
+  void poll();
+</script>

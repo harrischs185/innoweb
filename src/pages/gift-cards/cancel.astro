@@ -1,0 +1,47 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+import SectionWrapper from '../../components/layout/SectionWrapper.astro';
+---
+
+<Layout title="Gift Card Checkout Cancelled | InnoAV Sports Collectables" description="Your gift card checkout was cancelled." noindex={true}>
+  <SectionWrapper spacing="tight" container="narrow">
+    <section class="rounded-2xl border border-slate-800 bg-slate-950 p-6 text-center lg:p-10">
+      <p class="type-context-label text-amber-400">Gift Card Checkout</p>
+      <h1 class="type-section-title mt-3 text-white">Checkout Cancelled</h1>
+      <p id="gift-card-cancel-status" class="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-slate-300" aria-live="polite">
+        No payment was confirmed from this page. Releasing the pending gift card checkout.
+      </p>
+      <a href="/gift-cards" class="mt-7 inline-flex rounded-md bg-amber-400 px-5 py-3 text-xs font-black uppercase text-black hover:bg-amber-300">Return To Gift Cards</a>
+    </section>
+  </SectionWrapper>
+</Layout>
+
+<script>
+  import { postCardFlow } from '../../lib/cardflowApi';
+
+  const statusElement = document.querySelector<HTMLElement>('#gift-card-cancel-status');
+  const purchaseId = new URLSearchParams(window.location.search).get('purchase');
+
+  async function cancel() {
+    if (!purchaseId || !statusElement) {
+      if (statusElement) statusElement.textContent = 'No payment was confirmed, but no purchase reference was provided for automatic cancellation.';
+      return;
+    }
+
+    try {
+      const response = await postCardFlow<{ status: string }>(
+        `/gift-cards/purchases/${encodeURIComponent(purchaseId)}/cancel`,
+        {},
+      );
+      statusElement.textContent = response.status === 'already_cancelled'
+        ? 'This pending gift card checkout was already cancelled. No gift card was issued.'
+        : 'The pending gift card checkout has been cancelled. No gift card was issued.';
+    } catch (error) {
+      console.error('Gift card checkout cancellation failed.', error);
+      statusElement.textContent = 'No payment was confirmed from this page, but CardFlow could not verify cancellation automatically. The Stripe session will expire safely.';
+    }
+  }
+
+  void cancel();
+</script>
